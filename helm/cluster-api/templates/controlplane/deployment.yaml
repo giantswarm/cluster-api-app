@@ -26,7 +26,7 @@ spec:
         - --webhook-port={{ .Values.ports.webhook }}
         command:
         - /manager
-        images: "{{ .Values.registry.domain }}/{{ .Values.images.controlplane.name }}:{{ .Values.images.tag }}"
+        image: "{{ .Values.registry.domain }}/{{ .Values.images.controlplane.name }}:{{ .Values.images.tag }}"
         livenessProbe:
           tcpSocket:
             host: ""
