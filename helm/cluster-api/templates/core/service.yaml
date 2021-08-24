@@ -6,7 +6,7 @@ metadata:
     giantswarm.io/monitoring: "true"
     giantswarm.io/monitoring-port: "{{ .Values.ports.metrics }}"
   labels:
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "labels.common.core" . | nindent 4 }}
   name: {{ include "resource.core.name" . }}
   namespace: {{ include "resource.default.namespace" . }}
 spec:
@@ -18,5 +18,5 @@ spec:
     port: {{ .Values.ports.webhook }}
     targetPort: webhook
   selector:
-    {{- include "labels.selector" . | nindent 4 }}
+    {{- include "labels.selector.core" . | nindent 4 }}
     control-plane: controller-manager

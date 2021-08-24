@@ -4,7 +4,7 @@ metadata:
   labels:
     clusterctl.cluster.x-k8s.io: ""
     control-plane: controller-manager
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "labels.common.bootstrap" . | nindent 4 }}
   annotations:
     giantswarm.io/monitoring: "true"
     giantswarm.io/monitoring-port: "{{ .Values.ports.metrics }}"
@@ -21,6 +21,6 @@ spec:
     targetPort: webhook
   selector:
     control-plane: controller-manager
-    {{- include "labels.selector" . | nindent 4 }}
+    {{- include "labels.selector.bootstrap" . | nindent 4 }}
   sessionAffinity: None
   type: ClusterIP

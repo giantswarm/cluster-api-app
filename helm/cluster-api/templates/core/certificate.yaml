@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   labels:
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "labels.common.core" . | nindent 4 }}
   name: {{ include "resource.core.name" . }}-cert
   namespace: {{ include "resource.default.namespace" . }}
 spec:

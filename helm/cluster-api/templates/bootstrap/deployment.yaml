@@ -4,7 +4,7 @@ metadata:
   labels:
     clusterctl.cluster.x-k8s.io: ""
     control-plane: controller-manager
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "labels.common.bootstrap" . | nindent 4 }}
   name: {{ include "resource.bootstrap.name" . }}
   namespace: {{ include "resource.default.namespace" . }}
 spec:
@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       control-plane: controller-manager
-      {{- include "labels.selector" . | nindent 6 }}
+      {{- include "labels.selector.bootstrap" . | nindent 6 }}
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -24,7 +24,7 @@ spec:
       creationTimestamp: null
       labels:
         control-plane: controller-manager
-        {{- include "labels.common" . | nindent 8 }}
+        {{- include "labels.common.bootstrap" . | nindent 8 }}
     spec:
       containers:
       - args:

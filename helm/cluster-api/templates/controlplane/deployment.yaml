@@ -4,20 +4,20 @@ metadata:
   name: {{ include "resource.controlplane.name" . }}
   namespace: {{ include "resource.default.namespace" . }}
   labels:
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "labels.common.controlplane" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
       control-plane: controller-manager
-      {{- include "labels.selector" . | nindent 6 }}
+      {{- include "labels.selector.controlplane" . | nindent 6 }}
   template:
     metadata:
       annotations:
         releaseRevision: {{ .Release.Revision | quote }}
       labels:
         control-plane: controller-manager
-        {{- include "labels.common" . | nindent 8 }}
+        {{- include "labels.common.controlplane" . | nindent 8 }}
     spec:
       containers:
       - args:

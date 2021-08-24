@@ -4,19 +4,19 @@ metadata:
   name: {{ include "resource.core.name" . }}
   namespace: {{ include "resource.default.namespace" . }}
   labels:
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "labels.common.core" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "labels.selector" . | nindent 6 }}
+      {{- include "labels.selector.core" . | nindent 6 }}
       control-plane: controller-manager
   template:
     metadata:
       annotations:
         releaseRevision: {{ .Release.Revision | quote }}
       labels:
-        {{- include "labels.common" . | nindent 8 }}
+        {{- include "labels.common.core" . | nindent 8 }}
         control-plane: controller-manager
     spec:
       containers:

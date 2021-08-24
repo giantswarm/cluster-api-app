@@ -5,7 +5,7 @@ metadata:
     cert-manager.io/inject-ca-from: {{ include "resource.default.namespace" . }}/{{ include "resource.core.name" . }}-cert
   creationTimestamp: null
   labels:
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "labels.common.core" . | nindent 4 }}
   name: zzz-{{ include "resource.core.name" . }}
 webhooks:
 - clientConfig:

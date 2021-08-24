@@ -6,7 +6,7 @@ metadata:
     giantswarm.io/monitoring: "true"
     giantswarm.io/monitoring-port: "{{ .Values.ports.metrics }}"
   labels:
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "labels.common.controlplane" . | nindent 4 }}
   name: {{ include "resource.controlplane.name" . }}
   namespace: {{ include "resource.default.namespace" . }}
 spec:
@@ -20,7 +20,7 @@ spec:
     protocol: TCP
     targetPort: webhook
   selector:
-    {{- include "labels.selector" . | nindent 4 }}
+    {{- include "labels.selector.controlplane" . | nindent 4 }}
     control-plane: controller-manager
   sessionAffinity: None
   type: ClusterIP
