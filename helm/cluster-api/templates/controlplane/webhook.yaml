@@ -12,7 +12,7 @@ webhooks:
     service:
       name: {{ include "resource.controlplane.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /mutate-controlplane-cluster-x-k8s-io-v1alpha3-kubeadmcontrolplane
+      path: /mutate-controlplane-cluster-x-k8s-io-v1alpha4-kubeadmcontrolplane
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -24,7 +24,7 @@ webhooks:
   - apiGroups:
     - controlplane.cluster.x-k8s.io
     apiVersions:
-    - v1alpha3
+    - v1alpha4
     operations:
     - CREATE
     - UPDATE
@@ -46,7 +46,7 @@ webhooks:
     service:
       name: {{ include "resource.controlplane.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /validate-controlplane-cluster-x-k8s-io-v1alpha3-kubeadmcontrolplane
+      path: /validate-controlplane-cluster-x-k8s-io-v1alpha4-kubeadmcontrolplane
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -58,7 +58,7 @@ webhooks:
   - apiGroups:
     - controlplane.cluster.x-k8s.io
     apiVersions:
-    - v1alpha3
+    - v1alpha4
     operations:
     - CREATE
     - UPDATE
