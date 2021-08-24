@@ -9,6 +9,10 @@ spec:
   dnsNames:
   - {{ include "resource.core.name" . }}.{{ include "resource.default.namespace" . }}.svc
   - {{ include "resource.core.name" . }}.{{ include "resource.default.namespace" . }}.svc.cluster.local
+  - {{ include "resource.bootstrap.name" . }}.{{ include "resource.default.namespace" . }}.svc
+  - {{ include "resource.bootstrap.name" . }}.{{ include "resource.default.namespace" . }}.svc.cluster.local
+  - {{ include "resource.controlplane.name" . }}.{{ include "resource.default.namespace" . }}.svc
+  - {{ include "resource.controlplane.name" . }}.{{ include "resource.default.namespace" . }}.svc.cluster.local
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
