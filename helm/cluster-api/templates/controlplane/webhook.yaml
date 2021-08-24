@@ -36,7 +36,7 @@ apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
 metadata:
   annotations:
-    cert-manager.io/inject-ca-from: {{ include "resource.default.namespace" . }}/{{ include "resource.controlplane.name" . }}-cert
+    cert-manager.io/inject-ca-from: {{ include "resource.default.namespace" . }}/{{ include "resource.core.name" . }}-cert
   labels:
     {{- include "labels.common.controlplane" . | nindent 4 }}
   name: {{ include "resource.controlplane.name" . }}-webhook
