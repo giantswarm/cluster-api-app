@@ -200,6 +200,7 @@ rules:
       - configmaps
     verbs:
       - create
+      - delete
       - get
       - list
       - patch
@@ -237,6 +238,7 @@ rules:
       - list
       - patch
       - watch
+      - update
   - apiGroups:
       - exp.cluster.x-k8s.io
     resources:
