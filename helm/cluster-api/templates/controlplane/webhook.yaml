@@ -12,7 +12,7 @@ webhooks:
     service:
       name: {{ include "resource.controlplane.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /mutate-controlplane-cluster-x-k8s-io-v1alpha4-kubeadmcontrolplane
+      path: /mutate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplane
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -24,13 +24,36 @@ webhooks:
   - apiGroups:
     - controlplane.cluster.x-k8s.io
     apiVersions:
-    - v1alpha4
+    - v1beta1
     operations:
     - CREATE
     - UPDATE
     resources:
     - kubeadmcontrolplanes
   sideEffects: None
+- clientConfig:
+    caBundle: Cg==
+      service:
+        name: {{ include "resource.controlplane.name" . }}
+        namespace: {{ include "resource.default.namespace" . }}
+        path: /mutate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplanetemplate
+        port: {{ .Values.ports.webhook }}
+    failurePolicy: Fail
+    name: default.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: {{ .Values.watchfilter }}
+    rules:
+    - apiGroups:
+      - controlplane.cluster.x-k8s.io
+      apiVersions:
+      - v1beta1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - kubeadmcontrolplanetemplates
+    sideEffects: None
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
@@ -46,7 +69,7 @@ webhooks:
     service:
       name: {{ include "resource.controlplane.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /validate-controlplane-cluster-x-k8s-io-v1alpha4-kubeadmcontrolplane
+      path: /validate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplane
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -58,10 +81,33 @@ webhooks:
   - apiGroups:
     - controlplane.cluster.x-k8s.io
     apiVersions:
-    - v1alpha4
+    - v1beta1
     operations:
     - CREATE
     - UPDATE
     resources:
     - kubeadmcontrolplanes
   sideEffects: None
+- clientConfig:
+    caBundle: Cg==
+      service:
+        name: {{ include "resource.controlplane.name" . }}
+        namespace: {{ include "resource.default.namespace" . }}
+        path: /validate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplanetemplate
+        port: {{ .Values.ports.webhook }}
+    failurePolicy: Fail
+    name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: {{ .Values.watchfilter }}
+    rules:
+    - apiGroups:
+      - controlplane.cluster.x-k8s.io
+      apiVersions:
+      - v1beta1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - kubeadmcontrolplanetemplates
+    sideEffects: None

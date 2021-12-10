@@ -13,7 +13,7 @@ webhooks:
     service:
       name: {{ include "resource.core.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /mutate-cluster-x-k8s-io-v1alpha4-cluster
+      path: /mutate-cluster-x-k8s-io-v1beta1-cluster
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -25,7 +25,7 @@ webhooks:
   - apiGroups:
     - cluster.x-k8s.io
     apiVersions:
-    - v1alpha4
+    - v1beta1
     operations:
     - CREATE
     - UPDATE
@@ -37,7 +37,7 @@ webhooks:
     service:
       name: {{ include "resource.core.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /mutate-cluster-x-k8s-io-v1alpha4-clusterclass
+      path: /mutate-cluster-x-k8s-io-v1beta1-clusterclass
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -49,7 +49,7 @@ webhooks:
   - apiGroups:
     - cluster.x-k8s.io
     apiVersions:
-    - v1alpha4
+    - v1beta1
     operations:
     - CREATE
     - UPDATE
@@ -61,7 +61,7 @@ webhooks:
     service:
       name: {{ include "resource.core.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /mutate-cluster-x-k8s-io-v1alpha4-machine
+      path: /mutate-cluster-x-k8s-io-v1beta1-machine
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -73,7 +73,7 @@ webhooks:
   - apiGroups:
     - cluster.x-k8s.io
     apiVersions:
-    - v1alpha4
+    - v1beta1
     operations:
     - CREATE
     - UPDATE
@@ -85,7 +85,7 @@ webhooks:
     service:
       name: {{ include "resource.core.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /mutate-cluster-x-k8s-io-v1alpha4-machinedeployment
+      path: /mutate-cluster-x-k8s-io-v1beta1-machinedeployment
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -97,7 +97,7 @@ webhooks:
   - apiGroups:
     - cluster.x-k8s.io
     apiVersions:
-    - v1alpha4
+    - v1beta1
     operations:
     - CREATE
     - UPDATE
@@ -109,7 +109,7 @@ webhooks:
     service:
       name: {{ include "resource.core.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /mutate-cluster-x-k8s-io-v1alpha4-machinehealthcheck
+      path: /mutate-cluster-x-k8s-io-v1beta1-machinehealthcheck
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -121,7 +121,7 @@ webhooks:
   - apiGroups:
     - cluster.x-k8s.io
     apiVersions:
-    - v1alpha4
+    - v1beta1
     operations:
     - CREATE
     - UPDATE
@@ -133,7 +133,7 @@ webhooks:
     service:
       name: {{ include "resource.core.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /mutate-cluster-x-k8s-io-v1alpha4-machineset
+      path: /mutate-cluster-x-k8s-io-v1beta1-machineset
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -145,7 +145,7 @@ webhooks:
   - apiGroups:
     - cluster.x-k8s.io
     apiVersions:
-    - v1alpha4
+    - v1beta1
     operations:
     - CREATE
     - UPDATE
@@ -157,7 +157,7 @@ webhooks:
     service:
       name: {{ include "resource.core.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /mutate-cluster-x-k8s-io-v1alpha4-machinepool
+      path: /mutate-cluster-x-k8s-io-v1beta1-machinepool
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -169,7 +169,7 @@ webhooks:
   - apiGroups:
     - cluster.x-k8s.io
     apiVersions:
-    - v1alpha4
+    - v1beta1
     operations:
     - CREATE
     - UPDATE
@@ -181,7 +181,7 @@ webhooks:
     service:
       name: {{ include "resource.core.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /mutate-addons-cluster-x-k8s-io-v1alpha4-clusterresourceset
+      path: /mutate-addons-cluster-x-k8s-io-v1beta1-clusterresourceset
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -193,7 +193,7 @@ webhooks:
   - apiGroups:
     - addons.cluster.x-k8s.io
     apiVersions:
-    - v1alpha4
+    - v1beta1
     operations:
     - CREATE
     - UPDATE
