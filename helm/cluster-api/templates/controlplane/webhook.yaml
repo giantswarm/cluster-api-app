@@ -38,22 +38,22 @@ webhooks:
         namespace: {{ include "resource.default.namespace" . }}
         path: /mutate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplanetemplate
         port: {{ .Values.ports.webhook }}
-    failurePolicy: Fail
-    name: default.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
-    objectSelector:
-      matchLabels:
-        cluster.x-k8s.io/watch-filter: {{ .Values.watchfilter }}
-    rules:
-    - apiGroups:
-      - controlplane.cluster.x-k8s.io
-      apiVersions:
-      - v1beta1
-      operations:
-      - CREATE
-      - UPDATE
-      resources:
-      - kubeadmcontrolplanetemplates
-    sideEffects: None
+  failurePolicy: Fail
+  name: default.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
+  objectSelector:
+    matchLabels:
+      cluster.x-k8s.io/watch-filter: {{ .Values.watchfilter }}
+  rules:
+  - apiGroups:
+    - controlplane.cluster.x-k8s.io
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - kubeadmcontrolplanetemplates
+  sideEffects: None
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
@@ -95,19 +95,19 @@ webhooks:
         namespace: {{ include "resource.default.namespace" . }}
         path: /validate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplanetemplate
         port: {{ .Values.ports.webhook }}
-    failurePolicy: Fail
-    name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
-    objectSelector:
-      matchLabels:
-        cluster.x-k8s.io/watch-filter: {{ .Values.watchfilter }}
-    rules:
-    - apiGroups:
-      - controlplane.cluster.x-k8s.io
-      apiVersions:
-      - v1beta1
-      operations:
-      - CREATE
-      - UPDATE
-      resources:
-      - kubeadmcontrolplanetemplates
-    sideEffects: None
+  failurePolicy: Fail
+  name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
+  objectSelector:
+    matchLabels:
+      cluster.x-k8s.io/watch-filter: {{ .Values.watchfilter }}
+  rules:
+  - apiGroups:
+    - controlplane.cluster.x-k8s.io
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - kubeadmcontrolplanetemplates
+  sideEffects: None
