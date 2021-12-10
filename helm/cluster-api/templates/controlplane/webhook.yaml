@@ -39,6 +39,7 @@ webhooks:
       path: /mutate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplanetemplate
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
+  matchPolicy: Equivalent
   name: default.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
   objectSelector:
     matchLabels:
@@ -90,12 +91,13 @@ webhooks:
   sideEffects: None
 - clientConfig:
     caBundle: Cg==
-      service:
-        name: {{ include "resource.controlplane.name" . }}
-        namespace: {{ include "resource.default.namespace" . }}
-        path: /validate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplanetemplate
-        port: {{ .Values.ports.webhook }}
+    service:
+      name: {{ include "resource.controlplane.name" . }}
+      namespace: {{ include "resource.default.namespace" . }}
+      path: /validate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplanetemplate
+      port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
+  matchPolicy: Equivalent
   name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
   objectSelector:
     matchLabels:
