@@ -15,6 +15,7 @@ images:
 featuregates:
   machinepool: true
   clusterresourceset: true
+  clustertopology: true
 
 ports:
   healthz: 9440

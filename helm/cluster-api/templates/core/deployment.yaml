@@ -22,7 +22,7 @@ spec:
       containers:
       - args:
         - --metrics-bind-addr=0.0.0.0:{{ .Values.ports.metrics }}
-        - --feature-gates=MachinePool={{ .Values.featuregates.machinepool }},ClusterResourceSet={{ .Values.featuregates.clusterresourceset }}
+        - --feature-gates=MachinePool={{ .Values.featuregates.machinepool }},ClusterResourceSet={{ .Values.featuregates.clusterresourceset }},ClusterTopology={{ .Values.featuregates.clustertopology }}
         - --watch-filter={{ .Values.watchfilter }}
         - --webhook-port={{ .Values.ports.webhook }}
         command:
