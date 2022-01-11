@@ -8,8 +8,8 @@ annotations:
   application.giantswarm.io/owners: |
     - catalog: default
       provider: aws
-      team: firecracker
+      team: phoenix
     - catalog: default
       provider: azure
-      team: celestial
+      team: phoenix
   config.giantswarm.io/version: upgrade-capi

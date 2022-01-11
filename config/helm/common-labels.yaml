@@ -8,8 +8,8 @@ labels:
   app.giantswarm.io/commit: '{{ .Values.project.commit }}'
   app.kubernetes.io/managed-by: '{{ .Release.Service }}'
   app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
-  helm.sh/chart: cluster-api-provider-azure
-  app.kubernetes.io/name: cluster-api-provider-azure
+  helm.sh/chart: cluster-api
+  app.kubernetes.io/name: cluster-api
   app.kubernetes.io/instance: '{{ .Release.Name }}'
 fieldSpecs:
   - path: metadata/labels

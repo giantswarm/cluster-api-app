@@ -6,11 +6,11 @@ metadata:
     app.giantswarm.io/commit: '{{ .Values.project.commit }}'
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
-    app.kubernetes.io/name: cluster-api-provider-azure
+    app.kubernetes.io/name: cluster-api
     app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
     cluster.x-k8s.io/provider: bootstrap-kubeadm
     control-plane: controller-manager
-    helm.sh/chart: cluster-api-provider-azure
+    helm.sh/chart: cluster-api
   name: capi-kubeadm-bootstrap-controller-manager
   namespace: '{{ .Release.Namespace }}'
 spec:
