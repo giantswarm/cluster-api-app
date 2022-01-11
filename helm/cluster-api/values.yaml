@@ -1,18 +1,14 @@
 name: cluster-api
-
+registry:
+  domain: quay.io
 images:
   core:
     name: giantswarm/cluster-api-controller
-    registry: quay.io
-    tag: v0.4.1
   bootstrap:
     name: giantswarm/kubeadm-bootstrap-controller
-    registry: quay.io
-    tag: v0.4.1
   controlplane:
     name: giantswarm/kubeadm-control-plane-controller
-    registry: quay.io
-    tag: v0.4.1
+  tag: v0.4.1
 
 project:
   branch: "[[ .Branch ]]"

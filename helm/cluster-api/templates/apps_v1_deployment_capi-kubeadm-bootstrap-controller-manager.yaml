@@ -33,7 +33,7 @@ spec:
         - --v=0
         command:
         - /manager
-        image: '{{ .Values.images.bootstrap.registry }}/{{ .Values.images.bootstrap.name }}:{{ .Values.images.bootstrap.tag }}'
+        image: '{{ .Values.registry.domain }}/{{ .Values.images.bootstrap.name }}:{{ .Values.images.tag }}'
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:

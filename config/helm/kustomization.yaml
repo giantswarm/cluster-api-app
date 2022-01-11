@@ -5,14 +5,14 @@ resources:
 
 images:
   - name: k8s.gcr.io/cluster-api/cluster-api-controller
-    newName: "{{ .Values.images.core.registry }}/{{ .Values.images.core.name }}"
-    newTag: "{{ .Values.images.core.tag }}"
+    newName: "{{ .Values.registry.domain }}/{{ .Values.images.core.name }}"
+    newTag: "{{ .Values.images.tag }}"
   - name: k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller
-    newName: "{{ .Values.images.bootstrap.registry }}/{{ .Values.images.bootstrap.name }}"
-    newTag: "{{ .Values.images.bootstrap.tag }}"
+    newName: "{{ .Values.registry.domain }}/{{ .Values.images.bootstrap.name }}"
+    newTag: "{{ .Values.images.tag }}"
   - name: k8s.gcr.io/cluster-api/kubeadm-control-plane-controller
-    newName: "{{ .Values.images.controlplane.registry }}/{{ .Values.images.controlplane.name }}"
-    newTag: "{{ .Values.images.controlplane.tag }}"
+    newName: "{{ .Values.registry.domain }}/{{ .Values.images.controlplane.name }}"
+    newTag: "{{ .Values.images.tag }}"
 
 transformers:
   - common-labels.yaml

@@ -33,7 +33,7 @@ spec:
         - --v=0
         command:
         - /manager
-        image: '{{ .Values.images.controlplane.registry }}/{{ .Values.images.controlplane.name }}:{{ .Values.images.controlplane.tag }}'
+        image: '{{ .Values.registry.domain }}/{{ .Values.images.controlplane.name }}:{{ .Values.images.tag }}'
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
