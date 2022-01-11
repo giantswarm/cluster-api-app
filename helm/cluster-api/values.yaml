@@ -1,29 +1,19 @@
 name: cluster-api
 
-registry:
-  domain: quay.io
-
 images:
   core:
     name: giantswarm/cluster-api-controller
+    registry: quay.io
+    tag: v0.4.1
   bootstrap:
     name: giantswarm/kubeadm-bootstrap-controller
+    registry: quay.io
+    tag: v0.4.1
   controlplane:
     name: giantswarm/kubeadm-control-plane-controller
-  tag: v0.4.1
-
-featuregates:
-  machinepool: true
-  clusterresourceset: true
-  clustertopology: true
-
-ports:
-  healthz: 9440
-  metrics: 8080
-  webhook: 9443
+    registry: quay.io
+    tag: v0.4.1
 
 project:
   branch: "[[ .Branch ]]"
   commit: "[[ .SHA ]]"
-
-watchfilter: capi
