@@ -1,4 +1,8 @@
 .PHONY: generate
 generate:
+	$(MAKE) delete-generated-manifests
 	kustomize build config/helm -o helm/cluster-api/templates
-	rm -rf helm/cluster-api/templates/apiextensions* helm/cluster-api/templates/cert-manager.io_v1_issuer*
+	./hack/move-generated-manifests.sh
+
+delete-generated-manifests:
+	@rm -rf helm/cluster-api/templates/*
