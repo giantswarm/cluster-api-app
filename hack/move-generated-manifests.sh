@@ -38,6 +38,13 @@ move-bootstrap-manifests() {
     rm -rf "$KUSTOMIZE_DIR/crds/bootstrap/*"
     mkdir -p "$KUSTOMIZE_DIR/crds/bootstrap"
     mv ${HELM_DIR}/apiextensions.k8s.io_v1_customresourcedefinition_*.bootstrap.cluster.x-k8s.io.yaml "$KUSTOMIZE_DIR/crds/bootstrap/"
+
+    cd "$KUSTOMIZE_DIR"/crds/bootstrap
+    for crd_file in apiextensions.k8s.io_v1_customresourcedefinition_*.bootstrap.cluster.x-k8s.io.yaml; do
+        new_crd_file="$(echo "$crd_file" | cut -c50-)" # remove first 50 chars
+        mv "$crd_file" "$new_crd_file"
+    done
+    cd ../../../..
 }
 
 move-controlplane-manifests() {
@@ -71,6 +78,13 @@ move-controlplane-manifests() {
     rm -rf "$KUSTOMIZE_DIR/crds/controlplane/*"
     mkdir -p "$KUSTOMIZE_DIR/crds/controlplane"
     mv ${HELM_DIR}/apiextensions.k8s.io_v1_customresourcedefinition_*.controlplane.cluster.x-k8s.io.yaml "$KUSTOMIZE_DIR/crds/controlplane/"
+
+    cd "$KUSTOMIZE_DIR"/crds/controlplane
+    for crd_file in apiextensions.k8s.io_v1_customresourcedefinition_*.controlplane.cluster.x-k8s.io.yaml; do
+        new_crd_file="$(echo "$crd_file" | cut -c50-)" # remove first 50 chars
+        mv "$crd_file" "$new_crd_file"
+    done
+    cd ../../../..
 }
 
 move-core-manifests() {
@@ -104,6 +118,13 @@ move-core-manifests() {
     rm -rf "$KUSTOMIZE_DIR/crds/core/*"
     mkdir -p "$KUSTOMIZE_DIR/crds/core"
     mv ${HELM_DIR}/apiextensions.k8s.io_v1_customresourcedefinition_*.cluster.x-k8s.io.yaml "$KUSTOMIZE_DIR/crds/core/"
+
+    cd "$KUSTOMIZE_DIR"/crds/core
+    for crd_file in apiextensions.k8s.io_v1_customresourcedefinition_*.cluster.x-k8s.io.yaml; do
+        new_crd_file="$(echo "$crd_file" | cut -c50-)" # remove first 50 chars
+        mv "$crd_file" "$new_crd_file"
+    done
+    cd ../../../..
 }
 
 move-bootstrap-manifests
