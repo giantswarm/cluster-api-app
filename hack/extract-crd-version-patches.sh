@@ -11,9 +11,11 @@ KUSTOMIZE_CRD_DIR="$ROOT_DIR/config/helm/crds"
 # YQ="./$(dirname "$0")/tools/bin/yq"
 
 for CRD_DIR in "$KUSTOMIZE_CRD_DIR/core" "$KUSTOMIZE_CRD_DIR/bootstrap" "$KUSTOMIZE_CRD_DIR/controlplane"; do
-    # CRD_DIR="$ROOT_DIR/config/crd"
     CRD_BASE_DIR="${CRD_DIR}/bases"
     CRD_VERSION_PATCHES_DIR="${CRD_DIR}/patches/versions"
+
+    # remove old patches
+    rm -rf "${CRD_VERSION_PATCHES_DIR:?}"/v*
 
     KUSTOMIZATION_FILE="${CRD_DIR}/kustomization.yaml"
 
