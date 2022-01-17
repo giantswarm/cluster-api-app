@@ -1,45 +1,19 @@
-apiVersion: apiextensions.k8s.io/v1
-kind: CustomResourceDefinition
-metadata:
-  annotations:
-    controller-gen.kubebuilder.io/version: v0.2.9
-  creationTimestamp: null
-  labels:
-    app.giantswarm.io/branch: '{{ .Values.project.branch }}'
-    app.giantswarm.io/commit: '{{ .Values.project.commit }}'
-    app.kubernetes.io/instance: '{{ .Release.Name }}'
-    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
-    app.kubernetes.io/name: cluster-api
-    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
-    cluster.x-k8s.io/provider: cluster-api
-    helm.sh/chart: cluster-api
-  name: machinepools.exp.cluster.x-k8s.io
-spec:
-  group: exp.cluster.x-k8s.io
-  names:
-    categories:
-    - cluster-api
-    kind: MachinePool
-    listKind: MachinePoolList
-    plural: machinepools
-    shortNames:
-    - mp
-    singular: machinepool
-  scope: Namespaced
-  versions:
-  - additionalPrinterColumns:
-    - description: MachinePool replicas count
-      jsonPath: .status.replicas
-      name: Replicas
-      type: string
-    - description: MachinePool status such as Terminating/Pending/Provisioning/Running/Failed etc
-      jsonPath: .status.phase
-      name: Phase
-      type: string
-    - description: Kubernetes version associated with this MachinePool
-      jsonPath: .spec.template.spec.version
-      name: Version
-      type: string
+- op: add
+  path: /spec/versions/-
+  value:
+    additionalPrinterColumns:
+      - description: MachinePool replicas count
+        jsonPath: .status.replicas
+        name: Replicas
+        type: string
+      - description: MachinePool status such as Terminating/Pending/Provisioning/Running/Failed etc
+        jsonPath: .status.phase
+        name: Phase
+        type: string
+      - description: Kubernetes version associated with this MachinePool
+        jsonPath: .spec.template.spec.version
+        name: Version
+        type: string
     name: v1alpha3
     schema:
       openAPIV3Schema:
@@ -86,14 +60,14 @@ spec:
                     properties:
                       maxSurge:
                         anyOf:
-                        - type: integer
-                        - type: string
+                          - type: integer
+                          - type: string
                         description: 'The maximum number of machines that can be scheduled above the desired number of machines. Value can be an absolute number (ex: 5) or a percentage of desired machines (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 1. Example: when this is set to 30%, the new MachineSet can be scaled up immediately when the rolling update starts, such that the total number of old and new machines do not exceed 130% of desired machines. Once old machines have been killed, new MachineSet can be scaled up further, ensuring that total number of machines running at any time during the update is at most 130% of desired machines.'
                         x-kubernetes-int-or-string: true
                       maxUnavailable:
                         anyOf:
-                        - type: integer
-                        - type: string
+                          - type: integer
+                          - type: string
                         description: 'The maximum number of machines that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired machines (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 0. Example: when this is set to 30%, the old MachineSet can be scaled down to 70% of desired machines immediately when the rolling update starts. Once new machines are ready, old MachineSet can be scaled down further, followed by scaling up the new MachineSet, ensuring that the total number of machines available at all times during the update is at least 70% of desired machines.'
                         x-kubernetes-int-or-string: true
                     type: object
@@ -150,10 +124,10 @@ spec:
                               description: 'UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids'
                               type: string
                           required:
-                          - apiVersion
-                          - kind
-                          - name
-                          - uid
+                            - apiVersion
+                            - kind
+                            - name
+                            - uid
                           type: object
                         type: array
                     type: object
@@ -237,14 +211,14 @@ spec:
                         description: Version defines the desired Kubernetes version. This field is meant to be optionally used by bootstrap providers.
                         type: string
                     required:
-                    - bootstrap
-                    - clusterName
-                    - infrastructureRef
+                      - bootstrap
+                      - clusterName
+                      - infrastructureRef
                     type: object
                 type: object
             required:
-            - clusterName
-            - template
+              - clusterName
+              - template
             type: object
           status:
             description: MachinePoolStatus defines the observed state of MachinePool
@@ -281,8 +255,8 @@ spec:
                       description: Type of condition in CamelCase or in foo.example.com/CamelCase. Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important.
                       type: string
                   required:
-                  - status
-                  - type
+                    - status
+                    - type
                   type: object
                 type: array
               failureMessage:
@@ -350,9 +324,3 @@ spec:
         specReplicasPath: .spec.replicas
         statusReplicasPath: .status.replicas
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

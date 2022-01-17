@@ -1,75 +1,35 @@
-apiVersion: apiextensions.k8s.io/v1
-kind: CustomResourceDefinition
-metadata:
-  annotations:
-    cert-manager.io/inject-ca-from: capi-webhook-system/capi-kubeadm-control-plane-serving-cert
-    controller-gen.kubebuilder.io/version: v0.2.9
-  creationTimestamp: null
-  labels:
-    app.giantswarm.io/branch: '{{ .Values.project.branch }}'
-    app.giantswarm.io/commit: '{{ .Values.project.commit }}'
-    app.kubernetes.io/instance: '{{ .Release.Name }}'
-    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
-    app.kubernetes.io/name: cluster-api
-    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
-    cluster.x-k8s.io/provider: control-plane-kubeadm
-    cluster.x-k8s.io/v1alpha3: v1alpha3
-    helm.sh/chart: cluster-api
-  name: kubeadmcontrolplanes.controlplane.cluster.x-k8s.io
-spec:
-  conversion:
-    strategy: Webhook
-    webhook:
-      clientConfig:
-        caBundle: Cg==
-        service:
-          name: capi-kubeadm-control-plane-webhook-service
-          namespace: capi-webhook-system
-          path: /convert
-      conversionReviewVersions:
-      - v1
-      - v1beta1
-  group: controlplane.cluster.x-k8s.io
-  names:
-    categories:
-    - cluster-api
-    kind: KubeadmControlPlane
-    listKind: KubeadmControlPlaneList
-    plural: kubeadmcontrolplanes
-    shortNames:
-    - kcp
-    singular: kubeadmcontrolplane
-  scope: Namespaced
-  versions:
-  - additionalPrinterColumns:
-    - description: This denotes whether or not the control plane has the uploaded kubeadm-config configmap
-      jsonPath: .status.initialized
-      name: Initialized
-      type: boolean
-    - description: KubeadmControlPlane API Server is ready to receive requests
-      jsonPath: .status.ready
-      name: API Server Available
-      type: boolean
-    - description: Kubernetes version associated with this control plane
-      jsonPath: .spec.version
-      name: Version
-      type: string
-    - description: Total number of non-terminated machines targeted by this control plane
-      jsonPath: .status.replicas
-      name: Replicas
-      type: integer
-    - description: Total number of fully running and ready control plane machines
-      jsonPath: .status.readyReplicas
-      name: Ready
-      type: integer
-    - description: Total number of non-terminated machines targeted by this control plane that have the desired template spec
-      jsonPath: .status.updatedReplicas
-      name: Updated
-      type: integer
-    - description: Total number of unavailable machines targeted by this control plane
-      jsonPath: .status.unavailableReplicas
-      name: Unavailable
-      type: integer
+- op: add
+  path: /spec/versions/-
+  value:
+    additionalPrinterColumns:
+      - description: This denotes whether or not the control plane has the uploaded kubeadm-config configmap
+        jsonPath: .status.initialized
+        name: Initialized
+        type: boolean
+      - description: KubeadmControlPlane API Server is ready to receive requests
+        jsonPath: .status.ready
+        name: API Server Available
+        type: boolean
+      - description: Kubernetes version associated with this control plane
+        jsonPath: .spec.version
+        name: Version
+        type: string
+      - description: Total number of non-terminated machines targeted by this control plane
+        jsonPath: .status.replicas
+        name: Replicas
+        type: integer
+      - description: Total number of fully running and ready control plane machines
+        jsonPath: .status.readyReplicas
+        name: Ready
+        type: integer
+      - description: Total number of non-terminated machines targeted by this control plane that have the desired template spec
+        jsonPath: .status.updatedReplicas
+        name: Updated
+        type: integer
+      - description: Total number of unavailable machines targeted by this control plane
+        jsonPath: .status.unavailableReplicas
+        name: Unavailable
+        type: integer
     name: v1alpha3
     schema:
       openAPIV3Schema:
@@ -151,9 +111,9 @@ spec:
                                   description: ReadOnly controls write access to the volume
                                   type: boolean
                               required:
-                              - hostPath
-                              - mountPath
-                              - name
+                                - hostPath
+                                - mountPath
+                                - name
                               type: object
                             type: array
                           timeoutForControlPlane:
@@ -201,9 +161,9 @@ spec:
                                   description: ReadOnly controls write access to the volume
                                   type: boolean
                               required:
-                              - hostPath
-                              - mountPath
-                              - name
+                                - hostPath
+                                - mountPath
+                                - name
                               type: object
                             type: array
                         type: object
@@ -241,10 +201,10 @@ spec:
                                 description: KeyFile is an SSL key file used to secure etcd communication. Required if using a TLS connection.
                                 type: string
                             required:
-                            - caFile
-                            - certFile
-                            - endpoints
-                            - keyFile
+                              - caFile
+                              - certFile
+                              - endpoints
+                              - keyFile
                             type: object
                           local:
                             description: Local provides configuration knobs for configuring the local etcd instance Local and External are mutually exclusive
@@ -331,9 +291,9 @@ spec:
                                   description: ReadOnly controls write access to the volume
                                   type: boolean
                               required:
-                              - hostPath
-                              - mountPath
-                              - name
+                                - hostPath
+                                - mountPath
+                                - name
                               type: object
                             type: array
                         type: object
@@ -373,9 +333,9 @@ spec:
                               description: 'ReplaceFS is a special directive, used for Microsoft Azure that instructs cloud-init to replace a file system of <FS_TYPE>. NOTE: unless you define a label, this requires the use of the ''any'' partition directive.'
                               type: string
                           required:
-                          - device
-                          - filesystem
-                          - label
+                            - device
+                            - filesystem
+                            - label
                           type: object
                         type: array
                       partitions:
@@ -396,8 +356,8 @@ spec:
                               description: 'TableType specifies the tupe of partition table. The following are supported: ''mbr'': default and setups a MS-DOS partition table ''gpt'': setups a GPT partition table'
                               type: string
                           required:
-                          - device
-                          - layout
+                            - device
+                            - layout
                           type: object
                         type: array
                     type: object
@@ -422,18 +382,18 @@ spec:
                                   description: Name of the secret in the KubeadmBootstrapConfig's namespace to use.
                                   type: string
                               required:
-                              - key
-                              - name
+                                - key
+                                - name
                               type: object
                           required:
-                          - secret
+                            - secret
                           type: object
                         encoding:
                           description: Encoding specifies the encoding of the file contents.
                           enum:
-                          - base64
-                          - gzip
-                          - gzip+base64
+                            - base64
+                            - gzip
+                            - gzip+base64
                           type: string
                         owner:
                           description: Owner specifies the ownership of the file, e.g. "root:root".
@@ -445,13 +405,13 @@ spec:
                           description: Permissions specifies the permissions to assign to the file, e.g. "0640".
                           type: string
                       required:
-                      - path
+                        - path
                       type: object
                     type: array
                   format:
                     description: Format specifies the output format of the bootstrap data
                     enum:
-                    - cloud-config
+                      - cloud-config
                     type: string
                   initConfiguration:
                     description: InitConfiguration along with ClusterConfiguration are the configurations necessary for the init command
@@ -488,7 +448,7 @@ spec:
                                 type: string
                               type: array
                           required:
-                          - token
+                            - token
                           type: object
                         type: array
                       kind:
@@ -505,8 +465,8 @@ spec:
                             format: int32
                             type: integer
                         required:
-                        - advertiseAddress
-                        - bindPort
+                          - advertiseAddress
+                          - bindPort
                         type: object
                       nodeRegistration:
                         description: NodeRegistration holds fields that relate to registering the new control-plane node to the cluster. When used in the context of control plane nodes, NodeRegistration should remain consistent across both InitConfiguration and JoinConfiguration
@@ -541,8 +501,8 @@ spec:
                                   description: Required. The taint value corresponding to the taint key.
                                   type: string
                               required:
-                              - effect
-                              - key
+                                - effect
+                                - key
                               type: object
                             type: array
                         type: object
@@ -570,8 +530,8 @@ spec:
                                 format: int32
                                 type: integer
                             required:
-                            - advertiseAddress
-                            - bindPort
+                              - advertiseAddress
+                              - bindPort
                             type: object
                         type: object
                       discovery:
@@ -595,8 +555,8 @@ spec:
                                 description: UnsafeSkipCAVerification allows token-based discovery without CA verification via CACertHashes. This can weaken the security of kubeadm since other nodes can impersonate the control-plane.
                                 type: boolean
                             required:
-                            - token
-                            - unsafeSkipCAVerification
+                              - token
+                              - unsafeSkipCAVerification
                             type: object
                           file:
                             description: File is used to specify a file or URL to a kubeconfig file from which to load cluster information BootstrapToken and File are mutually exclusive
@@ -605,7 +565,7 @@ spec:
                                 description: KubeConfigPath is used to specify the actual file path or URL to the kubeconfig file from which to load cluster information
                                 type: string
                             required:
-                            - kubeConfigPath
+                              - kubeConfigPath
                             type: object
                           timeout:
                             description: Timeout modifies the discovery timeout
@@ -650,8 +610,8 @@ spec:
                                   description: Required. The taint value corresponding to the taint key.
                                   type: string
                               required:
-                              - effect
-                              - key
+                                - effect
+                                - key
                               type: object
                             type: array
                         type: object
@@ -730,7 +690,7 @@ spec:
                           description: Sudo specifies a sudo role for the user
                           type: string
                       required:
-                      - name
+                        - name
                       type: object
                     type: array
                   verbosity:
@@ -753,8 +713,8 @@ spec:
                     properties:
                       maxSurge:
                         anyOf:
-                        - type: integer
-                        - type: string
+                          - type: integer
+                          - type: string
                         description: 'The maximum number of control planes that can be scheduled above or under the desired number of control planes. Value can be an absolute number 1 or 0. Defaults to 1. Example: when this is set to 1, the control plane can be scaled up immediately when the rolling update starts.'
                         x-kubernetes-int-or-string: true
                     type: object
@@ -770,9 +730,9 @@ spec:
                 description: Version defines the desired Kubernetes version.
                 type: string
             required:
-            - infrastructureTemplate
-            - kubeadmConfigSpec
-            - version
+              - infrastructureTemplate
+              - kubeadmConfigSpec
+              - version
             type: object
           status:
             description: KubeadmControlPlaneStatus defines the observed state of KubeadmControlPlane.
@@ -802,8 +762,8 @@ spec:
                       description: Type of condition in CamelCase or in foo.example.com/CamelCase. Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important.
                       type: string
                   required:
-                  - status
-                  - type
+                    - status
+                    - type
                   type: object
                 type: array
               failureMessage:
@@ -851,9 +811,3 @@ spec:
         specReplicasPath: .spec.replicas
         statusReplicasPath: .status.replicas
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
