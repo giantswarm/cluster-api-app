@@ -1,0 +1,2 @@
+# exclude CRDs kustomize build output directory
+/out

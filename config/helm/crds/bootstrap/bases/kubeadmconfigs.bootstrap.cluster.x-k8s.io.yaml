@@ -39,7 +39,19 @@ spec:
     plural: kubeadmconfigs
     singular: kubeadmconfig
   scope: Namespaced
-  versions: []
+  versions:
+    - name: v1alpha2
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        status: {}
+    - name: v1alpha3
+      schema: {}
+      served: true
+      storage: true
+      subresources:
+        status: {}
 status:
   acceptedNames:
     kind: ""

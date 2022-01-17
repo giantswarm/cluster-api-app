@@ -54,6 +54,7 @@ EOF
         # Add CRD base to kustomization.yaml
         yq eval -i '.resources += ["bases/'"$crd_filename"'"]' "$KUSTOMIZATION_FILE"
 
+        version_index=0
         for version in $(yq e '.spec.versions[].name' "$crd")
         do
             version_patches_dir="$CRD_VERSION_PATCHES_DIR/$version"
@@ -62,13 +63,12 @@ EOF
             patch_file="$version_patches_dir/$crd_filename"
             rm -f "$patch_file"
 
-            echo "   Writing $version version patch"
-            echo "- op: add
-  path: /spec/versions/-
+            echo "- op: replace
+  path: /spec/versions/$version_index/schema
   value:
 " > "$patch_file"
 
-            version_obj="$(yq e ".spec.versions[] | select (.name == \"$version\")" "$crd")" \
+            version_obj="$(yq e ".spec.versions[$version_index].schema" "$crd")" \
                 yq e -i '.[0].value = env(version_obj)' "$patch_file"
 
             # Add CRD version patches to kustomization.yaml
@@ -80,9 +80,10 @@ target:
     name: $crd_name
 " \
             yq eval -i '.patches += [env(version_patch_entry)]' "$KUSTOMIZATION_FILE"
-        done
 
-        # Delete version data from the CRD base
-        yq e -i '.spec.versions = []' "$crd"
+            # Delete version data from the CRD base
+            yq e -i ".spec.versions[$version_index].schema = {}" "$crd"
+            version_index=$((version_index+1))
+        done
     done
 done

@@ -40,7 +40,26 @@ spec:
       - mhcs
     singular: machinehealthcheck
   scope: Namespaced
-  versions: []
+  versions:
+    - additionalPrinterColumns:
+        - description: Maximum number of unhealthy machines allowed
+          jsonPath: .spec.maxUnhealthy
+          name: MaxUnhealthy
+          type: string
+        - description: Number of machines currently monitored
+          jsonPath: .status.expectedMachines
+          name: ExpectedMachines
+          type: integer
+        - description: Current observed healthy machines
+          jsonPath: .status.currentHealthy
+          name: CurrentHealthy
+          type: integer
+      name: v1alpha3
+      schema: {}
+      served: true
+      storage: true
+      subresources:
+        status: {}
 status:
   acceptedNames:
     kind: ""

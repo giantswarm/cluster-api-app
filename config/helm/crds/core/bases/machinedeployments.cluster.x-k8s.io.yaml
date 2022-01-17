@@ -39,7 +39,48 @@ spec:
       - md
     singular: machinedeployment
   scope: Namespaced
-  versions: []
+  versions:
+    - name: v1alpha2
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        scale:
+          labelSelectorPath: .status.selector
+          specReplicasPath: .spec.replicas
+          statusReplicasPath: .status.replicas
+        status: {}
+    - additionalPrinterColumns:
+        - description: MachineDeployment status such as ScalingUp/ScalingDown/Running/Failed/Unknown
+          jsonPath: .status.phase
+          name: Phase
+          type: string
+        - description: Total number of non-terminated machines targeted by this MachineDeployment
+          jsonPath: .status.replicas
+          name: Replicas
+          type: integer
+        - description: Total number of ready machines targeted by this MachineDeployment
+          jsonPath: .status.readyReplicas
+          name: Ready
+          type: integer
+        - description: Total number of non-terminated machines targeted by this deployment that have the desired template spec
+          jsonPath: .status.updatedReplicas
+          name: Updated
+          type: integer
+        - description: Total number of unavailable machines targeted by this MachineDeployment
+          jsonPath: .status.unavailableReplicas
+          name: Unavailable
+          type: integer
+      name: v1alpha3
+      schema: {}
+      served: true
+      storage: true
+      subresources:
+        scale:
+          labelSelectorPath: .status.selector
+          specReplicasPath: .spec.replicas
+          statusReplicasPath: .status.replicas
+        status: {}
 status:
   acceptedNames:
     kind: ""

@@ -39,7 +39,40 @@ spec:
       - ms
     singular: machineset
   scope: Namespaced
-  versions: []
+  versions:
+    - name: v1alpha2
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        scale:
+          labelSelectorPath: .status.selector
+          specReplicasPath: .spec.replicas
+          statusReplicasPath: .status.replicas
+        status: {}
+    - additionalPrinterColumns:
+        - description: Total number of non-terminated machines targeted by this machineset
+          jsonPath: .status.replicas
+          name: Replicas
+          type: integer
+        - description: Total number of available machines (ready for at least minReadySeconds)
+          jsonPath: .status.availableReplicas
+          name: Available
+          type: integer
+        - description: Total number of ready machines targeted by this machineset.
+          jsonPath: .status.readyReplicas
+          name: Ready
+          type: integer
+      name: v1alpha3
+      schema: {}
+      served: true
+      storage: true
+      subresources:
+        scale:
+          labelSelectorPath: .status.selector
+          specReplicasPath: .spec.replicas
+          statusReplicasPath: .status.replicas
+        status: {}
 status:
   acceptedNames:
     kind: ""

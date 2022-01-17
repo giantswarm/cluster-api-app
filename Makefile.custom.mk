@@ -7,3 +7,13 @@ generate:
 
 delete-generated-manifests:
 	@rm -rf helm/cluster-api/templates/*
+
+CRD_BUILD_DIR := out
+
+$(CRD_BUILD_DIR):
+	mkdir -p $(CRD_BUILD_DIR)/
+
+.PHONY: release-manifests
+release-manifests: $(CRD_BUILD_DIR) ## Builds the manifests to publish with a release
+	# Build core-components.
+	kustomize build config/helm/crds > $(CRD_BUILD_DIR)/crds.yaml

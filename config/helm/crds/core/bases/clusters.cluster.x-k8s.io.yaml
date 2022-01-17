@@ -39,7 +39,29 @@ spec:
       - cl
     singular: cluster
   scope: Namespaced
-  versions: []
+  versions:
+    - additionalPrinterColumns:
+        - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
+          jsonPath: .status.phase
+          name: Phase
+          type: string
+      name: v1alpha2
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        status: {}
+    - additionalPrinterColumns:
+        - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
+          jsonPath: .status.phase
+          name: Phase
+          type: string
+      name: v1alpha3
+      schema: {}
+      served: true
+      storage: true
+      subresources:
+        status: {}
 status:
   acceptedNames:
     kind: ""

@@ -39,7 +39,51 @@ spec:
       - ma
     singular: machine
   scope: Namespaced
-  versions: []
+  versions:
+    - additionalPrinterColumns:
+        - description: Provider ID
+          jsonPath: .spec.providerID
+          name: ProviderID
+          type: string
+        - description: Machine status such as Terminating/Pending/Running/Failed etc
+          jsonPath: .status.phase
+          name: Phase
+          type: string
+        - description: Node name associated with this machine
+          jsonPath: .status.nodeRef.name
+          name: NodeName
+          priority: 1
+          type: string
+      name: v1alpha2
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        status: {}
+    - additionalPrinterColumns:
+        - description: Provider ID
+          jsonPath: .spec.providerID
+          name: ProviderID
+          type: string
+        - description: Machine status such as Terminating/Pending/Running/Failed etc
+          jsonPath: .status.phase
+          name: Phase
+          type: string
+        - description: Kubernetes version associated with this Machine
+          jsonPath: .spec.version
+          name: Version
+          type: string
+        - description: Node name associated with this machine
+          jsonPath: .status.nodeRef.name
+          name: NodeName
+          priority: 1
+          type: string
+      name: v1alpha3
+      schema: {}
+      served: true
+      storage: true
+      subresources:
+        status: {}
 status:
   acceptedNames:
     kind: ""

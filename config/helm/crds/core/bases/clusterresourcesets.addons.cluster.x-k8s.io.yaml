@@ -24,7 +24,13 @@ spec:
     plural: clusterresourcesets
     singular: clusterresourceset
   scope: Namespaced
-  versions: []
+  versions:
+    - name: v1alpha3
+      schema: {}
+      served: true
+      storage: true
+      subresources:
+        status: {}
 status:
   acceptedNames:
     kind: ""
