@@ -47,3 +47,15 @@ patches:
     target:
       kind: CustomResourceDefinition
       labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
+  - path: crd_core_webhook.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=cluster-api
+  - path: crd_bootstrap_webhook.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
+  - path: crd_controlplane_webhook.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm

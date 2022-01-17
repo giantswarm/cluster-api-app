@@ -23,8 +23,9 @@ spec:
         caBundle: Cg==
         service:
           name: capi-kubeadm-control-plane-webhook-service
-          namespace: capi-webhook-system
+          namespace: '{{ .Release.Namespace }}'
           path: /convert
+          port: 443
       conversionReviewVersions:
         - v1
         - v1beta1
