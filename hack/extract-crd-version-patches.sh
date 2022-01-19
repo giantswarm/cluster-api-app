@@ -6,7 +6,7 @@ set -o pipefail
 
 ROOT_DIR="./$(dirname "$0")/.."
 ROOT_DIR="$(realpath "$ROOT_DIR")"
-KUSTOMIZE_CRD_DIR="$ROOT_DIR/config/helm/crds"
+KUSTOMIZE_CRD_DIR="$ROOT_DIR/helm/cluster-api/crds"
 
 # YQ="./$(dirname "$0")/tools/bin/yq"
 

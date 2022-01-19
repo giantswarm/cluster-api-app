@@ -6,7 +6,9 @@ generate:
 	./hack/extract-crd-version-patches.sh
 
 delete-generated-manifests:
-	@rm -rf helm/cluster-api/templates/*
+	@rm -rf helm/cluster-api/templates/core/*
+	@rm -rf helm/cluster-api/templates/bootstrap/*
+	@rm -rf helm/cluster-api/templates/controlplane/*
 
 CRD_BUILD_DIR := out
 
