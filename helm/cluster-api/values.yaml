@@ -13,3 +13,7 @@ images:
 project:
   branch: "[[ .Branch ]]"
   commit: "[[ .SHA ]]"
+
+# We install CRDs through a Job with the helm specific crd folder.
+crds:
+  install: true
