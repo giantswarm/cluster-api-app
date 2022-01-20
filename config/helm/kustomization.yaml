@@ -59,3 +59,8 @@ patches:
     target:
       kind: CustomResourceDefinition
       labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
+  - path: cert-manager-apiversion.yaml
+    target:
+      group: cert-manager.io
+      version: v1alpha2
+      kind: Certificate

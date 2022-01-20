@@ -9,6 +9,7 @@ delete-generated-manifests:
 	@rm -rf helm/cluster-api/templates/core/*
 	@rm -rf helm/cluster-api/templates/bootstrap/*
 	@rm -rf helm/cluster-api/templates/controlplane/*
+	@rm -rf helm/cluster-api/templates/*.yaml
 
 CRD_BUILD_DIR := out
 

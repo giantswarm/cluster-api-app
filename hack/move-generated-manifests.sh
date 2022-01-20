@@ -26,7 +26,7 @@ move-bootstrap-manifests() {
     mv bootstrap/v1_service_capi-kubeadm-bootstrap-webhook-service.yaml bootstrap/service.yaml
 
     # rename certificate manifest
-    mv bootstrap/cert-manager.io_v1alpha2_certificate_capi-kubeadm-bootstrap-serving-cert.yaml bootstrap/certificate.yaml
+    mv bootstrap/cert-manager.io_v1_certificate_capi-kubeadm-bootstrap-serving-cert.yaml bootstrap/certificate.yaml
 
     # rename webhook configuration manifest
     mv bootstrap/admissionregistration.k8s.io_v1beta1_validatingwebhookconfiguration_capi-kubeadm-bootstrap-validating-webhook-configuration.yaml bootstrap/validatingwebhookconfiguration.yaml
@@ -66,7 +66,7 @@ move-controlplane-manifests() {
     mv controlplane/v1_service_capi-kubeadm-control-plane-webhook-service.yaml controlplane/service.yaml
 
     # rename certificate manifest
-    mv controlplane/cert-manager.io_v1alpha2_certificate_capi-kubeadm-control-plane-serving-cert.yaml controlplane/certificate.yaml
+    mv controlplane/cert-manager.io_v1_certificate_capi-kubeadm-control-plane-serving-cert.yaml controlplane/certificate.yaml
 
     # rename webhook configurations manifests
     mv controlplane/admissionregistration.k8s.io_v1beta1_mutatingwebhookconfiguration_zzz-capi-kubeadm-control-plane-mutating-webhook-configuration.yaml controlplane/mutatingwebhookconfiguration.yaml
@@ -107,7 +107,7 @@ move-core-manifests() {
     mv core/v1_service_capi-webhook-service.yaml core/service.yaml
 
     # rename certificate manifest
-    mv core/cert-manager.io_v1alpha2_certificate_capi-serving-cert.yaml core/certificate.yaml
+    mv core/cert-manager.io_v1_certificate_capi-serving-cert.yaml core/certificate.yaml
 
     # rename webhook configuration manifests
     mv core/admissionregistration.k8s.io_v1beta1_mutatingwebhookconfiguration_zzz-capi-mutating-webhook-configuration.yaml core/mutatingwebhookconfiguration.yaml
