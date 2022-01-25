@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# This script will generate kustomize patches for webhooks by first getting the
+# MutatingWebhookConfiguration and ValidatingWebhookConfiguration, so it
+# generates patches only or those webhooks that are specified in upstream.
+#
+# This way we don't have to specify webhook patches manually, since those
+# change from time to time, as CRDs are added, modified and removed.
+
 set -o errexit
 set -o nounset
 set -o pipefail
