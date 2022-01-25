@@ -41,7 +41,7 @@ spec:
           kubectl apply -k /files 2>&1
         volumeMounts:
 {{- range $path, $_ := $.Files.Glob "files/**.yaml" }}
-        - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix ".yaml" (base $path | replace "." "-")) }}
+        - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-") | trunc 63) }}
           mountPath: /{{ $path | dir }}
 {{- end }}
         resources:
@@ -55,9 +55,9 @@ spec:
 {{ $currentScope := . }}
 {{- range $path, $_ := .Files.Glob "files/**.yaml" }}
     {{- with $currentScope }}
-      - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix ".yaml" (base $path | replace "." "-")) }}
+      - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-") | trunc 63) }}
         configMap:
-          name: {{ include "cluster-api.crdInstall" . }}-{{ printf "%s-%s" (base (dir $path)) (trimSuffix ".yaml" (base $path)) }}
+          name: {{ include "cluster-api.crdInstall" . }}-{{ printf "%s-%s" (base (dir $path)) (trimSuffix ".yaml" (base $path) | trunc 63) }}
           items:
           - key: content
             path: {{ $path | base }}
