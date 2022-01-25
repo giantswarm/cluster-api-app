@@ -42,7 +42,9 @@ spec:
         volumeMounts:
 {{- range $path, $_ := $.Files.Glob "files/**.yaml" }}
         - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-") | trunc 63) }}
-          mountPath: /{{ $path | dir }}
+          mountPath: /{{ $path }}
+          subPath: {{base $path }}
+          readOnly: true
 {{- end }}
         resources:
           requests:
