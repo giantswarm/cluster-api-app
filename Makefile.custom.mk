@@ -1,5 +1,6 @@
 .PHONY: generate
 generate:
+	./hack/generate-kustomize-patches.sh
 	$(MAKE) delete-generated-manifests
 	kustomize build config/helm -o helm/cluster-api/templates
 	./hack/move-generated-manifests.sh

@@ -37,7 +37,3 @@ webhooks:
     resources:
     - kubeadmcontrolplanes
   sideEffects: None
-- name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: capi

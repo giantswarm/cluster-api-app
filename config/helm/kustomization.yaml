@@ -1,7 +1,7 @@
 namespace: '{{ .Release.Namespace }}'
 
 resources:
-  - https://github.com/kubernetes-sigs/cluster-api/releases/download/v0.3.22/cluster-api-components.yaml
+  - input/cluster-api-components.yaml
 
 images:
   - name: k8s.gcr.io/cluster-api/cluster-api-controller
