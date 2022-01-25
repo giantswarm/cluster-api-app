@@ -38,9 +38,9 @@ spec:
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
 
-          kubectl apply -k /crds 2>&1
+          kubectl apply -k /files 2>&1
         volumeMounts:
-{{- range $path, $_ := $.Files.Glob "crds/**.yaml" }}
+{{- range $path, $_ := $.Files.Glob "files/**.yaml" }}
         - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix ".yaml" (base $path)) }}
           mountPath: /{{ $path | dir }}
 {{- end }}
@@ -53,7 +53,7 @@ spec:
             memory: 512Mi
       volumes:
 {{ $currentScope := . }}
-{{- range $path, $_ := .Files.Glob "crds/**.yaml" }}
+{{- range $path, $_ := .Files.Glob "files/**.yaml" }}
     {{- with $currentScope }}
       - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix ".yaml" (base $path)) }}
         configMap:
