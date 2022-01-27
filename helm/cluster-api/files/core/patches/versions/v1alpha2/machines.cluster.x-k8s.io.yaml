@@ -2,7 +2,7 @@
   path: /spec/versions/0/schema
   value:
     openAPIV3Schema:
-      description: Machine is the Schema for the machines API
+      description: Machine is the Schema for the machines API.
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
@@ -13,7 +13,7 @@
         metadata:
           type: object
         spec:
-          description: MachineSpec defines the desired state of Machine
+          description: MachineSpec defines the desired state of Machine.
           properties:
             bootstrap:
               description: Bootstrap is a reference to a local struct which encapsulates fields to configure the Machine’s bootstrapping mechanism.
@@ -73,7 +73,7 @@
                   type: string
               type: object
             metadata:
-              description: 'DEPRECATED: ObjectMeta has no function and isn''t used anywhere.'
+              description: 'Deprecated: ObjectMeta has no function and isn''t used anywhere.'
               properties:
                 annotations:
                   additionalProperties:
@@ -136,7 +136,7 @@
             - infrastructureRef
           type: object
         status:
-          description: MachineStatus defines the observed state of Machine
+          description: MachineStatus defines the observed state of Machine.
           properties:
             addresses:
               description: Addresses is a list of addresses assigned to the machine. This field is copied from the infrastructure provider reference.

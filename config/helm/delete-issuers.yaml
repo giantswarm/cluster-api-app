@@ -1,22 +1,22 @@
 # We have our Issuer already deployed to clusters.
 ---
 $patch: delete
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: capi-selfsigned-issuer
-  namespace: capi-webhook-system
+  namespace: capi-system
 ---
 $patch: delete
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: capi-kubeadm-bootstrap-selfsigned-issuer
-  namespace: capi-webhook-system
+  namespace: capi-kubeadm-bootstrap-system
 ---
 $patch: delete
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: capi-kubeadm-control-plane-selfsigned-issuer
-  namespace: capi-webhook-system
+  namespace: capi-kubeadm-control-plane-system

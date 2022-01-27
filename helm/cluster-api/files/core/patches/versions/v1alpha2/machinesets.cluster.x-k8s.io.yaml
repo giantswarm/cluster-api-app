@@ -2,7 +2,7 @@
   path: /spec/versions/0/schema
   value:
     openAPIV3Schema:
-      description: MachineSet is the Schema for the machinesets API
+      description: MachineSet is the Schema for the machinesets API.
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
@@ -13,7 +13,7 @@
         metadata:
           type: object
         spec:
-          description: MachineSetSpec defines the desired state of MachineSet
+          description: MachineSetSpec defines the desired state of MachineSet.
           properties:
             deletePolicy:
               description: DeletePolicy defines the policy used to identify nodes to delete when downscaling. Defaults to "Random".  Valid values are "Random, "Newest", "Oldest"
@@ -177,7 +177,7 @@
                           type: string
                       type: object
                     metadata:
-                      description: 'DEPRECATED: ObjectMeta has no function and isn''t used anywhere.'
+                      description: 'Deprecated: ObjectMeta has no function and isn''t used anywhere.'
                       properties:
                         annotations:
                           additionalProperties:
@@ -244,7 +244,7 @@
             - selector
           type: object
         status:
-          description: MachineSetStatus defines the observed state of MachineSet
+          description: MachineSetStatus defines the observed state of MachineSet.
           properties:
             availableReplicas:
               description: The number of available replicas (ready for at least minReadySeconds) for this MachineSet.

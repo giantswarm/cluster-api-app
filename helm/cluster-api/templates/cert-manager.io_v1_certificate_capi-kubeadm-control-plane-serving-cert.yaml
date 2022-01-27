@@ -1,0 +1,26 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    app.giantswarm.io/branch: '{{ .Values.project.branch }}'
+    app.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    cluster.x-k8s.io/provider: control-plane-kubeadm
+    helm.sh/chart: cluster-api
+  name: capi-kubeadm-control-plane-serving-cert
+  namespace: '{{ .Release.Namespace }}'
+spec:
+  dnsNames:
+  - capi-kubeadm-control-plane-webhook-service.{{ .Release.Namespace }}.svc
+  - capi-kubeadm-control-plane-webhook-service.{{ .Release.Namespace }}.svc.cluster.local
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: selfsigned-giantswarm
+  secretName: capi-kubeadm-control-plane-webhook-service-cert
+  subject:
+    organizations:
+    - k8s-sig-cluster-lifecycle

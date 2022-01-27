@@ -2,7 +2,7 @@
   path: /spec/versions/0/schema
   value:
     openAPIV3Schema:
-      description: ClusterResourceSet is the Schema for the clusterresourcesets API
+      description: ClusterResourceSet is the Schema for the clusterresourcesets API.
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
@@ -13,7 +13,7 @@
         metadata:
           type: object
         spec:
-          description: ClusterResourceSetSpec defines the desired state of ClusterResourceSet
+          description: ClusterResourceSetSpec defines the desired state of ClusterResourceSet.
           properties:
             clusterSelector:
               description: Label selector for Clusters. The Clusters that are selected by this will be the ones affected by this ClusterResourceSet. It must match the Cluster labels. This field is immutable.
@@ -74,7 +74,7 @@
             - clusterSelector
           type: object
         status:
-          description: ClusterResourceSetStatus defines the observed state of ClusterResourceSet
+          description: ClusterResourceSetStatus defines the observed state of ClusterResourceSet.
           properties:
             conditions:
               description: Conditions defines current state of the ClusterResourceSet.

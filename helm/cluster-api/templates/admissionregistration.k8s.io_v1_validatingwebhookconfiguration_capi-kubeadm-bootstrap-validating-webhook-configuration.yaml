@@ -1,0 +1,41 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-kubeadm-bootstrap-serving-cert'
+  labels:
+    app.giantswarm.io/branch: '{{ .Values.project.branch }}'
+    app.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    cluster.x-k8s.io/provider: bootstrap-kubeadm
+    helm.sh/chart: cluster-api
+  name: capi-kubeadm-bootstrap-validating-webhook-configuration
+webhooks:
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: capi-kubeadm-bootstrap-webhook-service
+      namespace: '{{ .Release.Namespace }}'
+      path: /validate-bootstrap-cluster-x-k8s-io-v1beta1-kubeadmconfig
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: validation.kubeadmconfig.bootstrap.cluster.x-k8s.io
+  objectSelector:
+    matchLabels:
+      cluster.x-k8s.io/watch-filter: capi
+  rules:
+  - apiGroups:
+    - bootstrap.cluster.x-k8s.io
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - kubeadmconfigs
+  sideEffects: None

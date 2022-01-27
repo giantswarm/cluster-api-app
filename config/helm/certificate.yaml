@@ -1,9 +1,9 @@
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: capi-serving-cert
-  namespace: capi-webhook-system
+  namespace: capi-system
 spec:
   dnsNames:
   - capi-webhook-service.{{ .Release.Namespace }}.svc
@@ -14,11 +14,11 @@ spec:
     name: selfsigned-giantswarm
   secretName: capi-webhook-service-cert
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: capi-kubeadm-control-plane-serving-cert
-  namespace: capi-webhook-system
+  namespace: capi-kubeadm-control-plane-system
 spec:
   dnsNames:
   - capi-kubeadm-control-plane-webhook-service.{{ .Release.Namespace }}.svc
@@ -29,11 +29,11 @@ spec:
     name: selfsigned-giantswarm
   secretName: capi-kubeadm-control-plane-webhook-service-cert
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: capi-kubeadm-bootstrap-serving-cert
-  namespace: capi-webhook-system
+  namespace: capi-kubeadm-bootstrap-system
 spec:
   dnsNames:
   - capi-kubeadm-bootstrap-webhook-service.{{ .Release.Namespace }}.svc

@@ -1,10 +1,14 @@
 ---
-apiVersion: admissionregistration.k8s.io/v1beta1
+apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
   name: capi-mutating-webhook-configuration
 webhooks:
   - name: default.cluster.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: capi
+  - name: default.clusterclass.cluster.x-k8s.io
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
@@ -24,7 +28,7 @@ webhooks:
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
-  - name: default.exp.machinepool.cluster.x-k8s.io
+  - name: default.machinepool.cluster.x-k8s.io
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
@@ -33,12 +37,16 @@ webhooks:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
 ---
-apiVersion: admissionregistration.k8s.io/v1beta1
+apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: capi-validating-webhook-configuration
 webhooks:
   - name: validation.cluster.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: capi
+  - name: validation.clusterclass.cluster.x-k8s.io
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
@@ -58,7 +66,7 @@ webhooks:
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
-  - name: validation.exp.machinepool.cluster.x-k8s.io
+  - name: validation.machinepool.cluster.x-k8s.io
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
@@ -67,7 +75,7 @@ webhooks:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
 ---
-apiVersion: admissionregistration.k8s.io/v1beta1
+apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: capi-kubeadm-bootstrap-validating-webhook-configuration
@@ -77,7 +85,7 @@ webhooks:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
 ---
-apiVersion: admissionregistration.k8s.io/v1beta1
+apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
   name: capi-kubeadm-control-plane-mutating-webhook-configuration
@@ -86,13 +94,21 @@ webhooks:
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
+  - name: default.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: capi
 ---
-apiVersion: admissionregistration.k8s.io/v1beta1
+apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: capi-kubeadm-control-plane-validating-webhook-configuration
 webhooks:
   - name: validation.kubeadmcontrolplane.controlplane.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: capi
+  - name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
