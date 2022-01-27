@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.giantswarm.io/branch: '{{ .Values.project.branch }}'
+    app.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    cluster.x-k8s.io/provider: control-plane-kubeadm
+    control-plane: controller-manager
+    helm.sh/chart: cluster-api
+  name: capi-kubeadm-control-plane-controller-manager
+  namespace: '{{ .Release.Namespace }}'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      cluster.x-k8s.io/provider: control-plane-kubeadm
+      control-plane: controller-manager
+  template:
+    metadata:
+      labels:
+        cluster.x-k8s.io/provider: control-plane-kubeadm
+        control-plane: controller-manager
+    spec:
+      containers:
+      - args:
+        - --metrics-bind-addr=0.0.0.0:8080
+        - --feature-gates=ClusterTopology=true
+        - --watch-filter=capi
+        - --v=0
+        command:
+        - /manager
+        image: '{{ .Values.registry.domain }}/{{ .Values.images.controlplane.name }}:{{ .Values.images.tag }}'
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: healthz
+        name: manager
+        ports:
+        - containerPort: 8080
+          name: metrics
+          protocol: TCP
+        - containerPort: 9443
+          name: webhook-server
+          protocol: TCP
+        - containerPort: 9440
+          name: healthz
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: healthz
+        volumeMounts:
+        - mountPath: /tmp/k8s-webhook-server/serving-certs
+          name: cert
+          readOnly: true
+      serviceAccountName: capi-kubeadm-control-plane-manager
+      terminationGracePeriodSeconds: 10
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+      volumes:
+      - name: cert
+        secret:
+          secretName: capi-kubeadm-control-plane-webhook-service-cert
