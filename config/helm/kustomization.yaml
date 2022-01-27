@@ -29,6 +29,7 @@ patchesStrategicMerge:
   - delete-aggregated-roles.yaml
   - deployment-args.yaml
   - deployment-metrics-port.yaml
+  - deployment-labels.yaml
   - webhook-watchfilter.yaml
   - webhook-certificate.yaml
   - service-add-metrics-port.yaml

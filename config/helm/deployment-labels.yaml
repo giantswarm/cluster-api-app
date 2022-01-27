@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-controller-manager
+  namespace: capi-webhook-system
+  labels:
+    app.kubernetes.io/component: cluster-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-kubeadm-bootstrap-controller-manager
+  namespace: capi-webhook-system
+  labels:
+    app.kubernetes.io/component: bootstrap-kubeadm
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-kubeadm-control-plane-controller-manager
+  namespace: capi-webhook-system
+  labels:
+    app.kubernetes.io/component: control-plane-kubeadm
