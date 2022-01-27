@@ -35,7 +35,7 @@ move-bootstrap-manifests() {
     cd ../../..
 
     # move bootstrap CRDs to kustomize dir, because we are not deploying them with helm
-    CRD_BASE_DIR="$HELM_DIR/crds/bootstrap/bases"
+    CRD_BASE_DIR="$HELM_DIR/files/bootstrap/bases"
     rm -f "./$CRD_BASE_DIR"/*
     mkdir -p "./$CRD_BASE_DIR"
     mv ${HELM_TEMPLATES_DIR}/apiextensions.k8s.io_v1_customresourcedefinition_*.bootstrap.cluster.x-k8s.io.yaml "./$CRD_BASE_DIR/"
@@ -76,7 +76,7 @@ move-controlplane-manifests() {
     cd ../../..
 
     # move control plane CRDs to kustomize dir, because we are not deploying them with helm
-    CRD_BASE_DIR="$HELM_DIR/crds/controlplane/bases"
+    CRD_BASE_DIR="$HELM_DIR/files/controlplane/bases"
     rm -f "./$CRD_BASE_DIR"/*
     mkdir -p "./$CRD_BASE_DIR"
     mv ${HELM_TEMPLATES_DIR}/apiextensions.k8s.io_v1_customresourcedefinition_*.controlplane.cluster.x-k8s.io.yaml "./$CRD_BASE_DIR/"
@@ -117,7 +117,7 @@ move-core-manifests() {
     cd ../../..
 
     # move core plane CRDs to kustomize dir, because we are not deploying them with helm
-    CRD_BASE_DIR="$HELM_DIR/crds/core/bases"
+    CRD_BASE_DIR="$HELM_DIR/files/core/bases"
     rm -f "./$CRD_BASE_DIR"/*
     mkdir -p "./$CRD_BASE_DIR"
     mv ${HELM_TEMPLATES_DIR}/apiextensions.k8s.io_v1_customresourcedefinition_*.cluster.x-k8s.io.yaml "./$CRD_BASE_DIR/"
