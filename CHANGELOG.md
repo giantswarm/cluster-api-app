@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Helm manifests are generated from upstream assets attached to a release.
+
 ## [0.4.1] - 2021-09-29
 
 [Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v0.4.1...HEAD

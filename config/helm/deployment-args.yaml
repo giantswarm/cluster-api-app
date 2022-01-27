@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-controller-manager
+  namespace: capi-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: manager
+          args:
+            - --metrics-bind-addr=0.0.0.0:8080
+            - --feature-gates=MachinePool=true,ClusterResourceSet=true,ClusterTopology=true
+            - --watch-filter=capi
+            - --v=0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-kubeadm-bootstrap-controller-manager
+  namespace: capi-kubeadm-bootstrap-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: manager
+          args:
+            - --metrics-bind-addr=0.0.0.0:8080
+            - --feature-gates=MachinePool=true
+            - --watch-filter=capi
+            - --v=0
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-kubeadm-control-plane-controller-manager
+  namespace: capi-kubeadm-control-plane-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: manager
+          args:
+            - --metrics-bind-addr=0.0.0.0:8080
+            - --feature-gates=ClusterTopology=true
+            - --watch-filter=capi
+            - --v=0
