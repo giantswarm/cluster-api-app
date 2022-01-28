@@ -30,7 +30,6 @@ spec:
       - args:
         - --metrics-addr=0.0.0.0:8080
         - --webhook-port=9443
-        - --feature-gates=ClusterTopology=true
         - --watch-filter=capi
         - --v=0
         command:

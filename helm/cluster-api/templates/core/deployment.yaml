@@ -30,7 +30,7 @@ spec:
       - args:
         - --metrics-addr=0.0.0.0:8080
         - --webhook-port=9443
-        - --feature-gates=MachinePool=true,ClusterResourceSet=true,ClusterTopology=true
+        - --feature-gates=MachinePool=true,ClusterResourceSet=true
         - --watch-filter=capi
         - --v=0
         command:
