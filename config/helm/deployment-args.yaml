@@ -10,7 +10,7 @@ spec:
       containers:
         - name: manager
           args:
-            - --metrics-bind-addr=0.0.0.0:8080
+            - --metrics-addr=0.0.0.0:8080
             - --webhook-port=9443
             - --feature-gates=MachinePool=true,ClusterResourceSet=true,ClusterTopology=true
             - --watch-filter=capi
@@ -27,7 +27,7 @@ spec:
       containers:
         - name: manager
           args:
-            - --metrics-bind-addr=0.0.0.0:8080
+            - --metrics-addr=0.0.0.0:8080
             - --webhook-port=9443
             - --feature-gates=MachinePool=true
             - --watch-filter=capi
@@ -44,7 +44,7 @@ spec:
       containers:
         - name: manager
           args:
-            - --metrics-bind-addr=0.0.0.0:8080
+            - --metrics-addr=0.0.0.0:8080
             - --webhook-port=9443
             - --feature-gates=ClusterTopology=true
             - --watch-filter=capi
