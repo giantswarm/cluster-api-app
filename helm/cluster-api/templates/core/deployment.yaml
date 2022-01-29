@@ -36,7 +36,7 @@ spec:
         command:
         - /manager
         image: '{{ .Values.registry.domain }}/{{ .Values.images.core.name }}:{{ .Values.images.tag }}'
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
             path: /healthz
