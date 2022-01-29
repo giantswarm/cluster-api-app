@@ -6,6 +6,16 @@ metadata:
   namespace: capi-webhook-system
   labels:
     app.kubernetes.io/component: cluster-api
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: '{{ .Values.name }}'
+      app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: '{{ .Values.name }}'
+        app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -14,6 +24,16 @@ metadata:
   namespace: capi-webhook-system
   labels:
     app.kubernetes.io/component: bootstrap-kubeadm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: '{{ .Values.name }}'
+      app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: '{{ .Values.name }}'
+        app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -22,3 +42,13 @@ metadata:
   namespace: capi-webhook-system
   labels:
     app.kubernetes.io/component: control-plane-kubeadm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: '{{ .Values.name }}'
+      app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: '{{ .Values.name }}'
+        app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
