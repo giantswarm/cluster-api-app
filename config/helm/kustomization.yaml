@@ -4,13 +4,13 @@ resources:
   - input/cluster-api-components.yaml
 
 images:
-  - name: k8s.gcr.io/cluster-api/cluster-api-controller
+  - name: gcr.io/k8s-staging-cluster-api/cluster-api-controller
     newName: "{{ .Values.registry.domain }}/{{ .Values.images.core.name }}"
     newTag: "{{ .Values.images.tag }}"
-  - name: k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller
+  - name: gcr.io/k8s-staging-cluster-api/kubeadm-bootstrap-controller
     newName: "{{ .Values.registry.domain }}/{{ .Values.images.bootstrap.name }}"
     newTag: "{{ .Values.images.tag }}"
-  - name: k8s.gcr.io/cluster-api/kubeadm-control-plane-controller
+  - name: gcr.io/k8s-staging-cluster-api/kubeadm-control-plane-controller
     newName: "{{ .Values.registry.domain }}/{{ .Values.images.controlplane.name }}"
     newTag: "{{ .Values.images.tag }}"
 

@@ -35,8 +35,8 @@ spec:
         - --v=0
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.22
-        imagePullPolicy: IfNotPresent
+        image: '{{ .Values.registry.domain }}/{{ .Values.images.bootstrap.name }}:{{ .Values.images.tag }}'
+        imagePullPolicy: Always
         name: manager
         ports:
         - containerPort: 8080

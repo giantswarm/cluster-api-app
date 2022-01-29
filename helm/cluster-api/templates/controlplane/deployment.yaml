@@ -34,8 +34,8 @@ spec:
         - --v=0
         command:
         - /manager
-        image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:v0.3.22
-        imagePullPolicy: IfNotPresent
+        image: '{{ .Values.registry.domain }}/{{ .Values.images.controlplane.name }}:{{ .Values.images.tag }}'
+        imagePullPolicy: Always
         name: manager
         ports:
         - containerPort: 8080
