@@ -18,15 +18,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: '{{ .Values.name }}'
-      app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
       cluster.x-k8s.io/provider: bootstrap-kubeadm
       control-plane: controller-manager
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: '{{ .Values.name }}'
-        app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
         cluster.x-k8s.io/provider: bootstrap-kubeadm
         control-plane: controller-manager
     spec:
