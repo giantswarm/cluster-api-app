@@ -1,3 +1,4 @@
+# Generate kustomize patches and all helm charts
 .PHONY: generate
 generate:
 	./hack/generate-kustomize-patches.sh
