@@ -1,4 +1,4 @@
 .PHONY: generate
 generate:
 	kustomize build config/helm -o helm/cluster-api/templates
-	rm -rf helm/cluster-api/templates/apiextensions* helm/cluster-api/templates/cert-manager.io_v1_issuer*
+	rm -rf helm/cluster-api/templates/apiextensions* helm/cluster-api/templates/cert-manager.io_v1_issuer* helm/cluster-api/templates/rbac.authorization.k8s.io*-leader-election-role.yaml
