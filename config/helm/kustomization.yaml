@@ -23,10 +23,11 @@ patchesStrategicMerge:
   - deployment-args.yaml
   - deployment-metrics-port.yaml
   - deployment-labels.yaml
-  - delete-capi-system-ns.yaml
-  - delete-capi-kubeadm-control-plane-system-ns.yaml
-  - delete-capi-kubeadm-bootstrap-system-ns.yaml
   - webhook-watchfilter.yaml
   - webhook-certificate.yaml
   - service-add-metrics-port.yaml
   - certificate.yaml
+  - delete-leader-election.yaml
+  - delete-capi-system-ns.yaml
+  - delete-capi-kubeadm-control-plane-system-ns.yaml
+  - delete-capi-kubeadm-bootstrap-system-ns.yaml
