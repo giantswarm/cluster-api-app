@@ -4,6 +4,7 @@ metadata:
   labels:
     app.giantswarm.io/branch: '{{ .Values.project.branch }}'
     app.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    app.kubernetes.io/component: bootstrap-kubeadm
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
     app.kubernetes.io/name: cluster-api
@@ -33,7 +34,8 @@ spec:
         - --v=0
         command:
         - /manager
-        image: '{{ .Values.registry.domain }}/{{ .Values.images.bootstrap.name }}:{{ .Values.images.tag }}'
+        image: '{{ .Values.registry.domain }}/{{ .Values.images.bootstrap.name }}:{{
+          .Values.images.tag }}'
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
