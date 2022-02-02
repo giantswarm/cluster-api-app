@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add component label to Deployments.
+- Add `make verify` to make sure manifests are up to date.
 
 ## [1.0.0] - 2022-01-27
 

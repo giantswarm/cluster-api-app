@@ -5,4 +5,3 @@ This PR:
 ### Checklist
 
 - [ ] Update changelog in CHANGELOG.md.
-- [ ] Make sure to run `make generate` to generate Helm manifests.
