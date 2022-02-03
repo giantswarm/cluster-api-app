@@ -12,4 +12,4 @@ annotations:
     - catalog: default
       provider: azure
       team: phoenix
-  config.giantswarm.io/version: update-cluster-api-app
+  config.giantswarm.io/version: 1.x.x
