@@ -2,12 +2,12 @@
 .PHONY: generate
 generate:
 	./hack/generate-kustomize-patches.sh
-	$(MAKE) delete-generated-manifests
+	$(MAKE) delete-generated-helm-charts
 	kustomize build config/helm -o helm/cluster-api/templates
-	./hack/move-generated-manifests.sh
-	./hack/extract-crd-version-patches.sh
+	./hack/move-generated-helm-charts.sh
+	./hack/generate-crd-version-patches.sh
 
-delete-generated-manifests:
+delete-generated-helm-charts:
 	@rm -rf helm/cluster-api/templates/core/*
 	@rm -rf helm/cluster-api/templates/bootstrap/*
 	@rm -rf helm/cluster-api/templates/controlplane/*
