@@ -1,4 +1,6 @@
 name: cluster-api
+registry:
+  domain: quay.io
 images:
   core:
     name: giantswarm/cluster-api-controller
