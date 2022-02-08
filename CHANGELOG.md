@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Use `config` master branch.
+
+## [1.0.1] - 2022-02-02
+
 ### Added
 
 - Add component label to Deployments.
