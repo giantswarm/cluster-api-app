@@ -4,7 +4,7 @@ generate:
 	./hack/generate-kustomize-patches.sh
 	$(MAKE) delete-generated-helm-charts
 	kustomize build config/helm -o helm/cluster-api/templates
-	./hack/move-generated-helm-charts.sh
+	./hack/move-generated-crds.sh
 	./hack/generate-crd-version-patches.sh
 
 delete-generated-helm-charts:
