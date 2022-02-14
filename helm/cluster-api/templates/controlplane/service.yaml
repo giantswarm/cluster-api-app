@@ -1,26 +1,24 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    prometheus.io/scrape: "true"
-    giantswarm.io/monitoring: "true"
-    giantswarm.io/monitoring-port: "{{ .Values.ports.metrics }}"
   labels:
-    {{- include "labels.common.controlplane" . | nindent 4 }}
-  name: {{ include "resource.controlplane.name" . }}
-  namespace: {{ include "resource.default.namespace" . }}
+    app.giantswarm.io/branch: '{{ .Values.project.branch }}'
+    app.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    cluster.x-k8s.io/provider: control-plane-kubeadm
+    helm.sh/chart: cluster-api
+  name: capi-kubeadm-control-plane-webhook-service
+  namespace: '{{ .Release.Namespace }}'
 spec:
   ports:
   - name: metrics
-    port: {{ .Values.ports.metrics }}
-    protocol: TCP
+    port: 8080
     targetPort: metrics
-  - name: webhook
-    port: {{ .Values.ports.webhook }}
-    protocol: TCP
-    targetPort: webhook
+  - name: webhook-server
+    port: 443
+    targetPort: webhook-server
   selector:
-    {{- include "labels.selector.controlplane" . | nindent 4 }}
-    control-plane: controller-manager
-  sessionAffinity: None
-  type: ClusterIP
+    cluster.x-k8s.io/provider: control-plane-kubeadm

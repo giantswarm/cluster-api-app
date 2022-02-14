@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-controller-manager
+  namespace: capi-webhook-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: manager
+          args:
+            - --metrics-addr=0.0.0.0:8080
+            - --webhook-port=9443
+            - --feature-gates=MachinePool=true,ClusterResourceSet=true
+            - --watch-filter=capi
+            - --v=0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-kubeadm-bootstrap-controller-manager
+  namespace: capi-webhook-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: manager
+          args:
+            - --metrics-addr=0.0.0.0:8080
+            - --webhook-port=9443
+            - --feature-gates=MachinePool=true
+            - --watch-filter=capi
+            - --v=0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-kubeadm-control-plane-controller-manager
+  namespace: capi-webhook-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: manager
+          args:
+            - --metrics-addr=0.0.0.0:8080
+            - --webhook-port=9443
+            - --watch-filter=capi
+            - --v=0

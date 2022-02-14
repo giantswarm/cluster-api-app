@@ -1,0 +1,68 @@
+namespace: '{{ .Release.Namespace }}'
+
+resources:
+  - input/cluster-api-components.yaml
+
+images:
+  - name: gcr.io/k8s-staging-cluster-api/cluster-api-controller
+    newName: "{{ .Values.images.core.name }}"
+    newTag: "{{ .Values.images.tag }}"
+  - name: gcr.io/k8s-staging-cluster-api/kubeadm-bootstrap-controller
+    newName: "{{ .Values.images.bootstrap.name }}"
+    newTag: "{{ .Values.images.tag }}"
+  - name: gcr.io/k8s-staging-cluster-api/kubeadm-control-plane-controller
+    newName: "{{ .Values.images.controlplane.name }}"
+    newTag: "{{ .Values.images.tag }}"
+
+transformers:
+  - common-labels.yaml
+  - monitoring-annotations.yaml
+  - webhook-prefix.yaml
+
+patchesStrategicMerge:
+  - delete-namespaces.yaml
+  - delete-deployments.yaml
+  - delete-metrics-services.yaml
+  - delete-issuers.yaml
+  - delete-rbac-proxy.yaml
+  - delete-leader-election.yaml
+  - delete-aggregated-roles.yaml
+  - deployment-args.yaml
+  - deployment-metrics-port.yaml
+  - deployment-labels.yaml
+  - deployment-imagepullpolicy.yaml
+  - webhook-watchfilter.yaml
+  - webhook-certificate.yaml
+  - service-add-metrics-port.yaml
+  - certificate.yaml
+
+patches:
+  - path: crd_core_cainjection.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=cluster-api
+  - path: crd_bootstrap_cainjection.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
+  - path: crd_controlplane_cainjection.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
+  - path: crd_core_webhook.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=cluster-api
+  - path: crd_bootstrap_webhook.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
+  - path: crd_controlplane_webhook.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
+  - path: cert-manager-apiversion.yaml
+    target:
+      group: cert-manager.io
+      version: v1alpha2
+      kind: Certificate

@@ -1,0 +1,32 @@
+# In our current v0.3.x release we are deploying only webhooks, so we do not
+# need controller-manager deployments.
+---
+$patch: delete
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    cluster.x-k8s.io/provider: cluster-api
+    control-plane: controller-manager
+  name: capi-controller-manager
+  namespace: capi-system
+---
+$patch: delete
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    cluster.x-k8s.io/provider: bootstrap-kubeadm
+    control-plane: controller-manager
+  name: capi-kubeadm-bootstrap-controller-manager
+  namespace: capi-kubeadm-bootstrap-system
+---
+$patch: delete
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    cluster.x-k8s.io/provider: control-plane-kubeadm
+    control-plane: controller-manager
+  name: capi-kubeadm-control-plane-controller-manager
+  namespace: capi-kubeadm-control-plane-system

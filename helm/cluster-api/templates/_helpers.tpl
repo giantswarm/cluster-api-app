@@ -1,59 +1,24 @@
-{{/*
-Create chart name and version as used by the chart label.
-*/}}
-{{- define "chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{/* vim: set filetype=mustache: */}}
+{{/* Expand the name of the chart. This is suffixed with -alertmanager, which means subtract 13 from longest 63 available */}}
+{{- define "cluster-api.name" -}}
+{{- .Chart.Name | trunc 50 | trimSuffix "-" -}}
+{{- end }}
+
+{{- define "cluster-api.crdInstall" -}}
+{{- printf "%s-%s" ( include "cluster-api.name" . ) "crd-install" | replace "+" "_" | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "name" -}}
-{{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
+{{- define "cluster-api.CRDInstallAnnotations" -}}
+"helm.sh/hook": "pre-install,pre-upgrade"
+"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
 {{- end -}}
 
-{{/*
-Common labels
-*/}}
-{{- define "labels.common" -}}
-app.giantswarm.io/branch: {{ .Values.project.branch | quote }}
-app.giantswarm.io/commit: {{ .Values.project.commit | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-helm.sh/chart: {{ include "chart" . | quote }}
+{{- define "cluster-api.selectorLabels" -}}
+app.kubernetes.io/name: "{{ template "cluster-api.name" . }}"
+app.kubernetes.io/instance: "{{ template "cluster-api.name" . }}"
 {{- end -}}
 
-{{- define "labels.common.bootstrap" -}}
-{{ include "labels.selector.bootstrap" . }}
-{{ include "labels.common" . }}
-{{- end -}}
-
-{{- define "labels.common.controlplane" -}}
-{{ include "labels.selector.controlplane" . }}
-{{ include "labels.common" . }}
-{{- end -}}
-
-{{- define "labels.common.core" -}}
-{{ include "labels.selector.core" . }}
-{{ include "labels.common" . }}
-{{- end -}}
-
-{{/*
-Selector labels
-*/}}
-{{- define "labels.selector" -}}
-app.kubernetes.io/instance: {{ .Release.Name | quote }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end -}}
-
-{{- define "labels.selector.bootstrap" -}}
-app.kubernetes.io/name: {{ include "resource.bootstrap.name" . | quote }}
-{{ include "labels.selector" . }}
-{{- end -}}
-
-{{- define "labels.selector.controlplane" -}}
-app.kubernetes.io/name: {{ include "resource.controlplane.name" . | quote }}
-{{ include "labels.selector" . }}
-{{- end -}}
-
-{{- define "labels.selector.core" -}}
-app.kubernetes.io/name: {{ include "resource.core.name" . | quote }}
-{{ include "labels.selector" . }}
+{{/* Create a label which can be used to select any orphaned crd-install hook resources */}}
+{{- define "cluster-api.CRDInstallSelector" -}}
+{{- printf "%s" "crd-install-hook" -}}
 {{- end -}}
