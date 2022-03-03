@@ -19,19 +19,10 @@ spec:
       automountServiceAccountToken: true
       containers:
         - name: delete-roles
-          image: "appropriate/curl"
+          image: "{{ .Values.registry.domain }}/giantswarm/docker-kubectl:1.23.1"
           command:
             - "/bin/sh"
             - "-ec"
             - |
-              curl -s -X DELETE -k https://kubernetes.default.svc/api/rbac.authorization.k8s.io/v1/clusterroles/capi-kubeadm-control-plane-aggregated-manager-role \
-                -H "Authorization: Bearer $( cat /var/run/secrets/kubernetes.io/serviceaccount/token )" \
-                -H "Content-Type: application/json" \
-                -H "Accept: application/json" \
-                -d "{ \"kind\": \"ClusterRole\", \"apiVersion\": \"rbac.authorization.k8s.io/v1\", \"metadata\": { \"name\": \"capi-kubeadm-control-plane-aggregated-manager-role\", \"namespace\": \"\" } }"  > /dev/null \
-              && \
-              curl -s -X DELETE -k https://kubernetes.default.svc/api/rbac.authorization.k8s.io/v1/clusterroles/capi-aggregated-manager-role \
-                -H "Authorization: Bearer $( cat /var/run/secrets/kubernetes.io/serviceaccount/token )" \
-                -H "Content-Type: application/json" \
-                -H "Accept: application/json" \
-                -d "{ \"kind\": \"ClusterRole\", \"apiVersion\": \"rbac.authorization.k8s.io/v1\", \"metadata\": { \"name\": \"capi-aggregated-manager-role\", \"namespace\": \"\" } }"  > /dev/null
+              kubectl delete clusterrole capi-kubeadm-control-plane-aggregated-manager-role
+              kubectl delete clusterrole capi-aggregated-manager-role

@@ -18,7 +18,7 @@ rules:
   - apiGroups:
       - rbac.authorization.k8s.io
     resources:
-      - 'clusterrole'
+      - clusterroles
     verbs:
       - delete
       - get
