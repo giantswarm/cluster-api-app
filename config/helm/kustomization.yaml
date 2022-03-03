@@ -2,6 +2,10 @@ namespace: '{{ .Release.Namespace }}'
 
 resources:
   - https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.0.2/cluster-api-components.yaml
+  - hook-role.yaml
+  - hook-serviceaccount.yaml
+  - hook-rolebinding.yaml
+  - hook-job-remove-roles.yaml
 
 images:
   - name: k8s.gcr.io/cluster-api/cluster-api-controller

@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "0"
+  labels:
+    app.giantswarm.io/branch: '{{ .Values.project.branch }}'
+    app.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    helm.sh/chart: cluster-api
+  name: helm-hook-delete-aggregated-roles
+  namespace: '{{ .Release.Namespace }}'
+spec:
+  template:
+    spec:
+      automountServiceAccountToken: true
+      containers:
+      - command:
+        - /bin/sh
+        - -ec
+        - |
+          kubectl delete clusterrole capi-kubeadm-control-plane-aggregated-manager-role
+          kubectl delete clusterrole capi-aggregated-manager-role
+        image: '{{ .Values.registry.domain }}/giantswarm/docker-kubectl:1.23.1'
+        name: delete-roles
+      restartPolicy: Never
+      serviceAccountName: helm-hook-delete-aggregated-roles
