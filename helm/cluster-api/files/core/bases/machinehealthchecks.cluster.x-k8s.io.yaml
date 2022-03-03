@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.2.9
+    controller-gen.kubebuilder.io/version: v0.7.0
   labels:
     app.giantswarm.io/branch: '{{ .Values.project.branch }}'
     app.giantswarm.io/commit: '{{ .Values.project.commit }}'
@@ -55,6 +55,60 @@ spec:
           name: CurrentHealthy
           type: integer
       name: v1alpha3
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        status: {}
+    - additionalPrinterColumns:
+        - description: Cluster
+          jsonPath: .spec.clusterName
+          name: Cluster
+          type: string
+        - description: Time duration since creation of MachineHealthCheck
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+        - description: Maximum number of unhealthy machines allowed
+          jsonPath: .spec.maxUnhealthy
+          name: MaxUnhealthy
+          type: string
+        - description: Number of machines currently monitored
+          jsonPath: .status.expectedMachines
+          name: ExpectedMachines
+          type: integer
+        - description: Current observed healthy machines
+          jsonPath: .status.currentHealthy
+          name: CurrentHealthy
+          type: integer
+      name: v1alpha4
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        status: {}
+    - additionalPrinterColumns:
+        - description: Cluster
+          jsonPath: .spec.clusterName
+          name: Cluster
+          type: string
+        - description: Number of machines currently monitored
+          jsonPath: .status.expectedMachines
+          name: ExpectedMachines
+          type: integer
+        - description: Maximum number of unhealthy machines allowed
+          jsonPath: .spec.maxUnhealthy
+          name: MaxUnhealthy
+          type: string
+        - description: Current observed healthy machines
+          jsonPath: .status.currentHealthy
+          name: CurrentHealthy
+          type: integer
+        - description: Time duration since creation of MachineHealthCheck
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1beta1
       schema: {}
       served: true
       storage: true

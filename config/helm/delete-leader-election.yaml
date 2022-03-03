@@ -1,4 +1,4 @@
-# We are not using leader election in our current v0.3.x release, since we are
+# We are not using leader election in our current release, since we are
 # only deploying a single webhook pod.
 ---
 $patch: delete

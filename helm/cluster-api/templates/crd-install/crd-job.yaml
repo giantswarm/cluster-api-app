@@ -47,7 +47,7 @@ spec:
           done
         volumeMounts:
 {{- range $path, $_ := $.Files.Glob "files/**.yaml" }}
-        - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-") | trunc 63) }}
+        - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-")) | trunc 63 }}
           mountPath: /{{ $path }}
           subPath: {{base $path }}
           readOnly: true
@@ -63,7 +63,7 @@ spec:
 {{ $currentScope := . }}
 {{- range $path, $_ := .Files.Glob "files/**.yaml" }}
     {{- with $currentScope }}
-      - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-") | trunc 63) }}
+      - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-")) | trunc 63 }}
         configMap:
           name: {{ include "cluster-api.crdInstall" . }}-{{ printf "%s-%s" (base (dir $path)) (trimSuffix ".yaml" (base $path) | trunc 63) }}
           items:

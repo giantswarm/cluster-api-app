@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-kubeadm-bootstrap-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.2.9
+    controller-gen.kubebuilder.io/version: v0.7.0
   labels:
     app.giantswarm.io/branch: '{{ .Values.project.branch }}'
     app.giantswarm.io/commit: '{{ .Values.project.commit }}'
@@ -12,8 +12,9 @@ metadata:
     app.kubernetes.io/name: cluster-api
     app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
     cluster.x-k8s.io/provider: bootstrap-kubeadm
-    cluster.x-k8s.io/v1alpha2: v1alpha2
     cluster.x-k8s.io/v1alpha3: v1alpha3
+    cluster.x-k8s.io/v1alpha4: v1alpha4
+    cluster.x-k8s.io/v1beta1: v1beta1
     helm.sh/chart: cluster-api
   name: kubeadmconfigtemplates.bootstrap.cluster.x-k8s.io
 spec:
@@ -47,7 +48,27 @@ spec:
     - name: v1alpha3
       schema: {}
       served: true
+      storage: false
+    - additionalPrinterColumns:
+        - description: Time duration since creation of KubeadmConfigTemplate
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1alpha4
+      schema: {}
+      served: true
+      storage: false
+      subresources: {}
+    - additionalPrinterColumns:
+        - description: Time duration since creation of KubeadmConfigTemplate
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1beta1
+      schema: {}
+      served: true
       storage: true
+      subresources: {}
 status:
   acceptedNames:
     kind: ""

@@ -2,7 +2,7 @@
   path: /spec/versions/0/schema
   value:
     openAPIV3Schema:
-      description: KubeadmConfig is the Schema for the kubeadmconfigs API
+      description: KubeadmConfig is the Schema for the kubeadmconfigs API.
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
@@ -116,9 +116,6 @@
                       type: string
                     imageTag:
                       description: ImageTag allows to specify a tag for the image. In case this value is set, kubeadm does not change automatically the version of the above components during upgrades.
-                      type: string
-                    type:
-                      description: Type defines the DNS add-on to be used
                       type: string
                   type: object
                 etcd:
@@ -238,9 +235,6 @@
                         type: object
                       type: array
                   type: object
-                useHyperKubeImage:
-                  description: UseHyperKubeImage controls if hyperkube should be used for Kubernetes components instead of their respective separate images
-                  type: boolean
               type: object
             files:
               description: Files specifies extra files to be passed to user_data upon creation.
@@ -285,7 +279,7 @@
                 bootstrapTokens:
                   description: BootstrapTokens is respected at `kubeadm init` time and describes a set of Bootstrap Tokens to create. This information IS NOT uploaded to the kubeadm cluster configmap, partly because of its sensitive nature
                   items:
-                    description: BootstrapToken describes one bootstrap token, stored as a Secret in the cluster
+                    description: BootstrapToken describes one bootstrap token, stored as a Secret in the cluster.
                     properties:
                       description:
                         description: Description sets a human-friendly message why this token exists and what it's used for, so other administrators can know its purpose.
@@ -301,7 +295,7 @@
                         type: array
                       token:
                         description: Token is used for establishing bidirectional trust between nodes and control-planes. Used for joining nodes in the cluster.
-                        type: object
+                        type: string
                       ttl:
                         description: TTL defines the time to live for this token. Defaults to 24h. Expires and TTL are mutually exclusive.
                         type: string
@@ -327,9 +321,6 @@
                       description: BindPort sets the secure port for the API Server to bind to. Defaults to 6443.
                       format: int32
                       type: integer
-                  required:
-                    - advertiseAddress
-                    - bindPort
                   type: object
                 nodeRegistration:
                   description: NodeRegistration holds fields that relate to registering the new control-plane node to the cluster. When used in the context of control plane nodes, NodeRegistration should remain consistent across both InitConfiguration and JoinConfiguration
@@ -337,6 +328,11 @@
                     criSocket:
                       description: CRISocket is used to retrieve container runtime info. This information will be annotated to the Node API object, for later re-use
                       type: string
+                    ignorePreflightErrors:
+                      description: IgnorePreflightErrors provides a slice of pre-flight errors to be ignored when the current node is registered.
+                      items:
+                        type: string
+                      type: array
                     kubeletExtraArgs:
                       additionalProperties:
                         type: string
@@ -361,7 +357,7 @@
                             format: date-time
                             type: string
                           value:
-                            description: Required. The taint value corresponding to the taint key.
+                            description: The taint value corresponding to the taint key.
                             type: string
                         required:
                           - effect
@@ -392,9 +388,6 @@
                           description: BindPort sets the secure port for the API Server to bind to. Defaults to 6443.
                           format: int32
                           type: integer
-                      required:
-                        - advertiseAddress
-                        - bindPort
                       type: object
                   type: object
                 discovery:
@@ -419,7 +412,6 @@
                           type: boolean
                       required:
                         - token
-                        - unsafeSkipCAVerification
                       type: object
                     file:
                       description: File is used to specify a file or URL to a kubeconfig file from which to load cluster information BootstrapToken and File are mutually exclusive
@@ -434,7 +426,7 @@
                       description: Timeout modifies the discovery timeout
                       type: string
                     tlsBootstrapToken:
-                      description: 'TLSBootstrapToken is a token used for TLS bootstrapping. If .BootstrapToken is set, this field is defaulted to .BootstrapToken.Token, but can be overridden. If .File is set, this field **must be set** in case the KubeConfigFile does not contain any other authentication information TODO: revisit when there is defaulting from k/k'
+                      description: TLSBootstrapToken is a token used for TLS bootstrapping. If .BootstrapToken is set, this field is defaulted to .BootstrapToken.Token, but can be overridden. If .File is set, this field **must be set** in case the KubeConfigFile does not contain any other authentication information
                       type: string
                   type: object
                 kind:
@@ -446,6 +438,11 @@
                     criSocket:
                       description: CRISocket is used to retrieve container runtime info. This information will be annotated to the Node API object, for later re-use
                       type: string
+                    ignorePreflightErrors:
+                      description: IgnorePreflightErrors provides a slice of pre-flight errors to be ignored when the current node is registered.
+                      items:
+                        type: string
+                      type: array
                     kubeletExtraArgs:
                       additionalProperties:
                         type: string
@@ -470,7 +467,7 @@
                             format: date-time
                             type: string
                           value:
-                            description: Required. The taint value corresponding to the taint key.
+                            description: The taint value corresponding to the taint key.
                             type: string
                         required:
                           - effect
@@ -547,7 +544,7 @@
               type: array
           type: object
         status:
-          description: KubeadmConfigStatus defines the observed state of KubeadmConfig
+          description: KubeadmConfigStatus defines the observed state of KubeadmConfig.
           properties:
             bootstrapData:
               description: BootstrapData will be a cloud-init script for now
