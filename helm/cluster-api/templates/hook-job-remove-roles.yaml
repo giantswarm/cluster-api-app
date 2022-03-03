@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "0"
+  name: helm-hook-delete-aggregated-roles
+  namespace: '{{ .Release.Namespace }}'
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: helm-hook-delete-aggregated-roles
+      automountServiceAccountToken: true
+      containers:
+        - name: delete-roles
+          image: "appropriate/curl"
+          command:
+            - "/bin/sh"
+            - "-ec"
+            - |
+              curl -s -X DELETE -k https://kubernetes.default.svc/api/rbac.authorization.k8s.io/v1/clusterroles/capi-kubeadm-control-plane-aggregated-manager-role \
+                -H "Authorization: Bearer $( cat /var/run/secrets/kubernetes.io/serviceaccount/token )" \
+                -H "Content-Type: application/json" \
+                -H "Accept: application/json" \
+                -d "{ \"kind\": \"ClusterRole\", \"apiVersion\": \"rbac.authorization.k8s.io/v1\", \"metadata\": { \"name\": \"capi-kubeadm-control-plane-aggregated-manager-role\", \"namespace\": \"\" } }"  > /dev/null \
+              && \
+              curl -s -X DELETE -k https://kubernetes.default.svc/api/rbac.authorization.k8s.io/v1/clusterroles/capi-aggregated-manager-role \
+                -H "Authorization: Bearer $( cat /var/run/secrets/kubernetes.io/serviceaccount/token )" \
+                -H "Content-Type: application/json" \
+                -H "Accept: application/json" \
+                -d "{ \"kind\": \"ClusterRole\", \"apiVersion\": \"rbac.authorization.k8s.io/v1\", \"metadata\": { \"name\": \"capi-aggregated-manager-role\", \"namespace\": \"\" } }"  > /dev/null
