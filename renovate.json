@@ -1,8 +1,9 @@
 {
   "extends": [
     "config:base",
-    ":reviewer(team:team-phoenix)"
+    ":reviewer(team:area-kaas)"
   ],
+  "labels": ["dependencies"],
   "dependencyDashboard": true,
   "ignorePaths": [
     ".github/workflows/zz_generated.*",
@@ -10,7 +11,8 @@
   ],
   "ignoreDeps": [
     "architect",
-    "zricethezav/gitleaks-action"
+    "zricethezav/gitleaks-action",
+    "actions/setup-go"
   ],
-  "schedule": [ "after 9am on thursday" ]
+  "schedule": [ "after 6am on thursday" ]
 }

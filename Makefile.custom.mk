@@ -1,9 +1,24 @@
+# Generate kustomize patches and all helm charts
 .PHONY: generate
 generate:
-	@rm -rf helm/cluster-api/templates/*.yaml
+	./hack/generate-kustomize-patches.sh
+	$(MAKE) delete-generated-helm-charts
 	kustomize build config/helm -o helm/cluster-api/templates
-	@rm -rf helm/cluster-api/templates/apiextensions* helm/cluster-api/templates/cert-manager.io_v1_issuer*
+	./hack/move-generated-crds.sh
+	./hack/generate-crd-version-patches.sh
 
+delete-generated-helm-charts:
+	@rm -rf helm/cluster-api/templates/*.yaml
+
+CRD_BUILD_DIR := out
+
+$(CRD_BUILD_DIR):
+	mkdir -p $(CRD_BUILD_DIR)/
+
+.PHONY: release-manifests
+release-manifests: $(CRD_BUILD_DIR) ## Builds the manifests to publish with a release
+	# Build core-components.
+	kustomize build config/helm/files > $(CRD_BUILD_DIR)/crds.yaml
 
 .PHONY: verify
 verify: generate

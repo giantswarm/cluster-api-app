@@ -1,0 +1,76 @@
+{{- if .Values.crds.install }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "cluster-api.crdInstall" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  annotations:
+    # create hook dependencies in the right order
+    "helm.sh/hook-weight": "-1"
+    {{- include "cluster-api.CRDInstallAnnotations" . | nindent 4 }}
+  labels:
+    app.kubernetes.io/component: {{ include "cluster-api.crdInstall" . | quote }}
+    {{- include "cluster-api.selectorLabels" . | nindent 4 }}
+    role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: {{ include "cluster-api.crdInstall" . | quote }}
+        {{- include "cluster-api.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "cluster-api.crdInstall" . }}
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: kubectl
+        image: "{{ .Values.registry.domain }}/giantswarm/docker-kubectl:latest"
+        command:
+        - sh
+        - -c
+        - |
+          set -o errexit ; set -o xtrace ; set -o nounset
+
+          # piping stderr to stdout means kubectl's errors are surfaced
+          # in the pod's logs.
+
+          kubectl apply -k /files 2>&1
+
+          # After updating CRDs the cluster-operator will sometimes stop reconciling CRDs,
+          # so here we mitigate that issue by restarting it.
+          for deployment in $(kubectl get deployment -l app.kubernetes.io/name=cluster-operator -o name); do
+            kubectl rollout restart -n giantswarm "$deployment"
+          done
+        volumeMounts:
+{{- range $path, $_ := $.Files.Glob "files/**.yaml" }}
+        - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-")) | trunc 63 }}
+          mountPath: /{{ $path }}
+          subPath: {{base $path }}
+          readOnly: true
+{{- end }}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+      volumes:
+{{ $currentScope := . }}
+{{- range $path, $_ := .Files.Glob "files/**.yaml" }}
+    {{- with $currentScope }}
+      - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-")) | trunc 63 }}
+        configMap:
+          name: {{ include "cluster-api.crdInstall" . }}-{{ printf "%s-%s" (base (dir $path)) (trimSuffix ".yaml" (base $path) | trunc 63) }}
+          items:
+          - key: content
+            path: {{ $path | base }}
+{{- end }}
+{{- end }}
+      restartPolicy: Never
+  backoffLimit: 4
+{{- end }}

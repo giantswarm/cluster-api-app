@@ -76,6 +76,16 @@ webhooks:
         cluster.x-k8s.io/watch-filter: capi
 ---
 apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: capi-kubeadm-bootstrap-validating-webhook-configuration
+webhooks:
+  - name: validation.kubeadmconfig.bootstrap.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: capi
+---
+apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
   name: capi-kubeadm-control-plane-mutating-webhook-configuration
@@ -99,16 +109,6 @@ webhooks:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi
   - name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
-    objectSelector:
-      matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
----
-apiVersion: admissionregistration.k8s.io/v1
-kind: ValidatingWebhookConfiguration
-metadata:
-  name: capi-kubeadm-bootstrap-validating-webhook-configuration
-webhooks:
-  - name: validation.kubeadmconfig.bootstrap.cluster.x-k8s.io
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: capi

@@ -1,17 +1,17 @@
 namespace: '{{ .Release.Namespace }}'
 
 resources:
-  - https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.0.2/cluster-api-components.yaml
+  - input/cluster-api-components.yaml
 
 images:
   - name: k8s.gcr.io/cluster-api/cluster-api-controller
-    newName: "{{.Values.registry.domain}}/{{.Values.images.core.name}}"
+    newName: "{{.Values.images.core.name}}"
     newTag: "{{.Values.images.tag}}"
   - name: k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller
-    newName: "{{.Values.registry.domain}}/{{.Values.images.bootstrap.name}}"
+    newName: "{{.Values.images.bootstrap.name}}"
     newTag: "{{.Values.images.tag}}"
   - name: k8s.gcr.io/cluster-api/kubeadm-control-plane-controller
-    newName: "{{.Values.registry.domain}}/{{.Values.images.controlplane.name}}"
+    newName: "{{.Values.images.controlplane.name}}"
     newTag: "{{.Values.images.tag}}"
 
 transformers:
@@ -20,14 +20,41 @@ transformers:
   - webhook-prefix.yaml
 
 patchesStrategicMerge:
+  - delete-issuers.yaml
+  - delete-leader-election.yaml
   - deployment-args.yaml
   - deployment-metrics-port.yaml
   - deployment-labels.yaml
+  - delete-capi-system-ns.yaml
+  - delete-capi-kubeadm-control-plane-system-ns.yaml
+  - delete-capi-kubeadm-bootstrap-system-ns.yaml
   - webhook-watchfilter.yaml
   - webhook-certificate.yaml
   - service-add-metrics-port.yaml
   - certificate.yaml
-  - delete-leader-election.yaml
-  - delete-capi-system-ns.yaml
-  - delete-capi-kubeadm-control-plane-system-ns.yaml
-  - delete-capi-kubeadm-bootstrap-system-ns.yaml
+
+patches:
+  - path: crd_core_cainjection.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=cluster-api
+  - path: crd_bootstrap_cainjection.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
+  - path: crd_controlplane_cainjection.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
+  - path: crd_core_webhook.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=cluster-api
+  - path: crd_bootstrap_webhook.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
+  - path: crd_controlplane_webhook.yaml
+    target:
+      kind: CustomResourceDefinition
+      labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
