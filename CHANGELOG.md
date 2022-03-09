@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Use `--ignore-not-found` when trying to delete resources from the hook.
+
 ## [1.0.3] - 2022-03-09
 
 ### Changed
