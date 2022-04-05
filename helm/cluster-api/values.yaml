@@ -7,7 +7,7 @@ images:
   bootstrap:
     name: gcr.io/k8s-staging-cluster-api/kubeadm-bootstrap-controller
   controlplane:
-    name: giantswarm/kubeadm-control-plane-controller
+    name: gcr.io/k8s-staging-cluster-api/kubeadm-control-plane-controller
   tag: v1.0.4-gs1
   bTag: nightly_main_20220404
 
