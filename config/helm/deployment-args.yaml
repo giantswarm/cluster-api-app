@@ -44,6 +44,6 @@ spec:
         - name: manager
           args:
             - --metrics-bind-addr=0.0.0.0:8080
-            - --feature-gates=ClusterTopology=true
+            - --feature-gates=ClusterTopology=true,KubeadmBootstrapFormatIgnition=true
             - --watch-filter=capi
             - --v=0
