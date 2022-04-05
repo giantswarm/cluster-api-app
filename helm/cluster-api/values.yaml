@@ -5,10 +5,11 @@ images:
   core:
     name: giantswarm/cluster-api-controller
   bootstrap:
-    name: giantswarm/kubeadm-bootstrap-controller
+    name: gcr.io/k8s-staging-cluster-api/kubeadm-bootstrap-controller
   controlplane:
     name: giantswarm/kubeadm-control-plane-controller
   tag: v1.0.4-gs1
+  bootstrapTag: nightly_main_20220404
 
 project:
   branch: "[[ .Branch ]]"
