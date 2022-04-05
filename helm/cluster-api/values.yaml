@@ -9,7 +9,7 @@ images:
   controlplane:
     name: giantswarm/kubeadm-control-plane-controller
   tag: v1.0.4-gs1
-  bootstrapTag: nightly_main_20220404
+  bTag: nightly_main_20220404
 
 project:
   branch: "[[ .Branch ]]"

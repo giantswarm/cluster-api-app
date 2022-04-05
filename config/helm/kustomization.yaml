@@ -9,7 +9,7 @@ images:
     newTag: "{{ .Values.images.tag }}"
   - name: k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller
     newName: "{{ .Values.images.bootstrap.name }}"
-    newTag: "{{ .Values.images.bootstrapTag }}"
+    newTag: "{{ .Values.images.bTag }}"
   - name: k8s.gcr.io/cluster-api/kubeadm-control-plane-controller
     newName: "{{ .Values.images.controlplane.name }}"
     newTag: "{{ .Values.images.tag }}"
