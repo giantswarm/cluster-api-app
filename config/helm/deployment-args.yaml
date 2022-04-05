@@ -27,7 +27,7 @@ spec:
         - name: manager
           args:
             - --metrics-bind-addr=0.0.0.0:8080
-            - --feature-gates=MachinePool=true
+            - --feature-gates=MachinePool=true,KubeadmBootstrapFormatIgnition=true
             - --watch-filter=capi
             - --v=0
 
