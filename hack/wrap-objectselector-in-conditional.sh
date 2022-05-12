@@ -13,6 +13,6 @@ cd $HELM_TEMPLATES_DIR
 for file in admissionregistration.k8s.io_v1_*.yaml; do
   NEW_CONTENTS=$(cat ${file} | tr '\n' '\r' | sed -e "s/${MATCH}/{{ if .Values.watchFilter }}\n${MATCH}\n{{ end }}/g" | tr '\r' '\n')
 
-  printf "${NEW_CONTENTS}" > "${file}"
+  printf "${NEW_CONTENTS}\n" > "${file}"
 done
 
