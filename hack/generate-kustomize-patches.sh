@@ -58,7 +58,7 @@ webhooks: null
             webhook_name="$webhook_name" \
             yq e --null-input \
                 '.name = env(webhook_name) |
-                .objectSelector.matchLabels["cluster.x-k8s.io/watch-filter"] = "capi"'
+                .objectSelector.matchLabels["cluster.x-k8s.io/watch-filter"] = "{{ .Values.watchFilter }}"'
             )"
 
         webhook_patch="$(

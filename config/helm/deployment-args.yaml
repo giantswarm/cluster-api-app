@@ -12,7 +12,7 @@ spec:
           args:
             - --metrics-bind-addr=0.0.0.0:8080
             - --feature-gates=MachinePool=true,ClusterResourceSet=true,ClusterTopology=true
-            - --watch-filter=capi
+            - --watch-filter={{ .Values.watchFilter }}
             - --v=0
 ---
 apiVersion: apps/v1
@@ -28,7 +28,7 @@ spec:
           args:
             - --metrics-bind-addr=0.0.0.0:8080
             - --feature-gates=MachinePool=true
-            - --watch-filter=capi
+            - --watch-filter={{ .Values.watchFilter }}
             - --v=0
 
 ---
@@ -45,5 +45,5 @@ spec:
           args:
             - --metrics-bind-addr=0.0.0.0:8080
             - --feature-gates=ClusterTopology=true
-            - --watch-filter=capi
+            - --watch-filter={{ .Values.watchFilter }}
             - --v=0
