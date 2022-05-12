@@ -6,6 +6,7 @@ generate:
 	kustomize build config/helm -o helm/cluster-api/templates
 	./hack/move-generated-crds.sh
 	./hack/generate-crd-version-patches.sh
+	./hack/wrap-objectselector-in-conditional.sh
 
 delete-generated-helm-charts:
 	@rm -rf helm/cluster-api/templates/*.yaml

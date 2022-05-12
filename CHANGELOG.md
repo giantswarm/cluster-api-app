@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add component label to Deployments.
 - Add `make verify` to make sure manifests are up to date.
+- Value to control setting of the watch filter
 
 ## [1.0.0] - 2022-01-27
 
