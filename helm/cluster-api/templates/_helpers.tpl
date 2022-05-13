@@ -10,7 +10,7 @@
 
 {{- define "cluster-api.CRDInstallAnnotations" -}}
 "helm.sh/hook": "pre-install,pre-upgrade"
-"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
 {{- end -}}
 
 {{- define "cluster-api.selectorLabels" -}}
