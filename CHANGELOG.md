@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Value to control setting of the watch filter
+
 ## [1.0.4] - 2022-03-09
 
 ### Changed

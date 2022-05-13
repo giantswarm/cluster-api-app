@@ -25,9 +25,11 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.kubeadmcontrolplane.controlplane.cluster.x-k8s.io
+{{ if .Values.watchFilter }}
   objectSelector:
     matchLabels:
-      cluster.x-k8s.io/watch-filter: capi
+      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+{{ end }}
   rules:
   - apiGroups:
     - controlplane.cluster.x-k8s.io
@@ -49,9 +51,11 @@ webhooks:
       path: /validate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplanetemplate
   failurePolicy: Fail
   name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
+{{ if .Values.watchFilter }}
   objectSelector:
     matchLabels:
-      cluster.x-k8s.io/watch-filter: capi
+      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+{{ end }}
   rules:
   - apiGroups:
     - controlplane.cluster.x-k8s.io

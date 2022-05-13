@@ -30,7 +30,7 @@ spec:
       - args:
         - --metrics-bind-addr=0.0.0.0:8080
         - --feature-gates=ClusterTopology=true
-        - --watch-filter=capi
+        - --watch-filter={{ .Values.watchFilter }}
         - --v=0
         command:
         - /manager

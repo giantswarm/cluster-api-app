@@ -7,35 +7,35 @@ webhooks:
   - name: default.cluster.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.clusterclass.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.machine.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.machinedeployment.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.machinehealthcheck.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.machineset.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.machinepool.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.clusterresourceset.addons.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
@@ -45,35 +45,35 @@ webhooks:
   - name: validation.cluster.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.clusterclass.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.machine.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.machinedeployment.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.machinehealthcheck.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.machineset.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.machinepool.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.clusterresourceset.addons.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
@@ -83,7 +83,7 @@ webhooks:
   - name: validation.kubeadmconfig.bootstrap.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
@@ -93,11 +93,11 @@ webhooks:
   - name: default.kubeadmcontrolplane.controlplane.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
@@ -107,8 +107,8 @@ webhooks:
   - name: validation.kubeadmcontrolplane.controlplane.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
     objectSelector:
       matchLabels:
-        cluster.x-k8s.io/watch-filter: capi
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
