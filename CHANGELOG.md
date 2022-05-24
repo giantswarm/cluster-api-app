@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2022-05-24
+
 ### Fixed
 
 - Don't remove `crd-install` job when it fails to allow debugging.
@@ -57,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.4.1] - 2021-09-29
 
 [Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.1.0...v1.1.0
 [1.1.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.0.4...v1.1.0
 [1.0.4]: https://github.com/giantswarm/giantswarm/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/giantswarm/giantswarm/compare/v1.0.2...v1.0.3
