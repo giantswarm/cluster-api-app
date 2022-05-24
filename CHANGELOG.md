@@ -9,15 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2022-05-24
 
-### Fixed
-
-- Don't remove `crd-install` job when it fails to allow debugging.
-
-## [1.1.0] - 2022-05-13
-
 ### Added
 
 - Value to control setting of the watch filter
+
+### Fixed
+
+- Don't remove `crd-install` job when it fails to allow debugging.
 
 ## [1.0.4] - 2022-03-09
 
@@ -59,11 +57,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.4.1] - 2021-09-29
 
 [Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.1.0...HEAD
-[1.1.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.1.0...v1.1.0
 [1.1.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.0.4...v1.1.0
-[1.0.4]: https://github.com/giantswarm/giantswarm/compare/v1.0.3...v1.0.4
-[1.0.3]: https://github.com/giantswarm/giantswarm/compare/v1.0.2...v1.0.3
-[1.0.2]: https://github.com/giantswarm/giantswarm/compare/v1.0.1...v1.0.2
-[1.0.1]: https://github.com/giantswarm/giantswarm/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/giantswarm/giantswarm/compare/v0.5.3-gs1...v1.0.0
+[1.0.4]: https://github.com/giantswarm/cluster-api-app/compare/v1.0.3...v1.0.4
+[1.0.3]: https://github.com/giantswarm/cluster-api-app/compare/v1.0.2...v1.0.3
+[1.0.2]: https://github.com/giantswarm/cluster-api-app/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/giantswarm/cluster-api-app/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/giantswarm/cluster-api-app/compare/v0.5.3-gs1...v1.0.0
 [0.4.1]: https://github.com/giantswarm/cluster-api-app/releases/tag/v0.4.1
