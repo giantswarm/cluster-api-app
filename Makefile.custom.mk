@@ -33,4 +33,4 @@ ensure-schema-gen:
 
 .PHONY: schema-gen
 schema-gen: ensure-schema-gen ## Generates the values schema file
-	@cd helm/cluster-api && helm schema-gen values.yaml > values.schema.json
+	@cd helm/cluster-api && helm schema-gen values.yaml > values.schema.json && git diff values.schema.json
