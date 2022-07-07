@@ -41,3 +41,30 @@ webhooks:
     resources:
     - kubeadmconfigs
   sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: capi-kubeadm-bootstrap-webhook-service
+      namespace: '{{ .Release.Namespace }}'
+      path: /validate-bootstrap-cluster-x-k8s-io-v1beta1-kubeadmconfigtemplate
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: validation.kubeadmconfigtemplate.bootstrap.cluster.x-k8s.io
+{{ if .Values.watchFilter }}
+  objectSelector:
+    matchLabels:
+      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+{{ end }}
+  rules:
+  - apiGroups:
+    - bootstrap.cluster.x-k8s.io
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - kubeadmconfigtemplates
+  sideEffects: None

@@ -4,14 +4,6 @@ kind: MutatingWebhookConfiguration
 metadata:
   name: capi-mutating-webhook-configuration
 webhooks:
-  - name: default.cluster.cluster.x-k8s.io
-    objectSelector:
-      matchLabels:
-        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-  - name: default.clusterclass.cluster.x-k8s.io
-    objectSelector:
-      matchLabels:
-        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.machine.cluster.x-k8s.io
     objectSelector:
       matchLabels:
@@ -32,6 +24,14 @@ webhooks:
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: default.cluster.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: default.clusterclass.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.clusterresourceset.addons.cluster.x-k8s.io
     objectSelector:
       matchLabels:
@@ -42,14 +42,6 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: capi-validating-webhook-configuration
 webhooks:
-  - name: validation.cluster.cluster.x-k8s.io
-    objectSelector:
-      matchLabels:
-        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-  - name: validation.clusterclass.cluster.x-k8s.io
-    objectSelector:
-      matchLabels:
-        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.machine.cluster.x-k8s.io
     objectSelector:
       matchLabels:
@@ -70,6 +62,14 @@ webhooks:
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: validation.cluster.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: validation.clusterclass.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.clusterresourceset.addons.cluster.x-k8s.io
     objectSelector:
       matchLabels:
@@ -81,6 +81,10 @@ metadata:
   name: capi-kubeadm-bootstrap-validating-webhook-configuration
 webhooks:
   - name: validation.kubeadmconfig.bootstrap.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: validation.kubeadmconfigtemplate.bootstrap.cluster.x-k8s.io
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
@@ -109,6 +113,10 @@ webhooks:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: validation-scale.kubeadmcontrolplane.controlplane.cluster.x-k8s.io
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
