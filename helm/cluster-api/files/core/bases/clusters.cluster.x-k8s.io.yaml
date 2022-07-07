@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.7.0
+    controller-gen.kubebuilder.io/version: v0.8.0
   labels:
     app.giantswarm.io/branch: '{{ .Values.project.branch }}'
     app.giantswarm.io/commit: '{{ .Values.project.commit }}'
@@ -40,17 +40,6 @@ spec:
     singular: cluster
   scope: Namespaced
   versions:
-    - additionalPrinterColumns:
-        - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
-          jsonPath: .status.phase
-          name: Phase
-          type: string
-      name: v1alpha2
-      schema: {}
-      served: true
-      storage: false
-      subresources:
-        status: {}
     - additionalPrinterColumns:
         - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
           jsonPath: .status.phase

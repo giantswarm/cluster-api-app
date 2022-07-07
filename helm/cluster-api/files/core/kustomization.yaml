@@ -57,12 +57,6 @@ patches:
       version: v1
       kind: CustomResourceDefinition
       name: clusterresourcesets.addons.cluster.x-k8s.io
-  - path: patches/versions/v1alpha2/clusters.cluster.x-k8s.io.yaml
-    target:
-      group: apiextensions.k8s.io
-      version: v1
-      kind: CustomResourceDefinition
-      name: clusters.cluster.x-k8s.io
   - path: patches/versions/v1alpha3/clusters.cluster.x-k8s.io.yaml
     target:
       group: apiextensions.k8s.io
@@ -81,12 +75,6 @@ patches:
       version: v1
       kind: CustomResourceDefinition
       name: clusters.cluster.x-k8s.io
-  - path: patches/versions/v1alpha2/machinedeployments.cluster.x-k8s.io.yaml
-    target:
-      group: apiextensions.k8s.io
-      version: v1
-      kind: CustomResourceDefinition
-      name: machinedeployments.cluster.x-k8s.io
   - path: patches/versions/v1alpha3/machinedeployments.cluster.x-k8s.io.yaml
     target:
       group: apiextensions.k8s.io
@@ -141,12 +129,6 @@ patches:
       version: v1
       kind: CustomResourceDefinition
       name: machinepools.cluster.x-k8s.io
-  - path: patches/versions/v1alpha2/machines.cluster.x-k8s.io.yaml
-    target:
-      group: apiextensions.k8s.io
-      version: v1
-      kind: CustomResourceDefinition
-      name: machines.cluster.x-k8s.io
   - path: patches/versions/v1alpha3/machines.cluster.x-k8s.io.yaml
     target:
       group: apiextensions.k8s.io
@@ -165,12 +147,6 @@ patches:
       version: v1
       kind: CustomResourceDefinition
       name: machines.cluster.x-k8s.io
-  - path: patches/versions/v1alpha2/machinesets.cluster.x-k8s.io.yaml
-    target:
-      group: apiextensions.k8s.io
-      version: v1
-      kind: CustomResourceDefinition
-      name: machinesets.cluster.x-k8s.io
   - path: patches/versions/v1alpha3/machinesets.cluster.x-k8s.io.yaml
     target:
       group: apiextensions.k8s.io

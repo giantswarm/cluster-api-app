@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.7.0
+    controller-gen.kubebuilder.io/version: v0.8.0
   labels:
     app.giantswarm.io/branch: '{{ .Values.project.branch }}'
     app.giantswarm.io/commit: '{{ .Values.project.commit }}'
@@ -40,16 +40,6 @@ spec:
     singular: machinedeployment
   scope: Namespaced
   versions:
-    - name: v1alpha2
-      schema: {}
-      served: true
-      storage: false
-      subresources:
-        scale:
-          labelSelectorPath: .status.selector
-          specReplicasPath: .spec.replicas
-          statusReplicasPath: .status.replicas
-        status: {}
     - additionalPrinterColumns:
         - description: MachineDeployment status such as ScalingUp/ScalingDown/Running/Failed/Unknown
           jsonPath: .status.phase

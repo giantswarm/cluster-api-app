@@ -21,60 +21,6 @@ webhooks:
     service:
       name: capi-webhook-service
       namespace: '{{ .Release.Namespace }}'
-      path: /mutate-cluster-x-k8s-io-v1beta1-cluster
-  failurePolicy: Fail
-  matchPolicy: Equivalent
-  name: default.cluster.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
-  rules:
-  - apiGroups:
-    - cluster.x-k8s.io
-    apiVersions:
-    - v1beta1
-    operations:
-    - CREATE
-    - UPDATE
-    resources:
-    - clusters
-  sideEffects: None
-- admissionReviewVersions:
-  - v1
-  - v1beta1
-  clientConfig:
-    service:
-      name: capi-webhook-service
-      namespace: '{{ .Release.Namespace }}'
-      path: /mutate-cluster-x-k8s-io-v1beta1-clusterclass
-  failurePolicy: Fail
-  matchPolicy: Equivalent
-  name: default.clusterclass.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
-  rules:
-  - apiGroups:
-    - cluster.x-k8s.io
-    apiVersions:
-    - v1beta1
-    operations:
-    - CREATE
-    - UPDATE
-    resources:
-    - clusterclasses
-  sideEffects: None
-- admissionReviewVersions:
-  - v1
-  - v1beta1
-  clientConfig:
-    service:
-      name: capi-webhook-service
-      namespace: '{{ .Release.Namespace }}'
       path: /mutate-cluster-x-k8s-io-v1beta1-machine
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -202,6 +148,60 @@ webhooks:
     - UPDATE
     resources:
     - machinepools
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: capi-webhook-service
+      namespace: '{{ .Release.Namespace }}'
+      path: /mutate-cluster-x-k8s-io-v1beta1-cluster
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: default.cluster.cluster.x-k8s.io
+{{ if .Values.watchFilter }}
+  objectSelector:
+    matchLabels:
+      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+{{ end }}
+  rules:
+  - apiGroups:
+    - cluster.x-k8s.io
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - clusters
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: capi-webhook-service
+      namespace: '{{ .Release.Namespace }}'
+      path: /mutate-cluster-x-k8s-io-v1beta1-clusterclass
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: default.clusterclass.cluster.x-k8s.io
+{{ if .Values.watchFilter }}
+  objectSelector:
+    matchLabels:
+      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+{{ end }}
+  rules:
+  - apiGroups:
+    - cluster.x-k8s.io
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - clusterclasses
   sideEffects: None
 - admissionReviewVersions:
   - v1

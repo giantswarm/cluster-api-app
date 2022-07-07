@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.7.0
+    controller-gen.kubebuilder.io/version: v0.8.0
   labels:
     app.giantswarm.io/branch: '{{ .Values.project.branch }}'
     app.giantswarm.io/commit: '{{ .Values.project.commit }}'
@@ -40,26 +40,6 @@ spec:
     singular: machine
   scope: Namespaced
   versions:
-    - additionalPrinterColumns:
-        - description: Provider ID
-          jsonPath: .spec.providerID
-          name: ProviderID
-          type: string
-        - description: Machine status such as Terminating/Pending/Running/Failed etc
-          jsonPath: .status.phase
-          name: Phase
-          type: string
-        - description: Node name associated with this machine
-          jsonPath: .status.nodeRef.name
-          name: NodeName
-          priority: 1
-          type: string
-      name: v1alpha2
-      schema: {}
-      served: true
-      storage: false
-      subresources:
-        status: {}
     - additionalPrinterColumns:
         - description: Provider ID
           jsonPath: .spec.providerID
