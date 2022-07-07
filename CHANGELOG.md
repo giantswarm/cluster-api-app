@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Upgraded to cluster-api v1.1.4
+
+### Added
+
+- Configurable image registry via `.images.registry` value
+
 ## [1.1.0] - 2022-05-24
 
 ### Added
