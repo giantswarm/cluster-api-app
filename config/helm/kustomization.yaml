@@ -5,13 +5,13 @@ resources:
 
 images:
   - name: k8s.gcr.io/cluster-api/cluster-api-controller
-    newName: "{{.Values.images.core.name}}"
+    newName: "{{.Values.images.domain}}/{{.Values.images.core.name}}"
     newTag: "{{.Values.images.tag}}"
   - name: k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller
-    newName: "{{.Values.images.bootstrap.name}}"
+    newName: "{{.Values.images.domain}}/{{.Values.images.bootstrap.name}}"
     newTag: "{{.Values.images.tag}}"
   - name: k8s.gcr.io/cluster-api/kubeadm-control-plane-controller
-    newName: "{{.Values.images.controlplane.name}}"
+    newName: "{{.Values.images.domain}}/{{.Values.images.controlplane.name}}"
     newTag: "{{.Values.images.tag}}"
 
 transformers:

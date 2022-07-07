@@ -26,7 +26,7 @@ spec:
         - |
           kubectl delete clusterrole capi-kubeadm-control-plane-aggregated-manager-role --ignore-not-found
           kubectl delete clusterrole capi-aggregated-manager-role --ignore-not-found
-        image: '{{ .Values.registry.domain }}/giantswarm/docker-kubectl:1.23.1'
+        image: '{{ .Values.images.domain }}/giantswarm/docker-kubectl:1.23.1'
         name: delete-roles
       restartPolicy: Never
       serviceAccountName: helm-hook-delete-aggregated-roles
