@@ -14,8 +14,8 @@ metadata:
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
 data:
 {{- range $path, $_ := .Files.Glob "files/core/**.yaml" }}
-  {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}: |
-{{ $.Files.Get $path | indent 4 }}
+  {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}: |
+{{ $.Files.Get $path | indent 4 -}}
 {{- end }}
 ---
 apiVersion: v1
@@ -33,8 +33,8 @@ metadata:
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
 data:
 {{- range $path, $_ := .Files.Glob "files/controlplane/**.yaml" }}
-  {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}: |
-{{ $.Files.Get $path | indent 4 }}
+  {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}: |
+{{ $.Files.Get $path | toJson | indent 4 -}}
 {{- end }}
 ---
 apiVersion: v1
@@ -52,8 +52,8 @@ metadata:
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
 data:
 {{- range $path, $_ := .Files.Glob "files/bootstrap/**.yaml" }}
-  {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}: |
-{{ $.Files.Get $path | indent 4 }}
+  {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}: |
+{{ $.Files.Get $path | indent 4 -}}
 {{- end }}
 ---
 apiVersion: v1

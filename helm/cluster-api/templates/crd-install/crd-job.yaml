@@ -75,7 +75,7 @@ spec:
           name: {{ include "cluster-api.crdInstall" . }}-core
           items:
 {{- range $path, $_ := .Files.Glob "files/core/**.yaml" }}
-          - key: {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}
+          - key: {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}
             path: {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" }}
 {{- end }}
       - name: {{ include "cluster-api.crdInstall" . }}-controlplane
@@ -83,7 +83,7 @@ spec:
           name: {{ include "cluster-api.crdInstall" . }}-controlplane
           items:
 {{- range $path, $_ := .Files.Glob "files/controlplane/**.yaml" }}
-          - key: {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}
+          - key: {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}
             path: {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" }}
 {{- end }}
       - name: {{ include "cluster-api.crdInstall" . }}-bootstrap
@@ -91,7 +91,7 @@ spec:
           name: {{ include "cluster-api.crdInstall" . }}-bootstrap
           items:
 {{- range $path, $_ := .Files.Glob "files/bootstrap/**.yaml" }}
-          - key: {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}
+          - key: {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}
             path: {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" }}
 {{- end }}
       - name: {{ include "cluster-api.crdInstall" . }}-kustomization
