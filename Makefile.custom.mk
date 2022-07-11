@@ -7,6 +7,7 @@ generate:
 	./hack/move-generated-crds.sh
 	./hack/generate-crd-version-patches.sh
 	./hack/wrap-objectselector-in-conditional.sh
+	./hack/convert-to-json.sh
 
 delete-generated-helm-charts:
 	@rm -rf helm/cluster-api/templates/*.yaml

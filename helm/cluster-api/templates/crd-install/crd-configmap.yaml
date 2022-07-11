@@ -13,7 +13,7 @@ metadata:
     {{- include "cluster-api.selectorLabels" . | nindent 4 }}
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
 data:
-{{- range $path, $_ := .Files.Glob "files/core/**.yaml" }}
+{{- range $path, $_ := .Files.Glob "files/core/**.json" }}
   {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}: |
 {{ $.Files.Get $path | indent 4 -}}
 {{- end }}
@@ -32,9 +32,9 @@ metadata:
     {{- include "cluster-api.selectorLabels" . | nindent 4 }}
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
 data:
-{{- range $path, $_ := .Files.Glob "files/controlplane/**.yaml" }}
+{{- range $path, $_ := .Files.Glob "files/controlplane/**.json" }}
   {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}: |
-{{ $.Files.Get $path | toJson | indent 4 -}}
+{{ $.Files.Get $path | indent 4 -}}
 {{- end }}
 ---
 apiVersion: v1
@@ -51,7 +51,7 @@ metadata:
     {{- include "cluster-api.selectorLabels" . | nindent 4 }}
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
 data:
-{{- range $path, $_ := .Files.Glob "files/bootstrap/**.yaml" }}
+{{- range $path, $_ := .Files.Glob "files/bootstrap/**.json" }}
   {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}: |
 {{ $.Files.Get $path | indent 4 -}}
 {{- end }}
@@ -70,7 +70,7 @@ metadata:
     {{- include "cluster-api.selectorLabels" . | nindent 4 }}
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
 data:
-  kustomization.yaml: |
-{{ $.Files.Get "files/kustomization.yaml" | indent 4 }}
+  kustomization.json: |
+{{ $.Files.Get "files/kustomization.json" | indent 4 }}
 ---
 {{- end }}

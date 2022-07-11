@@ -59,8 +59,8 @@ spec:
           subPath: bootstrap
           readOnly: true
         - name: {{ include "cluster-api.crdInstall" . }}-kustomization
-          mountPath: /files/kustomization.yaml
-          subPath: kustomization.yaml
+          mountPath: /files/kustomization.json
+          subPath: kustomization.json
           readOnly: true
         resources:
           requests:
@@ -74,7 +74,7 @@ spec:
         configMap:
           name: {{ include "cluster-api.crdInstall" . }}-core
           items:
-{{- range $path, $_ := .Files.Glob "files/core/**.yaml" }}
+{{- range $path, $_ := .Files.Glob "files/core/**.json" }}
           - key: {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}
             path: {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" }}
 {{- end }}
@@ -82,7 +82,7 @@ spec:
         configMap:
           name: {{ include "cluster-api.crdInstall" . }}-controlplane
           items:
-{{- range $path, $_ := .Files.Glob "files/controlplane/**.yaml" }}
+{{- range $path, $_ := .Files.Glob "files/controlplane/**.json" }}
           - key: {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}
             path: {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" }}
 {{- end }}
@@ -90,7 +90,7 @@ spec:
         configMap:
           name: {{ include "cluster-api.crdInstall" . }}-bootstrap
           items:
-{{- range $path, $_ := .Files.Glob "files/bootstrap/**.yaml" }}
+{{- range $path, $_ := .Files.Glob "files/bootstrap/**.json" }}
           - key: {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}
             path: {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" }}
 {{- end }}
@@ -98,8 +98,8 @@ spec:
         configMap:
           name: {{ include "cluster-api.crdInstall" . }}-kustomization
           items:
-          - key: kustomization.yaml
-            path: kustomization.yaml
+          - key: kustomization.json
+            path: kustomization.json
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}
