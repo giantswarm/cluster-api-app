@@ -1,16 +1,8 @@
-{{/*
-We have to create individual configmaps for each CRD - they exceed the total
-allowed length for a configmap if they are combined.
-*/}}
-{{ $currentScope := . }}
 {{- if .Values.crds.install }}
-  {{- range $path, $_ := .Files.Glob "files/**.yaml" }}
-    {{- with $currentScope }}
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "cluster-api.crdInstall" . }}-{{ printf "%s-%s" (base (dir $path)) (trimSuffix ".yaml" (base $path) | trunc 63) }}
+  name: {{ include "cluster-api.crdInstall" . }}-core
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
@@ -21,8 +13,64 @@ metadata:
     {{- include "cluster-api.selectorLabels" . | nindent 4 }}
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
 data:
-  content: |
-{{ tpl ($.Files.Get $path) . | indent 4 }}
-    {{- end }}
-  {{- end }}
+{{- range $path, $_ := .Files.Glob "files/core/**.yaml" }}
+  {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}: |
+{{ $.Files.Get $path | indent 4 }}
+{{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cluster-api.crdInstall" . }}-controlplane
+  namespace: {{ .Release.Namespace | quote }}
+  annotations:
+    # create hook dependencies in the right order
+    "helm.sh/hook-weight": "-5"
+    {{- include "cluster-api.CRDInstallAnnotations" . | nindent 4 }}
+  labels:
+    app.kubernetes.io/component: {{ include "cluster-api.crdInstall" . | quote }}
+    {{- include "cluster-api.selectorLabels" . | nindent 4 }}
+    role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
+data:
+{{- range $path, $_ := .Files.Glob "files/controlplane/**.yaml" }}
+  {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}: |
+{{ $.Files.Get $path | indent 4 }}
+{{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cluster-api.crdInstall" . }}-bootstrap
+  namespace: {{ .Release.Namespace | quote }}
+  annotations:
+    # create hook dependencies in the right order
+    "helm.sh/hook-weight": "-5"
+    {{- include "cluster-api.CRDInstallAnnotations" . | nindent 4 }}
+  labels:
+    app.kubernetes.io/component: {{ include "cluster-api.crdInstall" . | quote }}
+    {{- include "cluster-api.selectorLabels" . | nindent 4 }}
+    role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
+data:
+{{- range $path, $_ := .Files.Glob "files/bootstrap/**.yaml" }}
+  {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}: |
+{{ $.Files.Get $path | indent 4 }}
+{{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cluster-api.crdInstall" . }}-kustomization
+  namespace: {{ .Release.Namespace | quote }}
+  annotations:
+    # create hook dependencies in the right order
+    "helm.sh/hook-weight": "-5"
+    {{- include "cluster-api.CRDInstallAnnotations" . | nindent 4 }}
+  labels:
+    app.kubernetes.io/component: {{ include "cluster-api.crdInstall" . | quote }}
+    {{- include "cluster-api.selectorLabels" . | nindent 4 }}
+    role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
+data:
+  kustomization.yaml: |
+{{ $.Files.Get "files/kustomization.yaml" | indent 4 }}
+---
 {{- end }}

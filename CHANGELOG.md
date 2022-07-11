@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Merge CRD install configmaps to avoid API rate limiting
+
 ### Added
 
 - `schema-gen` Make target for generating values schema

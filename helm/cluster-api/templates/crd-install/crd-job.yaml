@@ -46,12 +46,22 @@ spec:
             kubectl rollout restart -n giantswarm "$deployment"
           done
         volumeMounts:
-{{- range $path, $_ := $.Files.Glob "files/**.yaml" }}
-        - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-")) | trunc 63 }}
-          mountPath: /{{ $path }}
-          subPath: {{base $path }}
+        - name: {{ include "cluster-api.crdInstall" . }}-core
+          mountPath: /files/core
+          subPath: core
           readOnly: true
-{{- end }}
+        - name: {{ include "cluster-api.crdInstall" . }}-controlplane
+          mountPath: /files/controlplane
+          subPath: controlplane
+          readOnly: true
+        - name: {{ include "cluster-api.crdInstall" . }}-bootstrap
+          mountPath: /files/bootstrap
+          subPath: bootstrap
+          readOnly: true
+        - name: {{ include "cluster-api.crdInstall" . }}-kustomization
+          mountPath: /files/kustomization.yaml
+          subPath: kustomization.yaml
+          readOnly: true
         resources:
           requests:
             cpu: 100m
@@ -60,17 +70,36 @@ spec:
             cpu: 500m
             memory: 512Mi
       volumes:
-{{ $currentScope := . }}
-{{- range $path, $_ := .Files.Glob "files/**.yaml" }}
-    {{- with $currentScope }}
-      - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-")) | trunc 63 }}
+      - name: {{ include "cluster-api.crdInstall" . }}-core
         configMap:
-          name: {{ include "cluster-api.crdInstall" . }}-{{ printf "%s-%s" (base (dir $path)) (trimSuffix ".yaml" (base $path) | trunc 63) }}
+          name: {{ include "cluster-api.crdInstall" . }}-core
           items:
-          - key: content
-            path: {{ $path | base }}
+{{- range $path, $_ := .Files.Glob "files/core/**.yaml" }}
+          - key: {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}
+            path: {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" }}
 {{- end }}
+      - name: {{ include "cluster-api.crdInstall" . }}-controlplane
+        configMap:
+          name: {{ include "cluster-api.crdInstall" . }}-controlplane
+          items:
+{{- range $path, $_ := .Files.Glob "files/controlplane/**.yaml" }}
+          - key: {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}
+            path: {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" }}
 {{- end }}
+      - name: {{ include "cluster-api.crdInstall" . }}-bootstrap
+        configMap:
+          name: {{ include "cluster-api.crdInstall" . }}-bootstrap
+          items:
+{{- range $path, $_ := .Files.Glob "files/bootstrap/**.yaml" }}
+          - key: {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "~" }}
+            path: {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" }}
+{{- end }}
+      - name: {{ include "cluster-api.crdInstall" . }}-kustomization
+        configMap:
+          name: {{ include "cluster-api.crdInstall" . }}-kustomization
+          items:
+          - key: kustomization.yaml
+            path: kustomization.yaml
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}
