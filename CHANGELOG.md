@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Merge CRD install configmaps to avoid API rate limiting
 
+## [1.4.0] - 2022-07-11
+
+### Changed
+
+- Update CAPI to v1.1.5
+
 ### Added
 
 - `schema-gen` Make target for generating values schema
@@ -76,7 +82,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.0.4...v1.1.0
