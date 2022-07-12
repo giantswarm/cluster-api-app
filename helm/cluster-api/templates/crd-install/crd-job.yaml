@@ -41,6 +41,9 @@ spec:
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
 
+          sleep 9999
+
+
           kubectl apply -k /files 2>&1
 
           # After updating CRDs the cluster-operator will sometimes stop reconciling CRDs,
