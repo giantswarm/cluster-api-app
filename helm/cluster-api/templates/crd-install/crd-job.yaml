@@ -23,6 +23,7 @@ spec:
       securityContext:
         runAsUser: 65534
         runAsGroup: 65534
+        fsGroup: 0
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
