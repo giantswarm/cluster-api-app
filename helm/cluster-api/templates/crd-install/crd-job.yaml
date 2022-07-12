@@ -36,13 +36,9 @@ spec:
           tar xzf core.tar.gz
           tar xzf bootstrap.tar.gz
           tar xzf controlplane.tar.gz
-          cd /
 
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
-
-          sleep 9999
-
 
           kubectl apply -k /files 2>&1
 
