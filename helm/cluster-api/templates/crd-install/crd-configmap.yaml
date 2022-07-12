@@ -12,11 +12,9 @@ metadata:
     app.kubernetes.io/component: {{ include "cluster-api.crdInstall" . | quote }}
     {{- include "cluster-api.selectorLabels" . | nindent 4 }}
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
-data:
-{{- range $path, $_ := .Files.Glob "files/core/**.json" }}
-  {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}: |
-{{ $.Files.Get $path | indent 4 -}}
-{{- end }}
+binaryData:
+  core.tar.gz: |
+{{ (.Files.Get "files/core.tar.gz" | b64enc | indent 4)}}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -31,11 +29,9 @@ metadata:
     app.kubernetes.io/component: {{ include "cluster-api.crdInstall" . | quote }}
     {{- include "cluster-api.selectorLabels" . | nindent 4 }}
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
-data:
-{{- range $path, $_ := .Files.Glob "files/controlplane/**.json" }}
-  {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}: |
-{{ $.Files.Get $path | indent 4 -}}
-{{- end }}
+binaryData:
+  controlplane.tar.gz: |
+{{ (.Files.Get "files/controlplane.tar.gz" | b64enc | indent 4)}}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -50,11 +46,9 @@ metadata:
     app.kubernetes.io/component: {{ include "cluster-api.crdInstall" . | quote }}
     {{- include "cluster-api.selectorLabels" . | nindent 4 }}
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
-data:
-{{- range $path, $_ := .Files.Glob "files/bootstrap/**.json" }}
-  {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}: |
-{{ $.Files.Get $path | indent 4 -}}
-{{- end }}
+binaryData:
+  bootstrap.tar.gz: |
+{{ (.Files.Get "files/bootstrap.tar.gz" | b64enc | indent 4)}}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -70,7 +64,7 @@ metadata:
     {{- include "cluster-api.selectorLabels" . | nindent 4 }}
     role: {{ include "cluster-api.CRDInstallSelector" . | quote }}
 data:
-  kustomization.json: |
-{{ $.Files.Get "files/kustomization.json" | indent 4 }}
+  kustomization.yaml: |
+{{ $.Files.Get "files/kustomization.yaml" | indent 4 }}
 ---
 {{- end }}

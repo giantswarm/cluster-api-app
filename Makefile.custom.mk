@@ -7,7 +7,7 @@ generate:
 	./hack/move-generated-crds.sh
 	./hack/generate-crd-version-patches.sh
 	./hack/wrap-objectselector-in-conditional.sh
-	./hack/convert-to-json.sh
+	./hack/archive.sh
 
 delete-generated-helm-charts:
 	@rm -rf helm/cluster-api/templates/*.yaml
@@ -24,8 +24,12 @@ release-manifests: $(CRD_BUILD_DIR) ## Builds the manifests to publish with a re
 
 .PHONY: verify
 verify: generate
-	@if !(git diff --quiet HEAD); then \
-		git diff; \
+	@if !(git diff --quiet HEAD -- ':!*.tar.gz'); then \
+		git diff -- ':!*.tar.gz'; \
+		echo "generated files are out of date, run make generate"; exit 1; \
+	fi
+	@if !(git diff --binary HEAD -- ':*.tar.gz'); then \
+		git diff --binary -- ':*.tar.gz'; \
 		echo "generated files are out of date, run make generate"; exit 1; \
 	fi
 

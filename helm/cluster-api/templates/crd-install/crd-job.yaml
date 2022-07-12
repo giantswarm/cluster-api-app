@@ -35,6 +35,11 @@ spec:
         - |
           set -o errexit ; set -o xtrace ; set -o nounset
 
+          cd /files
+          tar xzf core.tar.gz
+          tar xzf bootstrap.tar.gz
+          tar xzf controlplane.tar.gz
+
           # piping stderr to stdout means kubectl's errors are surfaced
           # in the pod's logs.
 
@@ -47,20 +52,20 @@ spec:
           done
         volumeMounts:
         - name: {{ include "cluster-api.crdInstall" . }}-core
-          mountPath: /files/core
-          subPath: core
+          mountPath: /files/core.tar.gz
+          subPath: core.tar.gz
           readOnly: true
         - name: {{ include "cluster-api.crdInstall" . }}-controlplane
-          mountPath: /files/controlplane
-          subPath: controlplane
+          mountPath: /files/controlplane.tar.gz
+          subPath: controlplane.tar.gz
           readOnly: true
         - name: {{ include "cluster-api.crdInstall" . }}-bootstrap
-          mountPath: /files/bootstrap
-          subPath: bootstrap
+          mountPath: /files/bootstrap.tar.gz
+          subPath: bootstrap.tar.gz
           readOnly: true
         - name: {{ include "cluster-api.crdInstall" . }}-kustomization
-          mountPath: /files/kustomization.json
-          subPath: kustomization.json
+          mountPath: /files/kustomization.yaml
+          subPath: kustomization.yaml
           readOnly: true
         resources:
           requests:
@@ -74,32 +79,26 @@ spec:
         configMap:
           name: {{ include "cluster-api.crdInstall" . }}-core
           items:
-{{- range $path, $_ := .Files.Glob "files/core/**.json" }}
-          - key: {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}
-            path: {{ printf "%s/%s" (trimPrefix "files/core" (dir $path)) (base $path) | trimPrefix "/" }}
-{{- end }}
+          - key: core.tar.gz
+            path: core.tar.gz
       - name: {{ include "cluster-api.crdInstall" . }}-controlplane
         configMap:
           name: {{ include "cluster-api.crdInstall" . }}-controlplane
           items:
-{{- range $path, $_ := .Files.Glob "files/controlplane/**.json" }}
-          - key: {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}
-            path: {{ printf "%s/%s" (trimPrefix "files/controlplane" (dir $path)) (base $path) | trimPrefix "/" }}
-{{- end }}
+          - key: controlplane.tar.gz
+            path: controlplane.tar.gz
       - name: {{ include "cluster-api.crdInstall" . }}-bootstrap
         configMap:
           name: {{ include "cluster-api.crdInstall" . }}-bootstrap
           items:
-{{- range $path, $_ := .Files.Glob "files/bootstrap/**.json" }}
-          - key: {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" | replace "/" "__" }}
-            path: {{ printf "%s/%s" (trimPrefix "files/bootstrap" (dir $path)) (base $path) | trimPrefix "/" }}
-{{- end }}
+          - key: bootstrap.tar.gz
+            path: bootstrap.tar.gz
       - name: {{ include "cluster-api.crdInstall" . }}-kustomization
         configMap:
           name: {{ include "cluster-api.crdInstall" . }}-kustomization
           items:
-          - key: kustomization.json
-            path: kustomization.json
+          - key: kustomization.yaml
+            path: kustomization.yaml
       restartPolicy: Never
   backoffLimit: 4
 {{- end }}

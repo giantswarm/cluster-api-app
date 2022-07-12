@@ -1,0 +1,74 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
+    controller-gen.kubebuilder.io/version: v0.8.0
+  labels:
+    app.giantswarm.io/branch: '{{ .Values.project.branch }}'
+    app.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    cluster.x-k8s.io/provider: cluster-api
+    helm.sh/chart: cluster-api
+  name: clusterresourcesets.addons.cluster.x-k8s.io
+spec:
+  conversion:
+    strategy: Webhook
+    webhook:
+      clientConfig:
+        caBundle: Cg==
+        service:
+          name: capi-webhook-service
+          namespace: '{{ .Release.Namespace }}'
+          path: /convert
+          port: 443
+      conversionReviewVersions:
+        - v1
+        - v1beta1
+  group: addons.cluster.x-k8s.io
+  names:
+    categories:
+      - cluster-api
+    kind: ClusterResourceSet
+    listKind: ClusterResourceSetList
+    plural: clusterresourcesets
+    singular: clusterresourceset
+  scope: Namespaced
+  versions:
+    - name: v1alpha3
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        status: {}
+    - additionalPrinterColumns:
+        - description: Time duration since creation of ClusterResourceSet
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1alpha4
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        status: {}
+    - additionalPrinterColumns:
+        - description: Time duration since creation of ClusterResourceSet
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1beta1
+      schema: {}
+      served: true
+      storage: true
+      subresources:
+        status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
