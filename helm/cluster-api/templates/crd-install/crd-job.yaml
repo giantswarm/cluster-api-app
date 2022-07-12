@@ -25,7 +25,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: kubectl
-        image: "{{ .Values.images.domain }}/giantswarm/docker-kubectl:latest"
+        image: "{{ .Values.images.domain }}/giantswarm/docker-kubectl:1.24.2"
         command:
         - sh
         - -c
