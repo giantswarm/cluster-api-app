@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Enable ignition feature gate.
+
 ## [1.5.1] - 2022-07-13
 
 ### Changed
 
-- Use `kubectl` container retagged image. 
+- Use `kubectl` container retagged image.
 
 ## [1.5.0] - 2022-07-12
 

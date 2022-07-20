@@ -29,7 +29,7 @@ spec:
       containers:
       - args:
         - --metrics-bind-addr=0.0.0.0:8080
-        - --feature-gates=MachinePool=true
+        - --feature-gates=MachinePool=true,KubeadmBootstrapFormatIgnition=true
         - --watch-filter={{ .Values.watchFilter }}
         - --v=0
         command:
