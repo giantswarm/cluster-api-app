@@ -1,6 +1,5 @@
-# Generate kustomize patches and all helm charts
 .PHONY: generate
-generate:
+generate: ## Generate kustomize patches and all helm charts
 	./hack/generate-kustomize-patches.sh
 	$(MAKE) delete-generated-helm-charts
 	kustomize build config/helm -o helm/cluster-api/templates
