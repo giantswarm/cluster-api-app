@@ -182,7 +182,7 @@
                       description: FeatureGates enabled by the user.
                       type: object
                     imageRepository:
-                      description: ImageRepository sets the container registry to pull images from. If empty, `k8s.gcr.io` will be used by default; in case of kubernetes version is a CI build (kubernetes version starts with `ci/` or `ci-cross/`) `gcr.io/k8s-staging-ci-images` will be used as a default for control plane components and for kube-proxy, while `k8s.gcr.io` will be used for all the other images.
+                      description: ImageRepository sets the container registry to pull images from. If empty, `registry.k8s.io` will be used by default; in case of kubernetes version is a CI build (kubernetes version starts with `ci/` or `ci-cross/`) `gcr.io/k8s-staging-ci-images` will be used as a default for control plane components and for kube-proxy, while `registry.k8s.io` will be used for all the other images.
                       type: string
                     kind:
                       description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
@@ -304,6 +304,9 @@
                   items:
                     description: File defines the input for generating write_files in cloud-init.
                     properties:
+                      append:
+                        description: Append specifies whether to append Content to existing file if Path exists.
+                        type: boolean
                       content:
                         description: Content is the actual content of the file.
                         type: string
@@ -347,7 +350,6 @@
                     type: object
                   type: array
                 format:
-                  default: cloud-config
                   description: Format specifies the output format of the bootstrap data
                   enum:
                     - cloud-config
@@ -469,6 +471,11 @@
                           description: Directory is a path to a directory that contains files named "target[suffix][+patchtype].extension". For example, "kube-apiserver0+merge.yaml" or just "etcd.json". "target" can be one of "kube-apiserver", "kube-controller-manager", "kube-scheduler", "etcd". "patchtype" can be one of "strategic" "merge" or "json" and they match the patch formats supported by kubectl. The default "patchtype" is "strategic". "extension" must be either "json" or "yaml". "suffix" is an optional string that can be used to determine which patches are applied first alpha-numerically. These files can be written into the target directory via KubeadmConfig.Files which specifies additional files to be created on the machine, either with content inline or by referencing a secret.
                           type: string
                       type: object
+                    skipPhases:
+                      description: SkipPhases is a list of phases to skip during command execution. The list of phases can be obtained with the "kubeadm init --help" command. This option takes effect only on Kubernetes >=1.22.0.
+                      items:
+                        type: string
+                      type: array
                   type: object
                 joinConfiguration:
                   description: JoinConfiguration is the kubeadm configuration for the join command
@@ -586,6 +593,11 @@
                           description: Directory is a path to a directory that contains files named "target[suffix][+patchtype].extension". For example, "kube-apiserver0+merge.yaml" or just "etcd.json". "target" can be one of "kube-apiserver", "kube-controller-manager", "kube-scheduler", "etcd". "patchtype" can be one of "strategic" "merge" or "json" and they match the patch formats supported by kubectl. The default "patchtype" is "strategic". "extension" must be either "json" or "yaml". "suffix" is an optional string that can be used to determine which patches are applied first alpha-numerically. These files can be written into the target directory via KubeadmConfig.Files which specifies additional files to be created on the machine, either with content inline or by referencing a secret.
                           type: string
                       type: object
+                    skipPhases:
+                      description: SkipPhases is a list of phases to skip during command execution. The list of phases can be obtained with the "kubeadm init --help" command. This option takes effect only on Kubernetes >=1.22.0.
+                      items:
+                        type: string
+                      type: array
                   type: object
                 mounts:
                   description: Mounts specifies a list of mount points to be setup.
@@ -618,7 +630,7 @@
                     type: string
                   type: array
                 useExperimentalRetryJoin:
-                  description: "UseExperimentalRetryJoin replaces a basic kubeadm command with a shell script with retries for joins. \n This is meant to be an experimental temporary workaround on some environments where joins fail due to timing (and other issues). The long term goal is to add retries to kubeadm proper and use that functionality. \n This will add about 40KB to userdata \n For more information, refer to https://github.com/kubernetes-sigs/cluster-api/pull/2763#discussion_r397306055."
+                  description: "UseExperimentalRetryJoin replaces a basic kubeadm command with a shell script with retries for joins. \n This is meant to be an experimental temporary workaround on some environments where joins fail due to timing (and other issues). The long term goal is to add retries to kubeadm proper and use that functionality. \n This will add about 40KB to userdata \n For more information, refer to https://github.com/kubernetes-sigs/cluster-api/pull/2763#discussion_r397306055. Deprecated: This experimental fix is no longer needed and this field will be removed in a future release."
                   type: boolean
                 users:
                   description: Users specifies extra users to add
@@ -646,6 +658,25 @@
                       passwd:
                         description: Passwd specifies a hashed password for the user
                         type: string
+                      passwdFrom:
+                        description: PasswdFrom is a referenced source of passwd to populate the passwd.
+                        properties:
+                          secret:
+                            description: Secret represents a secret that should populate this password.
+                            properties:
+                              key:
+                                description: Key is the key in the secret's data map for this value.
+                                type: string
+                              name:
+                                description: Name of the secret in the KubeadmBootstrapConfig's namespace to use.
+                                type: string
+                            required:
+                              - key
+                              - name
+                            type: object
+                        required:
+                          - secret
+                        type: object
                       primaryGroup:
                         description: PrimaryGroup specifies the primary group for the user
                         type: string
@@ -697,6 +728,7 @@
                       description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
                       type: string
                   type: object
+                  x-kubernetes-map-type: atomic
                 metadata:
                   description: 'Standard object''s metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata'
                   properties:
@@ -711,6 +743,9 @@
                       description: 'Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
                       type: object
                   type: object
+                nodeDeletionTimeout:
+                  description: NodeDeletionTimeout defines how long the machine controller will attempt to delete the Node that the Machine hosts after the Machine is marked for deletion. A duration of 0 will retry deletion indefinitely. If no value is provided, the default value for this property of the Machine resource will be used.
+                  type: string
                 nodeDrainTimeout:
                   description: 'NodeDrainTimeout is the total amount of time that the controller will spend on draining a controlplane node The default value is 0, meaning that the node can be drained without any time limitations. NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`'
                   type: string

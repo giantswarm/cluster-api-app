@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.8.0
+    controller-gen.kubebuilder.io/version: v0.9.1
   labels:
     app.giantswarm.io/branch: '{{ .Values.project.branch }}'
     app.giantswarm.io/commit: '{{ .Values.project.commit }}'
@@ -115,6 +115,11 @@ spec:
           jsonPath: .spec.clusterName
           name: Cluster
           type: string
+        - description: Total number of machines desired by this MachineDeployment
+          jsonPath: .spec.replicas
+          name: Desired
+          priority: 10
+          type: integer
         - description: Total number of non-terminated machines targeted by this MachineDeployment
           jsonPath: .status.replicas
           name: Replicas
@@ -153,9 +158,3 @@ spec:
           specReplicasPath: .spec.replicas
           statusReplicasPath: .status.replicas
         status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

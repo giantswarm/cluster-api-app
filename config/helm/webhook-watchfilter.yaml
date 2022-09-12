@@ -20,15 +20,19 @@ webhooks:
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-  - name: default.machinepool.cluster.x-k8s.io
-    objectSelector:
-      matchLabels:
-        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.cluster.cluster.x-k8s.io
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: default.clusterclass.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: default.extensionconfig.runtime.addons.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: default.machinepool.cluster.x-k8s.io
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
@@ -58,10 +62,6 @@ webhooks:
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-  - name: validation.machinepool.cluster.x-k8s.io
-    objectSelector:
-      matchLabels:
-        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.cluster.cluster.x-k8s.io
     objectSelector:
       matchLabels:
@@ -70,7 +70,37 @@ webhooks:
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: validation.extensionconfig.runtime.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: validation.machinepool.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.clusterresourceset.addons.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: validation.ipaddress.ipam.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: validation.ipaddressclaim.ipam.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: capi-kubeadm-bootstrap-mutating-webhook-configuration
+webhooks:
+  - name: default.kubeadmconfig.bootstrap.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: default.kubeadmconfigtemplate.bootstrap.cluster.x-k8s.io
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
