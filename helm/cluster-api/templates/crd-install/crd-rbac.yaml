@@ -38,6 +38,7 @@ rules:
   - get
   - patch
   - list
+{{- if .Capabilities.APIVersions.Has "policy/v1beta1/PodSecurityPolicy" }}
 - apiGroups:
   - policy
   resources:
@@ -46,6 +47,7 @@ rules:
   - {{ include "cluster-api.crdInstall" . }}
   verbs:
   - use
+{{- end }}
 - apiGroups:
   - apps
   - extensions
