@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2022-10-04
+
 ### Changed
 
 - `PodSecurityPolicy` are removed on newer k8s versions, so only apply it in the `crd-install` job if object is registered in the k8s API.
@@ -106,7 +108,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.3...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.3...v1.6.0
 [1.5.3]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.2...v1.5.3
 [1.5.2]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.1...v1.5.2
 [1.5.1]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.0...v1.5.1
