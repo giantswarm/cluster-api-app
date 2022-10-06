@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.0] - 2022-10-06
+
 ## [1.6.0] - 2022-10-04
 
 ### Changed
@@ -108,7 +110,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.3...v1.6.0
 [1.5.3]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.2...v1.5.3
 [1.5.2]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.1...v1.5.2
