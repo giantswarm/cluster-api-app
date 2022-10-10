@@ -12,6 +12,8 @@ metadata:
     app.kubernetes.io/name: cluster-api
     app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
     cluster.x-k8s.io/provider: cluster-api
+    clusterctl.cluster.x-k8s.io: ""
+    clusterctl.cluster.x-k8s.io/move: ""
     helm.sh/chart: cluster-api
   name: machines.cluster.x-k8s.io
 spec:
