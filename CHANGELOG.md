@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Set Helm chart ownership to team hydra.
+
 ## [1.8.1] - 2022-10-18
 
 ### Changed
