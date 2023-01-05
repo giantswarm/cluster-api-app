@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Add mechanism for specifying tag per deployment.
+
 ## [1.8.2] - 2022-11-22
 
 ### Changed

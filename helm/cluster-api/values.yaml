@@ -6,6 +6,7 @@ images:
     name: giantswarm/cluster-api-controller
   bootstrap:
     name: giantswarm/kubeadm-bootstrap-controller
+    tag: 1.2.4-gs-2d415eda1545cf37455bd13a6156d39c72ec094d
   controlplane:
     name: giantswarm/kubeadm-control-plane-controller
   tag: v1.2.4
