@@ -6,6 +6,10 @@ images:
     name: giantswarm/cluster-api-controller
   bootstrap:
     name: giantswarm/kubeadm-bootstrap-controller
+    # In order to mitigate kubeadm token expiry issue,
+    # custom image version from a should be used until the following the PR is merged.
+    # https://github.com/giantswarm/roadmap/issues/1720
+    # https://github.com/kubernetes-sigs/cluster-api/pull/7717
     tag: 1.2.4-gs-2d415eda1545cf37455bd13a6156d39c72ec094d
   controlplane:
     name: giantswarm/kubeadm-control-plane-controller
