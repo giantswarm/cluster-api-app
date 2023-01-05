@@ -14,6 +14,7 @@ spec:
             - --feature-gates=MachinePool=true,ClusterResourceSet=true,ClusterTopology=true
             - --watch-filter={{ .Values.watchFilter }}
             - --v=0
+          image: '{{.Values.images.domain}}/{{.Values.images.core.name}}:{{.Values.images.core.tag | default .Values.images.tag}}'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -30,7 +31,7 @@ spec:
             - --feature-gates=MachinePool=true,KubeadmBootstrapFormatIgnition=true
             - --watch-filter={{ .Values.watchFilter }}
             - --v=0
-
+          image: '{{.Values.images.domain}}/{{.Values.images.bootstrap.name}}:{{.Values.images.bootstrap.tag | default .Values.images.tag}}'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -47,3 +48,4 @@ spec:
             - --feature-gates=ClusterTopology=true,KubeadmBootstrapFormatIgnition=true
             - --watch-filter={{ .Values.watchFilter }}
             - --v=0
+          image: '{{.Values.images.domain}}/{{.Values.images.controlplane.name}}:{{.Values.images.controlplane.tag | default .Values.images.tag}}'

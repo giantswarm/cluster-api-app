@@ -34,7 +34,8 @@ spec:
         - --v=0
         command:
         - /manager
-        image: '{{.Values.images.domain}}/{{.Values.images.bootstrap.name}}:{{.Values.images.bootstrap.tag | default .Values.images.tag}}'
+        image: '{{.Values.images.domain}}/{{.Values.images.bootstrap.name}}:{{.Values.images.bootstrap.tag
+          | default .Values.images.tag}}'
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
