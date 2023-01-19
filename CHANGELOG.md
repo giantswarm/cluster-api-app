@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update `giantswarm/kubectl` (used for installing CRDs) version to v1.24.9.
+
 ## [1.8.3] - 2023-01-06
 
 ### Changed
