@@ -182,7 +182,7 @@
                       description: FeatureGates enabled by the user.
                       type: object
                     imageRepository:
-                      description: ImageRepository sets the container registry to pull images from. If empty, `registry.k8s.io` will be used by default; in case of kubernetes version is a CI build (kubernetes version starts with `ci/` or `ci-cross/`) `gcr.io/k8s-staging-ci-images` will be used as a default for control plane components and for kube-proxy, while `registry.k8s.io` will be used for all the other images.
+                      description: 'ImageRepository sets the container registry to pull images from. * If not set, the default registry of kubeadm will be used, i.e. * registry.k8s.io (new registry): >= v1.22.17, >= v1.23.15, >= v1.24.9, >= v1.25.0 * k8s.gcr.io (old registry): all older versions Please note that when imageRepository is not set we don''t allow upgrades to versions >= v1.22.0 which use the old registry (k8s.gcr.io). Please use a newer patch version with the new registry instead (i.e. >= v1.22.17, >= v1.23.15, >= v1.24.9, >= v1.25.0). * If the version is a CI build (kubernetes version starts with `ci/` or `ci-cross/`) `gcr.io/k8s-staging-ci-images` will be used as a default for control plane components and for kube-proxy, while `registry.k8s.io` will be used for all the other images.'
                       type: string
                     kind:
                       description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
@@ -441,7 +441,7 @@
                           description: Name is the `.Metadata.Name` field of the Node API object that will be created in this `kubeadm init` or `kubeadm join` operation. This field is also used in the CommonName field of the kubelet's client certificate to the API server. Defaults to the hostname of the node if not provided.
                           type: string
                         taints:
-                          description: 'Taints specifies the taints the Node API object should be registered with. If this field is unset, i.e. nil, in the `kubeadm init` process it will be defaulted to []v1.Taint{''node-role.kubernetes.io/master=""''}. If you don''t want to taint your control-plane node, set this field to an empty slice, i.e. `taints: {}` in the YAML file. This field is solely used for Node registration.'
+                          description: 'Taints specifies the taints the Node API object should be registered with. If this field is unset, i.e. nil, in the `kubeadm init` process it will be defaulted to []v1.Taint{''node-role.kubernetes.io/master=""''}. If you don''t want to taint your control-plane node, set this field to an empty slice, i.e. `taints: []` in the YAML file. This field is solely used for Node registration.'
                           items:
                             description: The node this Taint is attached to has the "effect" on any pod that does not tolerate the Taint.
                             properties:
@@ -563,7 +563,7 @@
                           description: Name is the `.Metadata.Name` field of the Node API object that will be created in this `kubeadm init` or `kubeadm join` operation. This field is also used in the CommonName field of the kubelet's client certificate to the API server. Defaults to the hostname of the node if not provided.
                           type: string
                         taints:
-                          description: 'Taints specifies the taints the Node API object should be registered with. If this field is unset, i.e. nil, in the `kubeadm init` process it will be defaulted to []v1.Taint{''node-role.kubernetes.io/master=""''}. If you don''t want to taint your control-plane node, set this field to an empty slice, i.e. `taints: {}` in the YAML file. This field is solely used for Node registration.'
+                          description: 'Taints specifies the taints the Node API object should be registered with. If this field is unset, i.e. nil, in the `kubeadm init` process it will be defaulted to []v1.Taint{''node-role.kubernetes.io/master=""''}. If you don''t want to taint your control-plane node, set this field to an empty slice, i.e. `taints: []` in the YAML file. This field is solely used for Node registration.'
                           items:
                             description: The node this Taint is attached to has the "effect" on any pod that does not tolerate the Taint.
                             properties:
@@ -630,7 +630,7 @@
                     type: string
                   type: array
                 useExperimentalRetryJoin:
-                  description: "UseExperimentalRetryJoin replaces a basic kubeadm command with a shell script with retries for joins. \n This is meant to be an experimental temporary workaround on some environments where joins fail due to timing (and other issues). The long term goal is to add retries to kubeadm proper and use that functionality. \n This will add about 40KB to userdata \n For more information, refer to https://github.com/kubernetes-sigs/cluster-api/pull/2763#discussion_r397306055. Deprecated: This experimental fix is no longer needed and this field will be removed in a future release."
+                  description: "UseExperimentalRetryJoin replaces a basic kubeadm command with a shell script with retries for joins. \n This is meant to be an experimental temporary workaround on some environments where joins fail due to timing (and other issues). The long term goal is to add retries to kubeadm proper and use that functionality. \n This will add about 40KB to userdata \n For more information, refer to https://github.com/kubernetes-sigs/cluster-api/pull/2763#discussion_r397306055. \n Deprecated: This experimental fix is no longer needed and this field will be removed in a future release. When removing also remove from staticcheck exclude-rules for SA1019 in golangci.yml"
                   type: boolean
                 users:
                   description: Users specifies extra users to add
@@ -749,6 +749,9 @@
                 nodeDrainTimeout:
                   description: 'NodeDrainTimeout is the total amount of time that the controller will spend on draining a controlplane node The default value is 0, meaning that the node can be drained without any time limitations. NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`'
                   type: string
+                nodeVolumeDetachTimeout:
+                  description: NodeVolumeDetachTimeout is the total amount of time that the controller will spend on waiting for all volumes to be detached. The default value is 0, meaning that the volumes can be detached without any time limitations.
+                  type: string
               required:
                 - infrastructureRef
               type: object
@@ -760,6 +763,14 @@
               description: RolloutAfter is a field to indicate a rollout should be performed after the specified time even if no changes have been made to the KubeadmControlPlane.
               format: date-time
               type: string
+            rolloutBefore:
+              description: RolloutBefore is a field to indicate a rollout should be performed if the specified criteria is met.
+              properties:
+                certificatesExpiryDays:
+                  description: CertificatesExpiryDays indicates a rollout needs to be performed if the certificates of the machine will expire within the specified days.
+                  format: int32
+                  type: integer
+              type: object
             rolloutStrategy:
               default:
                 rollingUpdate:
@@ -782,7 +793,7 @@
                   type: string
               type: object
             version:
-              description: Version defines the desired Kubernetes version.
+              description: 'Version defines the desired Kubernetes version. Please note that if kubeadmConfigSpec.ClusterConfiguration.imageRepository is not set we don''t allow upgrades to versions >= v1.22.0 for which kubeadm uses the old registry (k8s.gcr.io). Please use a newer patch version with the new registry instead. The default registries of kubeadm are: * registry.k8s.io (new registry): >= v1.22.17, >= v1.23.15, >= v1.24.9, >= v1.25.0 * k8s.gcr.io (old registry): all older versions'
               type: string
           required:
             - kubeadmConfigSpec
