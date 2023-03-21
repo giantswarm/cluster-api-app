@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Remove known broken `creationTimestamp: "null"` fields that kustomize 5.0.0+ is rendering as string rather than `nil` values
+
 ## [1.9.0] - 2023-01-25
 
 ### Changed
