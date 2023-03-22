@@ -70,3 +70,9 @@ patches:
     target:
       kind: CustomResourceDefinition
       labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
+  - target:
+      kind: CustomResourceDefinition
+      name: (ipaddressclaims\.ipam|extensionconfigs\.runtime|ipaddresses\.ipam).cluster.x-k8s.io
+    patch: |-
+      - op: remove
+        path: /metadata/creationTimestamp
