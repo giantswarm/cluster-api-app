@@ -18,6 +18,20 @@
             template:
               description: KubeadmConfigTemplateResource defines the Template structure.
               properties:
+                metadata:
+                  description: 'Standard object''s metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata'
+                  properties:
+                    annotations:
+                      additionalProperties:
+                        type: string
+                      description: 'Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+                      type: object
+                    labels:
+                      additionalProperties:
+                        type: string
+                      description: 'Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels'
+                      type: object
+                  type: object
                 spec:
                   description: KubeadmConfigSpec defines the desired state of KubeadmConfig. Either ClusterConfiguration and InitConfiguration should be defined or the JoinConfiguration should be defined.
                   properties:
@@ -435,6 +449,13 @@
                               items:
                                 type: string
                               type: array
+                            imagePullPolicy:
+                              description: ImagePullPolicy specifies the policy for image pulling during kubeadm "init" and "join" operations. The value of this field must be one of "Always", "IfNotPresent" or "Never". Defaults to "IfNotPresent". This can be used only with Kubernetes version equal to 1.22 and later.
+                              enum:
+                                - Always
+                                - IfNotPresent
+                                - Never
+                              type: string
                             kubeletExtraArgs:
                               additionalProperties:
                                 type: string
@@ -557,6 +578,13 @@
                               items:
                                 type: string
                               type: array
+                            imagePullPolicy:
+                              description: ImagePullPolicy specifies the policy for image pulling during kubeadm "init" and "join" operations. The value of this field must be one of "Always", "IfNotPresent" or "Never". Defaults to "IfNotPresent". This can be used only with Kubernetes version equal to 1.22 and later.
+                              enum:
+                                - Always
+                                - IfNotPresent
+                                - Never
+                              type: string
                             kubeletExtraArgs:
                               additionalProperties:
                                 type: string
