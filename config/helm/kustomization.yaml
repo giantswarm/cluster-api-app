@@ -76,3 +76,9 @@ patches:
     patch: |-
       - op: remove
         path: /metadata/creationTimestamp
+  - target:
+      kind: Deployment 
+      name: capi-controller-manager|capi-kubeadm-bootstrap-controller-manager|capi-kubeadm-control-plane-controller-manager
+    patch: |-
+      - op: remove
+        path: /spec/template/spec/securityContext/seccompProfile
