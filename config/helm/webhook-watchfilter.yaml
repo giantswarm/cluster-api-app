@@ -82,6 +82,10 @@ webhooks:
     objectSelector:
       matchLabels:
         cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+  - name: validation.clusterresourcesetbinding.addons.cluster.x-k8s.io
+    objectSelector:
+      matchLabels:
+        cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
   - name: validation.ipaddress.ipam.cluster.x-k8s.io
     objectSelector:
       matchLabels:
