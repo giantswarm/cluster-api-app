@@ -16,7 +16,7 @@ spec:
   endpointSelector:
     matchLabels:
       app.kubernetes.io/component: {{ include "cluster-api.crdInstall" . | quote }}
-      {{- include "cluster-api.selectorLabels" . | nindent 8 }}
+      {{- include "cluster-api.selectorLabels" . | nindent 6 }}
   egress:
     - toEntities:
         - kube-apiserver
