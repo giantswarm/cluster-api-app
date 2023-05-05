@@ -10,14 +10,6 @@
                 }
             }
         },
-        "ciliumNetworkPolicy": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean"
-                }
-            }
-        },
         "images": {
             "type": "object",
             "properties": {
