@@ -1,3 +1,4 @@
+{{- if .Values.ciliumNetworkPolicy.enabled }}
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
@@ -27,3 +28,4 @@ spec:
   egress:
     - toEntities:
         - kube-apiserver
+{{- end }}
