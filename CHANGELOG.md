@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add cilium network policies.
+- Add cilium network policies to allow kube-api access.
+- Add network policies for egress.
 
 ## [1.11.0] - 2023-04-25
 
