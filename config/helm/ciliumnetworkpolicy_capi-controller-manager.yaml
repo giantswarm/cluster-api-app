@@ -2,6 +2,7 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   labels:
+    app.kubernetes.io/component: cluster-api
     cluster.x-k8s.io/provider: cluster-api
     control-plane: controller-manager
   name: capi-controller-manager
