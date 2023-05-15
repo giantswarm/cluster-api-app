@@ -5,7 +5,6 @@ metadata:
   labels:
     app.giantswarm.io/branch: '{{ .Values.project.branch }}'
     app.giantswarm.io/commit: '{{ .Values.project.commit }}'
-    app.kubernetes.io/component: bootstrap-kubeadm
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
     app.kubernetes.io/name: cluster-api
@@ -16,11 +15,11 @@ metadata:
   name: capi-kubeadm-bootstrap-controller-manager
   namespace: '{{ .Release.Namespace }}'
 spec:
+  egress:
+  - toEntities:
+    - kube-apiserver
   endpointSelector:
     matchLabels:
       cluster.x-k8s.io/provider: bootstrap-kubeadm
       control-plane: controller-manager
-  egress:
-    - toEntities:
-        - kube-apiserver
 {{- end }}
