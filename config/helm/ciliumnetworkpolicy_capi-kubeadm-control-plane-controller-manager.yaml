@@ -1,0 +1,16 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  labels:
+    app.kubernetes.io/component: control-plane-kubeadm
+    cluster.x-k8s.io/provider: control-plane-kubeadm
+    control-plane: controller-manager
+  name: capi-kubeadm-control-plane-controller-manager
+spec:
+  endpointSelector:
+    matchLabels:
+      cluster.x-k8s.io/provider: control-plane-kubeadm
+      control-plane: controller-manager
+  egress:
+    - toEntities:
+        - kube-apiserver
