@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-kubeadm-control-plane-controller-manager
+  namespace: capi-kubeadm-control-plane-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: manager
+          args:
+            - --metrics-bind-addr=0.0.0.0:8080
+            - --feature-gates=ClusterTopology=true,KubeadmBootstrapFormatIgnition=true
+            - --watch-filter={{ .Values.watchFilter }}
+            - --v=0
+          image: '{{.Values.images.domain}}/{{.Values.images.controlplane.name}}:{{.Values.images.controlplane.tag | default .Values.images.tag}}'
