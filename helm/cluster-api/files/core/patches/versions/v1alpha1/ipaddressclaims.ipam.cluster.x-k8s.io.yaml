@@ -75,5 +75,7 @@
                   - type
                 type: object
               type: array
+          required:
+            - addressRef
           type: object
       type: object

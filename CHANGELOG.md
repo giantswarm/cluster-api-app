@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Switch to using Giant Swarm fork for built images, replace deprecated kustomize config `patchesStrategicMerge`
+- Replace deprecated kustomize config `patchesStrategicMerge`
 
 ## [1.12.0] - 2023-05-17
 
