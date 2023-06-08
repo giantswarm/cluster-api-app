@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add cilium network policies to allow kube-api access.
 - Add network policies for egress.
+- Add network policies for egress also for `capi-kubeadm-bootstrap-controller-manager`.
 
 ## [1.7.0] - 2022-10-06
 
