@@ -9,6 +9,7 @@ resources:
   - ciliumnetworkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
   - ciliumnetworkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
   - networkpolicy_capi-controller-manager.yaml
+  - networkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
   - networkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
 
 images:

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add network policies for egress also for `capi-kubeadm-bootstrap-controller-manager`.
+
 ### Changed
 
 - Replace deprecated kustomize config `patchesStrategicMerge`
