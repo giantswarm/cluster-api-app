@@ -6,11 +6,8 @@ This is a meta App that provides deployment packaging for Cluster API core, boot
 
 ## Upgrading CAPI
 
-If you want to upgrade the CAPI version used in this app, there is a value in the `values.yaml` file of the helm chart that controls which CAPI version to use.
+See README of [cluster-api fork](https://github.com/giantswarm/cluster-api/blob/main/README.md) for testing and releasing changes.
 
-Once you have changed that value, you may run `make generate` so that the app helm manifests and CRDs are regenerated using that version of CAPI.
-Manifests will be generated automatically from the source manifests attached to the Github release of the selected version.
+It is important to run `make generate` so that the patches, app manifests and CRDs are regenerated using the new version of CAPI.
 
-There is one thing that needs manual intervention though. **When new webhooks are added upstream** we need to add them to the following `kustomize` patches:
-- webhook-certificate.yaml
-- webhook-watchfilter.yaml
+There is one thing that needs manual intervention though: **when new webhooks are added upstream**, we need to manually add them to the relevant patches (`config/helm/certificate*.yaml`).

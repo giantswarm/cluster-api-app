@@ -1,3 +1,6 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 namespace: '{{ .Release.Namespace }}'
 
 resources:
@@ -24,20 +27,6 @@ transformers:
   - common-labels.yaml
   - monitoring-annotations.yaml
   - webhook-prefix.yaml
-
-patchesStrategicMerge:
-  - delete-issuers.yaml
-  - delete-leader-election.yaml
-  - deployment-args.yaml
-  - deployment-metrics-port.yaml
-  - deployment-labels.yaml
-  - delete-capi-system-ns.yaml
-  - delete-capi-kubeadm-control-plane-system-ns.yaml
-  - delete-capi-kubeadm-bootstrap-system-ns.yaml
-  - webhook-watchfilter.yaml
-  - webhook-certificate.yaml
-  - service-add-metrics-port.yaml
-  - certificate.yaml
 
 patches:
   - path: crd_core_cainjection.yaml
@@ -77,14 +66,123 @@ patches:
       kind: CustomResourceDefinition
       labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
   - target:
-      kind: CustomResourceDefinition
-      name: (ipaddressclaims\.ipam|extensionconfigs\.runtime|ipaddresses\.ipam).cluster.x-k8s.io
-    patch: |-
-      - op: remove
-        path: /metadata/creationTimestamp
-  - target:
-      kind: Deployment 
+      kind: Deployment
       name: capi-controller-manager|capi-kubeadm-bootstrap-controller-manager|capi-kubeadm-control-plane-controller-manager
     patch: |-
       - op: remove
         path: /spec/template/spec/securityContext/seccompProfile
+
+  # Upstream defaults to `Always` but since we use images that are not changing (`vX.Y.Z` or commit SHA), we prefer `IfNotPresent`
+  - target:
+      kind: Deployment
+      name: capi-controller-manager|capi-kubeadm-bootstrap-controller-manager|capi-kubeadm-control-plane-controller-manager
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/imagePullPolicy
+        value: IfNotPresent
+
+  # We have our `Issuer` manifests already deployed to clusters
+  - patch: |-
+      $patch: delete
+      apiVersion: cert-manager.io/v1
+      kind: Issuer
+      metadata:
+        name: capi-selfsigned-issuer
+        namespace: capi-system
+  - patch: |-
+      $patch: delete
+      apiVersion: cert-manager.io/v1
+      kind: Issuer
+      metadata:
+        name: capi-kubeadm-bootstrap-selfsigned-issuer
+        namespace: capi-kubeadm-bootstrap-system
+  - patch: |-
+      $patch: delete
+      apiVersion: cert-manager.io/v1
+      kind: Issuer
+      metadata:
+        name: capi-kubeadm-control-plane-selfsigned-issuer
+        namespace: capi-kubeadm-control-plane-system
+
+  # We are not using leader election in our current release, since we are
+  # only deploying a single webhook pod.
+  - patch: |-
+      $patch: delete
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: capi-leader-election-role
+        namespace: capi-system
+  - patch: |-
+      $patch: delete
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: capi-leader-election-rolebinding
+        namespace: capi-system
+  - patch: |-
+      $patch: delete
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: capi-kubeadm-bootstrap-leader-election-role
+        namespace: capi-kubeadm-bootstrap-system
+  - patch: |-
+      $patch: delete
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: capi-kubeadm-bootstrap-leader-election-rolebinding
+        namespace: capi-kubeadm-bootstrap-system
+  - patch: |-
+      $patch: delete
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: capi-kubeadm-control-plane-leader-election-role
+        namespace: capi-kubeadm-control-plane-system
+  - patch: |-
+      $patch: delete
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: capi-kubeadm-control-plane-leader-election-rolebinding
+        namespace: capi-kubeadm-control-plane-system
+
+  - path: deployment-args-controller-manager.yaml
+  - path: deployment-args-kubeadm-bootstrap-controller-manager.yaml
+  - path: deployment-args-kubeadm-control-plane-controller-manager.yaml
+
+  - path: deployment-labels-controller-manager.yaml
+  - path: deployment-labels-kubeadm-bootstrap-controller-manager.yaml
+  - path: deployment-labels-kubeadm-control-plane-controller-manager.yaml
+
+  - path: deployment-metrics-port-controller-manager.yaml
+  - path: deployment-metrics-port-kubeadm-bootstrap-controller-manager.yaml
+  - path: deployment-metrics-port-kubeadm-control-plane-controller-manager.yaml
+
+  - path: delete-capi-system-ns.yaml
+  - path: delete-capi-kubeadm-control-plane-system-ns.yaml
+  - path: delete-capi-kubeadm-bootstrap-system-ns.yaml
+
+  - path: webhook-mutating-capi-kubeadm-bootstrap-mutating-webhook-configuration-watchfilter.yaml
+  - path: webhook-mutating-capi-kubeadm-control-plane-mutating-webhook-configuration-watchfilter.yaml
+  - path: webhook-mutating-capi-mutating-webhook-configuration-watchfilter.yaml
+  - path: webhook-validating-capi-kubeadm-bootstrap-validating-webhook-configuration-watchfilter.yaml
+  - path: webhook-validating-capi-kubeadm-control-plane-validating-webhook-configuration-watchfilter.yaml
+  - path: webhook-validating-capi-validating-webhook-configuration-watchfilter.yaml
+
+  - path: webhook-mutating-certificate-kubeadm-bootstrap.yaml
+  - path: webhook-mutating-certificate-kubeadm-control-plane.yaml
+  - path: webhook-mutating-certificate.yaml
+  - path: webhook-validating-certificate-kubeadm-bootstrap.yaml
+  - path: webhook-validating-certificate-kubeadm-control-plane.yaml
+  - path: webhook-validating-certificate.yaml
+
+  - path: service-add-metrics-port-kubeadm-bootstrap.yaml
+  - path: service-add-metrics-port-kubeadm-control-plane.yaml
+  - path: service-add-metrics-port.yaml
+
+  - path: certificate-kubeadm-bootstrap.yaml
+  - path: certificate-kubeadm-control-plane.yaml
+  - path: certificate.yaml

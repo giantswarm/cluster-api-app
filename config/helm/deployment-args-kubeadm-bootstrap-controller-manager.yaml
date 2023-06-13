@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-kubeadm-bootstrap-controller-manager
+  namespace: capi-kubeadm-bootstrap-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: manager
+          args:
+            - --metrics-bind-addr=0.0.0.0:8080
+            - --feature-gates=MachinePool=true,KubeadmBootstrapFormatIgnition=true
+            - --watch-filter={{ .Values.watchFilter }}
+            - --v=0
+          image: '{{.Values.images.domain}}/{{.Values.images.bootstrap.name}}:{{.Values.images.bootstrap.tag | default .Values.images.tag}}'
