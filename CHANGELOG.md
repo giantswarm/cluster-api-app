@@ -9,18 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add network policies for egress also for `capi-kubeadm-bootstrap-controller-manager`.
-
-### Changed
-
-- Replace deprecated kustomize config `patchesStrategicMerge`
-
-## [1.12.0] - 2023-05-17
-
-### Added
-
-- Add cilium network policies to allow kube-api access.
 - Add network policies for egress.
+
+### Fixed
+
+- Update cilium network policies with ingress for webhooks.
 
 ## [1.11.0] - 2023-04-25
 
