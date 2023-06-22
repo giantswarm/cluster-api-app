@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Replace deprecated kustomize config `patchesStrategicMerge`
 
+### Fixed
+
+- Update cilium network policies with ingress for webhooks.
+
 ## [1.12.0] - 2023-05-17
 
 ### Added
