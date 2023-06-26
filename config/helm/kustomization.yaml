@@ -71,6 +71,12 @@ patches:
     patch: |-
       - op: remove
         path: /spec/template/spec/securityContext/seccompProfile
+  - target:
+      kind: CustomResourceDefinition
+      name: (ipaddressclaims\.ipam|extensionconfigs\.runtime|ipaddresses\.ipam).cluster.x-k8s.io
+    patch: |-
+      - op: remove
+        path: /metadata/creationTimestamp
 
   # Upstream defaults to `Always` but since we use images that are not changing (`vX.Y.Z` or commit SHA), we prefer `IfNotPresent`
   - target:
