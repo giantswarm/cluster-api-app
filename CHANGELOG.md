@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Replace deprecated kustomize config `patchesStrategicMerge`
+- Fail crd-install on `kubectl get` error
 
 ### Fixed
 

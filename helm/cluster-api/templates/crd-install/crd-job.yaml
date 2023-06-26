@@ -32,10 +32,10 @@ spec:
       - name: kubectl
         image: "{{ .Values.images.domain }}/giantswarm/kubectl:1.24.9"
         command:
-        - sh
+        - bash
         - -c
         - |
-          set -o errexit ; set -o xtrace ; set -o nounset
+          set -o errexit ; set -o xtrace ; set -o nounset ; set -o pipefail
 
           for crd in $(kubectl get crds -o json | jq -r '.items[] | select(.metadata.name | test("cluster.x-k8s.io")) | select(.status.storedVersions | index("v1alpha2")) | .metadata.name'); do
             index=$(kubectl get crds ${crd} -o json | jq -r '.status.storedVersions | index("v1alpha2")')
