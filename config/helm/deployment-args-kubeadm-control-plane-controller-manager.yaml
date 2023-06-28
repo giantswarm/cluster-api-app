@@ -13,4 +13,3 @@ spec:
             - --feature-gates=ClusterTopology=true,KubeadmBootstrapFormatIgnition=true
             - --watch-filter={{ .Values.watchFilter }}
             - --v=0
-          image: '{{.Values.images.domain}}/{{.Values.images.controlplane.name}}:{{.Values.images.controlplane.tag | default .Values.images.tag}}'
