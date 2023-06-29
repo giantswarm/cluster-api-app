@@ -4,6 +4,13 @@
 
 This is a meta App that provides deployment packaging for Cluster API core, bootstrap and control-plane controllers.
 
+## Prerequisites
+
+To get all the `make targets` run
+
+* `kustomize` ([source](https://github.com/kubernetes-sigs/kustomize/releases)) in version `>= v5.0` is needed 
+* `yq` ([source](https://github.com/mikefarah/yq/)) is needed
+
 ## How it works
 
 The `make` target `generate` transfer the upstream released `cluster-api-components.yaml` into a Giant Swarm specific `HelmChart`.
@@ -13,9 +20,8 @@ To make all the changes transparent and reproducible, `kustomize` is used to app
 
 Following notable commands/scripts are triggered in `make generate`:
 
-1. [`hack/generate-kustomize-patches.sh`](hack/generate-kustomize-patches.sh)
-    1. fetch the latest upstream released manifest.
-    1. as `JSON Patch 6902` doesn't support `wildcard` patches, we iterate over all `MutatingWebhookConfiguration` and `ValidatingWebhookConfiguration` to create valid `kustomize` patches for all items in the list.
+1. [`hack/generate-kustomize-patches.sh`](hack/fetch-upstream-released-manifest.sh)</br>
+    Fetch the upstream released manifest with the version specified in `helm/cluster-api/values.yaml`
 1. `make delete-generated-helm-charts`</br>
     Cleans folder `helm/cluster-api/templates` to not get any orphaned objects in the app.
 1. `kustomize build config/helm -o helm/cluster-api/templates`</br>

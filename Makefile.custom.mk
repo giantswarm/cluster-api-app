@@ -1,8 +1,9 @@
 .PHONY: generate
 generate: ## Generate kustomize patches and all helm charts
-	./hack/generate-kustomize-patches.sh
+	./hack/fetch-upstream-released-manifest.sh
 	$(MAKE) delete-generated-helm-charts
 	kustomize build config/helm -o helm/cluster-api/templates
+	rm -v helm/cluster-api/templates/v1_configmap_watchfilter-patch.yaml
 	./hack/move-generated-crds.sh
 	./hack/generate-crd-version-patches.sh
 	./hack/wrap-with-conditional.sh

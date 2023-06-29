@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: watchfilter-patch
+  namespace: watchfilter-patch-ns-not-exist
+data:
+  watch-filter: "{{ .Values.watchFilter }}"

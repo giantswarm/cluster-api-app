@@ -5,6 +5,7 @@ namespace: "{{ .Release.Namespace }}"
 
 resources:
   - input/cluster-api-components.yaml
+  - watchfilter-patch-configmap.yaml
   - ciliumnetworkpolicy_capi-controller-manager.yaml
   - ciliumnetworkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
   - ciliumnetworkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
@@ -32,6 +33,27 @@ transformers:
   # set zzz- as prefix for MutatingWebhookConfiguration
   # more detailed explanation: https://intranet.giantswarm.io/docs/product/architecture-specs-adrs/adr/017_webhook-ordering
   - webhook-prefix.yaml
+
+replacements:
+  - source:
+      name: watchfilter-patch
+      namespace: watchfilter-patch-ns-not-exist
+      kind: ConfigMap
+      fieldPath: data.watch-filter
+      version: v1
+    targets:
+      - select:
+          kind: MutatingWebhookConfiguration
+        fieldPaths:
+          - webhooks.*.objectSelector.matchLabels.[cluster.x-k8s.io/watch-filter]
+        options:
+          create: true
+      - select:
+          kind: ValidatingWebhookConfiguration
+        fieldPaths:
+          - webhooks.*.objectSelector.matchLabels.[cluster.x-k8s.io/watch-filter]
+        options:
+          create: true
 
 patches:
   # add the `cert-manager.io/inject-ca-from` label to point to the target namespace where the CAPI controllers are running
