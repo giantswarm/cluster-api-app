@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Replace deprecated kustomize config `patchesStrategicMerge`
+- `CRD` watchfilter patches are now generated with `kustomize replacement` feature (introduced in `kustomize v5.0`)
 
 ### Fixed
 
