@@ -13,4 +13,3 @@ spec:
             - --feature-gates=MachinePool=true,KubeadmBootstrapFormatIgnition=true
             - --watch-filter={{ .Values.watchFilter }}
             - --v=0
-          image: '{{.Values.images.domain}}/{{.Values.images.bootstrap.name}}:{{.Values.images.bootstrap.tag | default .Values.images.tag}}'
