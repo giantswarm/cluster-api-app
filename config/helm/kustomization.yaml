@@ -2,6 +2,12 @@ namespace: '{{ .Release.Namespace }}'
 
 resources:
   - input/cluster-api-components.yaml
+  - ciliumnetworkpolicy_capi-controller-manager.yaml
+  - ciliumnetworkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
+  - ciliumnetworkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
+  - networkpolicy_capi-controller-manager.yaml
+  - networkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
+  - networkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
 
 images:
   - name: k8s.gcr.io/cluster-api/cluster-api-controller

@@ -1,0 +1,20 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  labels:
+    app.kubernetes.io/component: cluster-api
+    cluster.x-k8s.io/provider: cluster-api
+    control-plane: controller-manager
+  name: capi-controller-manager
+spec:
+  endpointSelector:
+    matchLabels:
+      cluster.x-k8s.io/provider: cluster-api
+      control-plane: controller-manager
+  ingress:  # for webhooks
+    - fromEntities:
+      - cluster  # even though it's a kube-apiserver pod running in host network it doesn't work without "cluster"
+      - kube-apiserver
+  egress:
+    - toEntities:
+        - kube-apiserver
