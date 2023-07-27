@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.13.0] - 2023-07-26
+
 ### Added
 
 - Add network policies for egress also for `capi-kubeadm-bootstrap-controller-manager`.
@@ -191,7 +193,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.12.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.13.0...HEAD
+[1.13.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.12.0...v1.13.0
 [1.12.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.11.0...v1.12.0
 [1.11.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.10.0...v1.11.0
 [1.10.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.9.1...v1.10.0
