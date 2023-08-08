@@ -43,7 +43,8 @@ spec:
     singular: kubeadmconfig
   scope: Namespaced
   versions:
-    - name: v1alpha3
+    - deprecated: true
+      name: v1alpha3
       schema: {}
       served: true
       storage: false
@@ -54,6 +55,7 @@ spec:
           jsonPath: .metadata.creationTimestamp
           name: Age
           type: date
+      deprecated: true
       name: v1alpha4
       schema: {}
       served: true

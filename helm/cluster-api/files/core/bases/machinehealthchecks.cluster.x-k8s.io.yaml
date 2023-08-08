@@ -56,6 +56,7 @@ spec:
           jsonPath: .status.currentHealthy
           name: CurrentHealthy
           type: integer
+      deprecated: true
       name: v1alpha3
       schema: {}
       served: true
@@ -83,6 +84,7 @@ spec:
           jsonPath: .status.currentHealthy
           name: CurrentHealthy
           type: integer
+      deprecated: true
       name: v1alpha4
       schema: {}
       served: true

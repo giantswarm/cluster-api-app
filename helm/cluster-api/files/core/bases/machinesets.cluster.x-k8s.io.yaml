@@ -55,6 +55,7 @@ spec:
           jsonPath: .status.readyReplicas
           name: Ready
           type: integer
+      deprecated: true
       name: v1alpha3
       schema: {}
       served: true
@@ -86,6 +87,7 @@ spec:
           jsonPath: .status.readyReplicas
           name: Ready
           type: integer
+      deprecated: true
       name: v1alpha4
       schema: {}
       served: true

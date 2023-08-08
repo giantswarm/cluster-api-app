@@ -55,6 +55,7 @@ spec:
           jsonPath: .spec.template.spec.version
           name: Version
           type: string
+      deprecated: true
       name: v1alpha3
       schema: {}
       served: true
@@ -81,6 +82,7 @@ spec:
           jsonPath: .spec.template.spec.version
           name: Version
           type: string
+      deprecated: true
       name: v1alpha4
       schema: {}
       served: true
