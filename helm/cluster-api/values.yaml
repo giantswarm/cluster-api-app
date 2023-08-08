@@ -8,7 +8,7 @@ images:
     name: giantswarm/kubeadm-bootstrap-controller
   controlplane:
     name: giantswarm/kubeadm-control-plane-controller
-  tag: 2385b72c86f48da2c5e624acb67e60880774277a  # upstream release-1.4 branch 2023-08-08 (after v1.4.5) + https://github.com/kubernetes-sigs/cluster-api/pull/8586 (Makefile improvement)
+  tag: 630b309ccd8d5c263a353facc9a0b35bc99b3e3d  # upstream v1.4.5 + https://github.com/kubernetes-sigs/cluster-api/pull/8586 (Makefile improvement)
 
 project:
   branch: "[[ .Branch ]]"
