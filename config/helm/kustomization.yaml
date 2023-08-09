@@ -18,9 +18,11 @@ images:
   - name: registry.k8s.io/cluster-api/cluster-api-controller
     newName: "{{.Values.images.domain}}/{{.Values.images.core.name}}"
     newTag: "{{.Values.images.core.tag | default .Values.images.tag}}"
+
   - name: registry.k8s.io/cluster-api/kubeadm-bootstrap-controller
     newName: "{{.Values.images.domain}}/{{.Values.images.bootstrap.name}}"
     newTag: "{{.Values.images.bootstrap.tag | default .Values.images.tag}}"
+
   - name: registry.k8s.io/cluster-api/kubeadm-control-plane-controller
     newName: "{{.Values.images.domain}}/{{.Values.images.controlplane.name}}"
     newTag: "{{.Values.images.controlplane.tag | default .Values.images.tag}}"
@@ -105,12 +107,6 @@ patches:
     patch: |-
       - op: remove
         path: /spec/template/spec/securityContext/seccompProfile
-  - target:
-      kind: CustomResourceDefinition
-      name: (ipaddressclaims\.ipam|extensionconfigs\.runtime|ipaddresses\.ipam).cluster.x-k8s.io
-    patch: |-
-      - op: remove
-        path: /metadata/creationTimestamp
 
   # Upstream defaults to `Always` but since we use images that are not changing (`vX.Y.Z` or commit SHA), we prefer `IfNotPresent`
   - target:

@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.11.3
+    controller-gen.kubebuilder.io/version: v0.11.4
   labels:
     app.giantswarm.io/branch: '{{ .Values.project.branch }}'
     app.giantswarm.io/commit: '{{ .Values.project.commit }}'
@@ -40,7 +40,8 @@ spec:
     singular: clusterresourcesetbinding
   scope: Namespaced
   versions:
-    - name: v1alpha3
+    - deprecated: true
+      name: v1alpha3
       schema: {}
       served: true
       storage: false
@@ -51,6 +52,7 @@ spec:
           jsonPath: .metadata.creationTimestamp
           name: Age
           type: date
+      deprecated: true
       name: v1alpha4
       schema: {}
       served: true

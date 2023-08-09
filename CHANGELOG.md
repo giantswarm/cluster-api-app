@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Switch to using Giant Swarm fork for built images
+
 ## [1.13.0] - 2023-07-26
 
 ### Added
@@ -25,7 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update cilium network policies with ingress for webhooks.
 - Fix cilium network policy for delete-aggregated-roles hook.
-
 ## [1.12.0] - 2023-05-17
 
 ### Added

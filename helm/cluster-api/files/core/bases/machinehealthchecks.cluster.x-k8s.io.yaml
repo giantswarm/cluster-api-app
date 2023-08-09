@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.11.3
+    controller-gen.kubebuilder.io/version: v0.11.4
   labels:
     app.giantswarm.io/branch: '{{ .Values.project.branch }}'
     app.giantswarm.io/commit: '{{ .Values.project.commit }}'
@@ -56,6 +56,7 @@ spec:
           jsonPath: .status.currentHealthy
           name: CurrentHealthy
           type: integer
+      deprecated: true
       name: v1alpha3
       schema: {}
       served: true
@@ -83,6 +84,7 @@ spec:
           jsonPath: .status.currentHealthy
           name: CurrentHealthy
           type: integer
+      deprecated: true
       name: v1alpha4
       schema: {}
       served: true

@@ -13,6 +13,7 @@ spec:
       control-plane: controller-manager
   egress:
     - ports:
+        # Access to workload clusters' Kubernetes API
         - port: 443
           protocol: TCP
         - port: 6443

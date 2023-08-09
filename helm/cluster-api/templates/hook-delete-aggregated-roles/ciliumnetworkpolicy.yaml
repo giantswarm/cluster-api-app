@@ -20,7 +20,7 @@ spec:
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: cluster-api
-      job: helm-hook-delete-aggregated-roles 
+      job: helm-hook-delete-aggregated-roles
   egress:
     - toEntities:
         - kube-apiserver
