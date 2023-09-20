@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.14.1] - 2023-09-20
 
+### Added
+
+- Add common labels to pods so that Hubble shows the app name
+
 ## [1.14.0] - 2023-08-09
 
 ### Changed
