@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Configure `gsoci.azurecr.io` as the default container image registry.
 - Upgrade CAPI to v1.4.7
+- Support bootstrap config reference rotation (backported feature into v1.4.x)
 
 ## [1.14.1] - 2023-09-20
 
