@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.15.0] - 2023-12-20
+
 ### Changed
 
 - Configure `gsoci.azurecr.io` as the default container image registry.
@@ -212,7 +214,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.14.1...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.15.0...HEAD
+[1.15.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.14.1...v1.15.0
 [1.14.1]: https://github.com/giantswarm/cluster-api-app/compare/v1.14.0...v1.14.1
 [1.14.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.13.0...v1.14.0
 [1.13.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.12.0...v1.13.0
