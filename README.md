@@ -8,7 +8,7 @@ This is a meta App that provides deployment packaging for Cluster API core, boot
 
 To get all the `make targets` run
 
-* `kustomize` ([source](https://github.com/kubernetes-sigs/kustomize/releases)) in version `>= v5.0` is needed
+* `kubectl` ([source](https://github.com/kubernetes/kubectl)) in version `>= v1.27.0` is needed
 * `yq` ([source](https://github.com/mikefarah/yq/)) is needed
 
 ## How it works
@@ -16,7 +16,7 @@ To get all the `make targets` run
 The `make` target `generate` transfer the upstream released `cluster-api-components.yaml` into a Giant Swarm specific `HelmChart`.
 Beside the transformation into a `HelmChart` there are few other changes needed to make all the `cluster-api` components fit well into our stack.
 
-To make all the changes transparent and reproducible, `kustomize` is used to apply (mostly) all changes.
+To make all the changes transparent and reproducible, `kubectl kustomize` is used to apply (mostly) all changes.
 
 Following notable commands/scripts are triggered in `make generate`:
 
@@ -24,7 +24,7 @@ Following notable commands/scripts are triggered in `make generate`:
     Fetch the release manifest with the version specified in `helm/cluster-api/values.yaml`. Since we use our own fork of CAPI which does not replicate upstream GitHub releases, the YAML manifest is part of the Docker image as means to easily fetch the manifest which exactly matches the desired commit/tag.
 1. `make delete-generated-helm-charts`</br>
     Cleans folder `helm/cluster-api/templates` to not get any orphaned objects in the app.
-1. `kustomize build config/helm -o helm/cluster-api/templates`</br>
+1. `kubectl kustomize config/helm -o helm/cluster-api/templates`</br>
     Apply all the defined `kustomize` changes (defined in `kustomization.yaml`)
 1. [`hack/move-generated-crds.sh`](hack/move-generated-crds.sh)</br>
     Used to move all the `CRDs` into the directory `helm/cluster-api/files`. All files within this directory are later used in `Job/cluster-api-crd-install`.
