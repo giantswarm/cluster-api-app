@@ -2,7 +2,7 @@
 generate: ## Generate kustomize patches and all helm charts
 	./hack/fetch-manifest.sh
 	$(MAKE) delete-generated-helm-charts
-	kustomize build config/helm -o helm/cluster-api/templates
+	kubectl kustomize config/helm -o helm/cluster-api/templates
 	rm -v helm/cluster-api/templates/v1_configmap_watchfilter-patch.yaml
 	./hack/move-generated-crds.sh
 	./hack/generate-crd-version-patches.sh
@@ -19,7 +19,7 @@ $(CRD_BUILD_DIR):
 .PHONY: release-manifests
 release-manifests: $(CRD_BUILD_DIR) ## Builds the manifests to publish with a release
 	# Build core-components.
-	kustomize build config/helm/files > $(CRD_BUILD_DIR)/crds.yaml
+	kubectl kustomize config/helm/files > $(CRD_BUILD_DIR)/crds.yaml
 
 .PHONY: verify
 verify: generate
