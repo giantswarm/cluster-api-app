@@ -30,7 +30,7 @@ Following notable commands/scripts are triggered in `make generate`:
 1. [`hack/generate-crd-version-patches.sh`](hack/generate-crd-version-patches.sh)\
     Extracts the upstream `cluster-api` CRDs into `kustomize` patches in `helm/cluster-api/files`.
     With that it's easier to review CRD changes in PRs as our own Vintage controllers also reconcile CAPI CRs.
-    The `kustomize`d CRDs get applied within `job/cluster-api-crd-install` by running `kubectl apply` with the `--kustomize` flag ([code](https://github.com/giantswarm/cluster-api-app/blob/master/helm/cluster-api/templates/crd-install/crd-job.yaml#L48)).
+    The `kustomize`d CRDs get applied within `job/cluster-api-crd-install` by running `kubectl apply` with the `--kustomize` flag ([code](https://github.com/giantswarm/cluster-api-app/blob/main/helm/cluster-api/templates/crd-install/crd-job.yaml#L48)).
 1. [`hack/wrap-with-conditional.sh`](hack/wrap-with-conditional.sh) wraps
     * all the occurrence of the `cluster.x-k8s.io/watch-filter` label selector into a `helm` condition, e.g.:
 
