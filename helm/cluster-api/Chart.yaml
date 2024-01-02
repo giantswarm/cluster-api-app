@@ -1,9 +1,8 @@
-apiVersion: "v1"
+apiVersion: v2
 name: cluster-api
-description: "Helm chart for cluster api."
-home: "https://github.com/giantswarm/cluster-api-app"
-version: "[[ .Version ]]"
+description: Helm chart for cluster API.
+home: https://github.com/giantswarm/cluster-api-app
+version: [[ .Version ]]
 appVersion: [[ .AppVersion ]]
 annotations:
   application.giantswarm.io/team: turtles
-  config.giantswarm.io/version: 1.x.x
