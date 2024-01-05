@@ -1,24 +1,17 @@
 #!/usr/bin/env bash
 
-# This script fetch upstream release `cluster-api-components.yaml` which is later used to apply
-# all kustomize patches
+#
+# Fetches upstream `cluster-api-components.yaml` as basis for kustomization.
+#
 
-set -o errexit
-set -o nounset
-set -o pipefail
+# Exit on error.
+set -o errexit -o nounset -o pipefail
 
-# Directories
-ROOT_DIR="./$(dirname "$0")/.."
-ROOT_DIR="$(realpath "$ROOT_DIR")"
-HELM_DIR="$ROOT_DIR/helm/cluster-api"
-KUSTOMIZE_INPUT_DIR="$ROOT_DIR/manifests"
+# Get repository & version.
+repository="$(dirname "${0}")/.."
+version="$(yq --exit-status ".images.tag" "${repository}/helm/cluster-api/values.yaml")"
 
-# Download upstream manifests
-helm_values="$HELM_DIR/values.yaml"
-org="giantswarm"
-repo="cluster-api"
-version="$(yq e -e '.images.tag' "$helm_values")" || { >&2 echo "Could not find image tag value"; exit 1; }
-release_asset_filename="cluster-api-components.yaml"
-url="https://github.com/$org/$repo/releases/download/$version/${release_asset_filename}"
-mkdir -p "$KUSTOMIZE_INPUT_DIR"
-curl -fsSL "$url" -o "$KUSTOMIZE_INPUT_DIR/${release_asset_filename}" || { >&2 echo "Failed to get release manifest from $url"; exit 1; }
+# Fetch manifest.
+curl --silent --show-error --fail --location \
+  "https://github.com/giantswarm/cluster-api/releases/download/${version}/cluster-api-components.yaml" \
+  --output "${repository}/manifests/cluster-api-components.yaml"
