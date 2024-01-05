@@ -20,7 +20,7 @@ To make all the changes transparent and reproducible, `kubectl kustomize` is use
 The following notable scripts & commands are triggered in `make generate`:
 
 1. [`hack/fetch-manifest.sh`](hack/fetch-manifest.sh): Fetches the release manifest with the version specified in `helm/cluster-api/values.yaml`.
-1. `kubectl kustomize config/helm --output helm/cluster-api/templates`: Applies all the changes defined in `kustomization.yaml`.
+1. `kubectl kustomize manifests --output helm/cluster-api/templates`: Applies all the changes defined in `kustomization.yaml`.
 1. [`hack/move-generated-crds.sh`](hack/move-generated-crds.sh): Moves all the CRDs into the `helm/cluster-api/files` directory. All files within this directory are later used in `job/cluster-api-crd-install`.
 1. [`hack/generate-crd-version-patches.sh`](hack/generate-crd-version-patches.sh): Extracts the upstream Cluster API CRDs into `kustomize` patches in `helm/cluster-api/files`.
 1. [`hack/wrap-with-conditional.sh`](hack/wrap-with-conditional.sh)
@@ -45,4 +45,4 @@ See the [`README.md`](https://github.com/giantswarm/cluster-api/blob/main/README
 
 It is important to run `make generate` so that the templates, CRDs and patches are regenerated using the new version of CAPI.
 
-**NOTE:** When new webhooks are added upstream, we need to manually add them to the relevant patches (`config/helm/certificate*.yaml`).
+**NOTE:** When new webhooks are added upstream, we need to manually add them to the relevant patches (`manifests/certificate*.yaml`).

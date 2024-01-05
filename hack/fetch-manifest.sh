@@ -11,7 +11,7 @@ set -o pipefail
 ROOT_DIR="./$(dirname "$0")/.."
 ROOT_DIR="$(realpath "$ROOT_DIR")"
 HELM_DIR="$ROOT_DIR/helm/cluster-api"
-KUSTOMIZE_INPUT_DIR="$ROOT_DIR/config/helm/input"
+KUSTOMIZE_INPUT_DIR="$ROOT_DIR/manifests/input"
 
 # Download upstream manifests
 helm_values="$HELM_DIR/values.yaml"
