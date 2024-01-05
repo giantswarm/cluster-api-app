@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: "{{ .Release.Namespace }}"
 
 resources:
-  - input/cluster-api-components.yaml
+  - cluster-api-components.yaml
   - watchfilter-patch-configmap.yaml
   - ciliumnetworkpolicy_capi-controller-manager.yaml
   - ciliumnetworkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
