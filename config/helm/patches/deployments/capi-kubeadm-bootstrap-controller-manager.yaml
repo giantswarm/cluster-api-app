@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-kubeadm-bootstrap-controller-manager
+  namespace: capi-kubeadm-bootstrap-system
+  labels:
+    app.kubernetes.io/component: bootstrap-kubeadm
+spec:
+  template:
+    spec:
+      securityContext:
+        seccompProfile:
+          $patch: delete
+      containers:
+      - name: manager
+        args:
+        - --metrics-bind-addr=0.0.0.0:8080
+        - --feature-gates=MachinePool=true,KubeadmBootstrapFormatIgnition=true
+        - --watch-filter={{ .Values.watchFilter }}
+        - --v=0
+        ports:
+        - name: metrics
+          protocol: TCP
+          containerPort: 8080

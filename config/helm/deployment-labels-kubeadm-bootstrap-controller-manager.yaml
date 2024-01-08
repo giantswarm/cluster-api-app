@@ -1,7 +1,0 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: capi-kubeadm-bootstrap-controller-manager
-  namespace: capi-kubeadm-bootstrap-system
-  labels:
-    app.kubernetes.io/component: bootstrap-kubeadm
