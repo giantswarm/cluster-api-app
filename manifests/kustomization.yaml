@@ -108,15 +108,6 @@ patches:
       - op: remove
         path: /spec/template/spec/securityContext/seccompProfile
 
-  # Upstream defaults to `Always` but since we use images that are not changing (`vX.Y.Z` or commit SHA), we prefer `IfNotPresent`
-  - target:
-      kind: Deployment
-      name: capi-controller-manager|capi-kubeadm-bootstrap-controller-manager|capi-kubeadm-control-plane-controller-manager
-    patch: |-
-      - op: replace
-        path: /spec/template/spec/containers/0/imagePullPolicy
-        value: IfNotPresent
-
   # We have our `Issuer` manifests already deployed to clusters
   - patch: |-
       $patch: delete
