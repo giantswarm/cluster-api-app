@@ -178,6 +178,11 @@ patches:
   - path: patches/deployments/capi-kubeadm-bootstrap-controller-manager.yaml
   - path: patches/deployments/capi-kubeadm-control-plane-controller-manager.yaml
 
+  # Services
+  - path: patches/services/capi-webhook-service.yaml
+  - path: patches/services/capi-kubeadm-bootstrap-webhook-service.yaml
+  - path: patches/services/capi-kubeadm-control-plane-webhook-service.yaml
+
   # delete namespace
   #
   # as we deploy everything in namspace/giantswarm we don't need the namespace objects from upstream CAPI
@@ -194,14 +199,6 @@ patches:
   - path: patches/validatingwebhooks/capi-validating-webhook-configuration.yaml
   - path: patches/validatingwebhooks/capi-kubeadm-bootstrap-validating-webhook-configuration.yaml
   - path: patches/validatingwebhooks/capi-kubeadm-control-plane-validating-webhook-configuration.yaml
-
-  # metrics port
-  #
-  # to make the scraping of kubebuilder generated metrics via the service possible
-  # we add the metrics port to the service
-  - path: service-add-metrics-port-kubeadm-bootstrap.yaml
-  - path: service-add-metrics-port-kubeadm-control-plane.yaml
-  - path: service-add-metrics-port.yaml
 
   # certificates
   #
