@@ -198,13 +198,11 @@ patches:
   - path: admissionregistration.k8s.io_v1_validatingwebhookconfiguration_capi-kubeadm-control-plane-validating-webhook-configuration.yaml
   - path: admissionregistration.k8s.io_v1_validatingwebhookconfiguration_capi-validating-webhook-configuration.yaml
 
-  # metrics port
-  #
-  # to make the scraping of kubebuilder generated metrics via the service possible
-  # we add the metrics port to the service
-  - path: service-add-metrics-port-kubeadm-bootstrap.yaml
-  - path: service-add-metrics-port-kubeadm-control-plane.yaml
-  - path: service-add-metrics-port.yaml
+  # Services
+  - path: v1_service_capi-webhook-services.yaml
+    target:
+      kind: Service
+      name: capi-kubeadm-bootstrap-webhook-service|capi-kubeadm-control-plane-webhook-service|capi-webhook-service
 
   # certificates
   #
