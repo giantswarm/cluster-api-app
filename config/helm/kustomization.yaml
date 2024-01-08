@@ -6,13 +6,14 @@ namespace: "{{ .Release.Namespace }}"
 resources:
   # Cluster API components
   - bases/cluster-api-components.yaml
-  - watchfilter-patch-configmap.yaml
   - ciliumnetworkpolicy_capi-controller-manager.yaml
   - ciliumnetworkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
   - ciliumnetworkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
   - networkpolicy_capi-controller-manager.yaml
   - networkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
   - networkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
+  # Watch filter configmap
+  - bases/configmaps/watch-filter.yaml
 
 # we want to define our own images
 images:
@@ -33,30 +34,33 @@ transformers:
   - common-labels.yaml
   # Add prometheus scrape labels - could be removed in the future as we're using `PodMonitors|ServiceMonitors` to define a scrape target
   - monitoring-annotations.yaml
-  # set zzz- as prefix for MutatingWebhookConfiguration
-  # more detailed explanation: https://intranet.giantswarm.io/docs/product/architecture-specs-adrs/adr/017_webhook-ordering
-  - webhook-prefix.yaml
+  # Mutating webhooks
+  - patches/mutatingwebhooks/zzz-prefix.yaml
 
 replacements:
-  - source:
-      name: watchfilter-patch
-      namespace: watchfilter-patch-ns-not-exist
-      kind: ConfigMap
-      fieldPath: data.watch-filter
+- source:
+    version: v1
+    kind: ConfigMap
+    name: watch-filter
+    namespace: watch-filter
+    fieldPath: data
+  targets:
+  - select:
+      group: admissionregistration.k8s.io
       version: v1
-    targets:
-      - select:
-          kind: MutatingWebhookConfiguration
-        fieldPaths:
-          - webhooks.*.objectSelector.matchLabels.[cluster.x-k8s.io/watch-filter]
-        options:
-          create: true
-      - select:
-          kind: ValidatingWebhookConfiguration
-        fieldPaths:
-          - webhooks.*.objectSelector.matchLabels.[cluster.x-k8s.io/watch-filter]
-        options:
-          create: true
+      kind: MutatingWebhookConfiguration
+    fieldPaths:
+    - webhooks.*.objectSelector.matchLabels
+    options:
+      create: true
+  - select:
+      group: admissionregistration.k8s.io
+      version: v1
+      kind: ValidatingWebhookConfiguration
+    fieldPaths:
+    - webhooks.*.objectSelector.matchLabels
+    options:
+      create: true
 
 patches:
   # add the `cert-manager.io/inject-ca-from` label to point to the target namespace where the CAPI controllers are running
@@ -181,26 +185,15 @@ patches:
   - path: delete-capi-kubeadm-control-plane-system-ns.yaml
   - path: delete-capi-kubeadm-bootstrap-system-ns.yaml
 
-  # watchfilter
-  #
-  # needed for vintage only as we make use of the watchfilter feature there.
-  - path: webhook-mutating-capi-kubeadm-bootstrap-mutating-webhook-configuration-watchfilter.yaml
-  - path: webhook-mutating-capi-kubeadm-control-plane-mutating-webhook-configuration-watchfilter.yaml
-  - path: webhook-mutating-capi-mutating-webhook-configuration-watchfilter.yaml
-  - path: webhook-validating-capi-kubeadm-bootstrap-validating-webhook-configuration-watchfilter.yaml
-  - path: webhook-validating-capi-kubeadm-control-plane-validating-webhook-configuration-watchfilter.yaml
-  - path: webhook-validating-capi-validating-webhook-configuration-watchfilter.yaml
+  # Mutating webhooks
+  - path: patches/mutatingwebhooks/capi-mutating-webhook-configuration.yaml
+  - path: patches/mutatingwebhooks/capi-kubeadm-bootstrap-mutating-webhook-configuration.yaml
+  - path: patches/mutatingwebhooks/capi-kubeadm-control-plane-mutating-webhook-configuration.yaml
 
-  # webhook certificate configuration
-  #
-  # as everything got deployed in namespace/giantswarm we also have to update the cert-manager.io/inject-ca-from annotation to not
-  # use the upstream namespace
-  - path: webhook-mutating-certificate-kubeadm-bootstrap.yaml
-  - path: webhook-mutating-certificate-kubeadm-control-plane.yaml
-  - path: webhook-mutating-certificate.yaml
-  - path: webhook-validating-certificate-kubeadm-bootstrap.yaml
-  - path: webhook-validating-certificate-kubeadm-control-plane.yaml
-  - path: webhook-validating-certificate.yaml
+  # Validating webhooks
+  - path: patches/validatingwebhooks/capi-validating-webhook-configuration.yaml
+  - path: patches/validatingwebhooks/capi-kubeadm-bootstrap-validating-webhook-configuration.yaml
+  - path: patches/validatingwebhooks/capi-kubeadm-control-plane-validating-webhook-configuration.yaml
 
   # metrics port
   #

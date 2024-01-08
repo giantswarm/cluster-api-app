@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: watch-filter
+  namespace: watch-filter
+data:
+  cluster.x-k8s.io/watch-filter: "{{ .Values.watchFilter }}"

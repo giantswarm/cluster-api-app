@@ -4,7 +4,7 @@ generate:
 	rm helm/cluster-api/templates/*.yaml
 	hack/fetch-manifest.sh
 	kubectl kustomize config/helm --output helm/cluster-api/templates
-	rm helm/cluster-api/templates/v1_configmap_watchfilter-patch.yaml
+	rm helm/cluster-api/templates/v1_configmap_watch-filter.yaml
 	hack/move-generated-crds.sh
 	hack/generate-crd-version-patches.sh
 	hack/wrap-with-conditional.sh

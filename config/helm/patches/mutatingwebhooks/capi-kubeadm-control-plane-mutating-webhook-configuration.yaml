@@ -3,4 +3,4 @@ kind: MutatingWebhookConfiguration
 metadata:
   name: capi-kubeadm-control-plane-mutating-webhook-configuration
   annotations:
-    cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-kubeadm-control-plane-serving-cert'
+    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/capi-kubeadm-control-plane-serving-cert"

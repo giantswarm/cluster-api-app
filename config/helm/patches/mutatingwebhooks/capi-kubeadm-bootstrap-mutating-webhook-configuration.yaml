@@ -3,4 +3,4 @@ kind: MutatingWebhookConfiguration
 metadata:
   name: capi-kubeadm-bootstrap-mutating-webhook-configuration
   annotations:
-    cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-kubeadm-bootstrap-serving-cert'
+    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/capi-kubeadm-bootstrap-serving-cert"

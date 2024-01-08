@@ -3,4 +3,4 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: capi-kubeadm-control-plane-validating-webhook-configuration
   annotations:
-    cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-kubeadm-control-plane-serving-cert'
+    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/capi-kubeadm-control-plane-serving-cert"
