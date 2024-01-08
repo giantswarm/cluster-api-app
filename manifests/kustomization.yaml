@@ -185,29 +185,10 @@ patches:
         name: capi-kubeadm-control-plane-leader-election-rolebinding
         namespace: capi-kubeadm-control-plane-system
 
-  # deployment args
-  #
-  # we make us of a few feature-gates, want to define the image by our own
-  # and also need the watch-filter argument (for vintage clusters)
-  - path: deployment-args-controller-manager.yaml
-  - path: deployment-args-kubeadm-bootstrap-controller-manager.yaml
-  - path: deployment-args-kubeadm-control-plane-controller-manager.yaml
-
-  # app labels
-  #
-  # we try to follow https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
-  # and add the label=app.kubernetes.io/component
-  - path: deployment-labels-controller-manager.yaml
-  - path: deployment-labels-kubeadm-bootstrap-controller-manager.yaml
-  - path: deployment-labels-kubeadm-control-plane-controller-manager.yaml
-
-  # metrics port
-  #
-  # to make the scraping of kubebuilder generated metrics possible
-  # we expose the metrics port
-  - path: deployment-metrics-port-controller-manager.yaml
-  - path: deployment-metrics-port-kubeadm-bootstrap-controller-manager.yaml
-  - path: deployment-metrics-port-kubeadm-control-plane-controller-manager.yaml
+  # Deployments
+  - path: apps_v1_deployment_capi-controller-manager.yaml
+  - path: apps_v1_deployment_capi-kubeadm-bootstrap-controller-manager.yaml
+  - path: apps_v1_deployment_capi-kubeadm-control-plane-controller-manager.yaml
 
   # delete namespace
   #

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capi-controller-manager
+  namespace: capi-system
+  labels:
+    app.kubernetes.io/component: cluster-api
+spec:
+  template:
+    spec:
+      containers:
+      - name: manager
+        args:
+        - --metrics-bind-addr=0.0.0.0:8080
+        - --feature-gates=MachinePool=true,ClusterResourceSet=true,ClusterTopology=true
+        - --watch-filter={{ .Values.watchFilter }}
+        - --v=0
+        ports:
+        - name: metrics
+          protocol: TCP
+          containerPort: 8080
