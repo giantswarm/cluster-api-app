@@ -188,12 +188,14 @@ patches:
   - path: delete-capi-kubeadm-control-plane-system-ns.yaml
   - path: delete-capi-kubeadm-bootstrap-system-ns.yaml
 
+  # MutatingWebhookConfigurations
+  - path: admissionregistration.k8s.io_v1_mutatingwebhookconfiguration_capi-kubeadm-bootstrap-mutating-webhook-configuration.yaml
+  - path: admissionregistration.k8s.io_v1_mutatingwebhookconfiguration_capi-kubeadm-control-plane-mutating-webhook-configuration.yaml
+  - path: admissionregistration.k8s.io_v1_mutatingwebhookconfiguration_capi-mutating-webhook-configuration.yaml
+
   # watchfilter
   #
   # needed for vintage only as we make use of the watchfilter feature there.
-  - path: webhook-mutating-capi-kubeadm-bootstrap-mutating-webhook-configuration-watchfilter.yaml
-  - path: webhook-mutating-capi-kubeadm-control-plane-mutating-webhook-configuration-watchfilter.yaml
-  - path: webhook-mutating-capi-mutating-webhook-configuration-watchfilter.yaml
   - path: webhook-validating-capi-kubeadm-bootstrap-validating-webhook-configuration-watchfilter.yaml
   - path: webhook-validating-capi-kubeadm-control-plane-validating-webhook-configuration-watchfilter.yaml
   - path: webhook-validating-capi-validating-webhook-configuration-watchfilter.yaml
@@ -202,9 +204,6 @@ patches:
   #
   # as everything got deployed in namespace/giantswarm we also have to update the cert-manager.io/inject-ca-from annotation to not
   # use the upstream namespace
-  - path: webhook-mutating-certificate-kubeadm-bootstrap.yaml
-  - path: webhook-mutating-certificate-kubeadm-control-plane.yaml
-  - path: webhook-mutating-certificate.yaml
   - path: webhook-validating-certificate-kubeadm-bootstrap.yaml
   - path: webhook-validating-certificate-kubeadm-control-plane.yaml
   - path: webhook-validating-certificate.yaml
