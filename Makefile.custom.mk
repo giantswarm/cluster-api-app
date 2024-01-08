@@ -2,12 +2,12 @@
 
 generate:
 	rm helm/cluster-api/templates/*.yaml
-	hack/fetch-manifest.sh
+	bin/fetch-manifest.sh
 	kubectl kustomize manifests --output helm/cluster-api/templates
 	rm helm/cluster-api/templates/v1_configmap_watchfilter-patch.yaml
-	hack/move-generated-crds.sh
-	hack/generate-crd-version-patches.sh
-	hack/wrap-with-conditional.sh
+	bin/move-generated-crds.sh
+	bin/generate-crd-version-patches.sh
+	bin/wrap-with-conditional.sh
 
 verify: generate
 	@if ! git diff --exit-code ; then \

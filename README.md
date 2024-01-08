@@ -19,11 +19,11 @@ To make all the changes transparent and reproducible, `kubectl kustomize` is use
 
 The following notable scripts & commands are triggered in `make generate`:
 
-1. [`hack/fetch-manifest.sh`](hack/fetch-manifest.sh): Fetches the release manifest with the version specified in `helm/cluster-api/values.yaml`.
+1. [`bin/fetch-manifest.sh`](bin/fetch-manifest.sh): Fetches the release manifest with the version specified in `helm/cluster-api/values.yaml`.
 1. `kubectl kustomize manifests --output helm/cluster-api/templates`: Applies all the changes defined in `kustomization.yaml`.
-1. [`hack/move-generated-crds.sh`](hack/move-generated-crds.sh): Moves all the CRDs into the `helm/cluster-api/files` directory. All files within this directory are later used in `job/cluster-api-crd-install`.
-1. [`hack/generate-crd-version-patches.sh`](hack/generate-crd-version-patches.sh): Extracts the upstream Cluster API CRDs into `kustomize` patches in `helm/cluster-api/files`.
-1. [`hack/wrap-with-conditional.sh`](hack/wrap-with-conditional.sh)
+1. [`bin/move-generated-crds.sh`](bin/move-generated-crds.sh): Moves all the CRDs into the `helm/cluster-api/files` directory. All files within this directory are later used in `job/cluster-api-crd-install`.
+1. [`bin/generate-crd-version-patches.sh`](bin/generate-crd-version-patches.sh): Extracts the upstream Cluster API CRDs into `kustomize` patches in `helm/cluster-api/files`.
+1. [`bin/wrap-with-conditional.sh`](bin/wrap-with-conditional.sh)
     * Wraps all occurrences of the `cluster.x-k8s.io/watch-filter` object selector into a condition:
         ```yaml
         {{ if .Values.watchfilter }}
