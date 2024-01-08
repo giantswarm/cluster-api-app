@@ -193,20 +193,10 @@ patches:
   - path: admissionregistration.k8s.io_v1_mutatingwebhookconfiguration_capi-kubeadm-control-plane-mutating-webhook-configuration.yaml
   - path: admissionregistration.k8s.io_v1_mutatingwebhookconfiguration_capi-mutating-webhook-configuration.yaml
 
-  # watchfilter
-  #
-  # needed for vintage only as we make use of the watchfilter feature there.
-  - path: webhook-validating-capi-kubeadm-bootstrap-validating-webhook-configuration-watchfilter.yaml
-  - path: webhook-validating-capi-kubeadm-control-plane-validating-webhook-configuration-watchfilter.yaml
-  - path: webhook-validating-capi-validating-webhook-configuration-watchfilter.yaml
-
-  # webhook certificate configuration
-  #
-  # as everything got deployed in namespace/giantswarm we also have to update the cert-manager.io/inject-ca-from annotation to not
-  # use the upstream namespace
-  - path: webhook-validating-certificate-kubeadm-bootstrap.yaml
-  - path: webhook-validating-certificate-kubeadm-control-plane.yaml
-  - path: webhook-validating-certificate.yaml
+  # ValidatingWebhookConfigurations
+  - path: admissionregistration.k8s.io_v1_validatingwebhookconfiguration_capi-kubeadm-bootstrap-validating-webhook-configuration.yaml
+  - path: admissionregistration.k8s.io_v1_validatingwebhookconfiguration_capi-kubeadm-control-plane-validating-webhook-configuration.yaml
+  - path: admissionregistration.k8s.io_v1_validatingwebhookconfiguration_capi-validating-webhook-configuration.yaml
 
   # metrics port
   #
