@@ -4,12 +4,14 @@ kind: Kustomization
 resources:
   # Cluster API components
   - bases/cluster-api-components.yaml
-  - ciliumnetworkpolicy_capi-controller-manager.yaml
-  - ciliumnetworkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
-  - ciliumnetworkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
-  - networkpolicy_capi-controller-manager.yaml
-  - networkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
-  - networkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
+  # Network policies
+  - bases/networkpolicies/capi-controller-manager.yaml
+  - bases/networkpolicies/capi-kubeadm-bootstrap-controller-manager.yaml
+  - bases/networkpolicies/capi-kubeadm-control-plane-controller-manager.yaml
+  # Cilium network policies
+  - bases/ciliumnetworkpolicies/capi-controller-manager.yaml
+  - bases/ciliumnetworkpolicies/capi-kubeadm-bootstrap-controller-manager.yaml
+  - bases/ciliumnetworkpolicies/capi-kubeadm-control-plane-controller-manager.yaml
   # Watch filter configmap
   - bases/configmaps/watch-filter.yaml
 
