@@ -89,29 +89,6 @@ patches:
   - path: patches/namespaces/capi-kubeadm-bootstrap-system.yaml
   - path: patches/namespaces/capi-kubeadm-control-plane-system.yaml
 
-  # We have our `Issuer` manifests already deployed to clusters
-  - patch: |-
-      $patch: delete
-      apiVersion: cert-manager.io/v1
-      kind: Issuer
-      metadata:
-        name: capi-selfsigned-issuer
-        namespace: capi-system
-  - patch: |-
-      $patch: delete
-      apiVersion: cert-manager.io/v1
-      kind: Issuer
-      metadata:
-        name: capi-kubeadm-bootstrap-selfsigned-issuer
-        namespace: capi-kubeadm-bootstrap-system
-  - patch: |-
-      $patch: delete
-      apiVersion: cert-manager.io/v1
-      kind: Issuer
-      metadata:
-        name: capi-kubeadm-control-plane-selfsigned-issuer
-        namespace: capi-kubeadm-control-plane-system
-
   # We are not using leader election in our current release, since we are
   # only deploying a single webhook pod.
   - patch: |-
@@ -156,6 +133,11 @@ patches:
       metadata:
         name: capi-kubeadm-control-plane-leader-election-rolebinding
         namespace: capi-kubeadm-control-plane-system
+
+  # Issuers
+  - path: patches/issuers/capi-selfsigned-issuer.yaml
+  - path: patches/issuers/capi-kubeadm-bootstrap-selfsigned-issuer.yaml
+  - path: patches/issuers/capi-kubeadm-control-plane-selfsigned-issuer.yaml
 
   # Certificates
   - path: patches/certificates/capi-serving-cert.yaml
