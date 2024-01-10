@@ -44,8 +44,6 @@ images:
     newTag: "{{.Values.images.controlplane.tag | default .Values.images.tag}}"
 
 transformers:
-  # Add prometheus scrape labels - could be removed in the future as we're using `PodMonitors|ServiceMonitors` to define a scrape target
-  - monitoring-annotations.yaml
   # Mutating webhooks
   - patches/mutatingwebhooks/zzz-prefix.yaml
 
