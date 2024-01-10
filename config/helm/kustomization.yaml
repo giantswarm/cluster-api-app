@@ -89,50 +89,15 @@ patches:
   - path: patches/namespaces/capi-kubeadm-bootstrap-system.yaml
   - path: patches/namespaces/capi-kubeadm-control-plane-system.yaml
 
-  # We are not using leader election in our current release, since we are
-  # only deploying a single webhook pod.
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: Role
-      metadata:
-        name: capi-leader-election-role
-        namespace: capi-system
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: RoleBinding
-      metadata:
-        name: capi-leader-election-rolebinding
-        namespace: capi-system
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: Role
-      metadata:
-        name: capi-kubeadm-bootstrap-leader-election-role
-        namespace: capi-kubeadm-bootstrap-system
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: RoleBinding
-      metadata:
-        name: capi-kubeadm-bootstrap-leader-election-rolebinding
-        namespace: capi-kubeadm-bootstrap-system
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: Role
-      metadata:
-        name: capi-kubeadm-control-plane-leader-election-role
-        namespace: capi-kubeadm-control-plane-system
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: RoleBinding
-      metadata:
-        name: capi-kubeadm-control-plane-leader-election-rolebinding
-        namespace: capi-kubeadm-control-plane-system
+  # Roles
+  - path: patches/roles/capi-leader-election-role.yaml
+  - path: patches/roles/capi-kubeadm-bootstrap-leader-election-role.yaml
+  - path: patches/roles/capi-kubeadm-control-plane-leader-election-role.yaml
+
+  # Role bindings
+  - path: patches/rolebindings/capi-leader-election-rolebinding.yaml
+  - path: patches/rolebindings/capi-kubeadm-bootstrap-leader-election-rolebinding.yaml
+  - path: patches/rolebindings/capi-kubeadm-control-plane-leader-election-rolebinding.yaml
 
   # Issuers
   - path: patches/issuers/capi-selfsigned-issuer.yaml
