@@ -1,8 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: "{{ .Release.Namespace }}"
-
 resources:
   # Cluster API components
   - bases/cluster-api-components.yaml
@@ -14,6 +12,8 @@ resources:
   - networkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
   # Watch filter configmap
   - bases/configmaps/watch-filter.yaml
+
+namespace: "{{ .Release.Namespace }}"
 
 # we want to define our own images
 images:
@@ -83,6 +83,11 @@ patches:
       version: v1
       kind: CustomResourceDefinition
       labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
+
+  # Namespaces
+  - path: patches/namespaces/capi-system.yaml
+  - path: patches/namespaces/capi-kubeadm-bootstrap-system.yaml
+  - path: patches/namespaces/capi-kubeadm-control-plane-system.yaml
 
   # We have our `Issuer` manifests already deployed to clusters
   - patch: |-
@@ -166,13 +171,6 @@ patches:
   - path: patches/services/capi-webhook-service.yaml
   - path: patches/services/capi-kubeadm-bootstrap-webhook-service.yaml
   - path: patches/services/capi-kubeadm-control-plane-webhook-service.yaml
-
-  # delete namespace
-  #
-  # as we deploy everything in namspace/giantswarm we don't need the namespace objects from upstream CAPI
-  - path: delete-capi-system-ns.yaml
-  - path: delete-capi-kubeadm-control-plane-system-ns.yaml
-  - path: delete-capi-kubeadm-bootstrap-system-ns.yaml
 
   # Mutating webhooks
   - path: patches/mutatingwebhooks/capi-mutating-webhook-configuration.yaml
