@@ -11,4 +11,3 @@ spec:
     group: cert-manager.io
     kind: ClusterIssuer
     name: selfsigned-giantswarm
-  secretName: capi-webhook-service-cert

@@ -173,6 +173,11 @@ patches:
         name: capi-kubeadm-control-plane-leader-election-rolebinding
         namespace: capi-kubeadm-control-plane-system
 
+  # Certificates
+  - path: patches/certificates/capi-serving-cert.yaml
+  - path: patches/certificates/capi-kubeadm-bootstrap-serving-cert.yaml
+  - path: patches/certificates/capi-kubeadm-control-plane-serving-cert.yaml
+
   # Deployments
   - path: patches/deployments/capi-controller-manager.yaml
   - path: patches/deployments/capi-kubeadm-bootstrap-controller-manager.yaml
@@ -199,13 +204,3 @@ patches:
   - path: patches/validatingwebhooks/capi-validating-webhook-configuration.yaml
   - path: patches/validatingwebhooks/capi-kubeadm-bootstrap-validating-webhook-configuration.yaml
   - path: patches/validatingwebhooks/capi-kubeadm-control-plane-validating-webhook-configuration.yaml
-
-  # certificates
-  #
-  # the target namespace has to be present in the certificate
-  # we use `ClusterIssuer/selfsigned-giantswarm` as certificate issuer
-  #  - defined in cert-manager-app: https://github.com/giantswarm/cert-manager-app/blob/8adabf2af43ce3c6c19f94d0bba5e4064fc90a45/helm/cert-manager-app/charts/cert-manager-giantswarm-clusterissuer/templates/_helpers.tpl#L55-L62
-  #  - used in https://github.com/giantswarm/mc-bootstrap/blob/8bbd507d9d0feba1bac4406d71332ac8ff04c05d/scripts/deploy-cert-manager-app.sh#L95
-  - path: certificate-kubeadm-bootstrap.yaml
-  - path: certificate-kubeadm-control-plane.yaml
-  - path: certificate.yaml
