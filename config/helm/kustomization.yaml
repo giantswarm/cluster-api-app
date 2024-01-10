@@ -17,6 +17,18 @@ resources:
 
 namespace: "{{ .Release.Namespace }}"
 
+labels:
+# Common labels
+- pairs:
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.giantswarm.io/branch: "{{ .Values.project.branch }}"
+    app.giantswarm.io/commit: "{{ .Values.project.commit }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: cluster-api
+  includeTemplates: true
+
 # we want to define our own images
 images:
   - name: registry.k8s.io/cluster-api/cluster-api-controller
@@ -32,8 +44,6 @@ images:
     newTag: "{{.Values.images.controlplane.tag | default .Values.images.tag}}"
 
 transformers:
-  # add all the mandatory labels to make an object managed by helm
-  - common-labels.yaml
   # Add prometheus scrape labels - could be removed in the future as we're using `PodMonitors|ServiceMonitors` to define a scrape target
   - monitoring-annotations.yaml
   # Mutating webhooks
