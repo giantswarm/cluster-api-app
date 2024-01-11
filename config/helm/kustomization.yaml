@@ -2,18 +2,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  # Cluster API components
-  - bases/cluster-api-components.yaml
-  # Network policies
-  - bases/networkpolicies/capi-controller-manager.yaml
-  - bases/networkpolicies/capi-kubeadm-bootstrap-controller-manager.yaml
-  - bases/networkpolicies/capi-kubeadm-control-plane-controller-manager.yaml
-  # Cilium network policies
-  - bases/ciliumnetworkpolicies/capi-controller-manager.yaml
-  - bases/ciliumnetworkpolicies/capi-kubeadm-bootstrap-controller-manager.yaml
-  - bases/ciliumnetworkpolicies/capi-kubeadm-control-plane-controller-manager.yaml
-  # Watch filter configmap
-  - bases/configmaps/watch-filter.yaml
+# Cluster API components
+- bases/cluster-api-components.yaml
+# Network policies
+- bases/networkpolicies/capi-controller-manager.yaml
+- bases/networkpolicies/capi-kubeadm-bootstrap-controller-manager.yaml
+- bases/networkpolicies/capi-kubeadm-control-plane-controller-manager.yaml
+# Cilium network policies
+- bases/ciliumnetworkpolicies/capi-controller-manager.yaml
+- bases/ciliumnetworkpolicies/capi-kubeadm-bootstrap-controller-manager.yaml
+- bases/ciliumnetworkpolicies/capi-kubeadm-control-plane-controller-manager.yaml
+# Watch filter configmap
+- bases/configmaps/watch-filter.yaml
 
 namespace: "{{ .Release.Namespace }}"
 
@@ -44,8 +44,8 @@ images:
   newTag: "{{ .Values.images.controlplane.tag | default .Values.images.tag }}"
 
 transformers:
-  # Mutating webhooks
-  - patches/mutatingwebhooks/zzz-prefix.yaml
+# Mutating webhooks
+- patches/mutatingwebhooks/zzz-prefix.yaml
 
 replacements:
 # CRDs
@@ -74,67 +74,67 @@ replacements:
       create: true
 
 patches:
-  # CRDs
-  - path: patches/crds/core.yaml
-    target:
-      group: apiextensions.k8s.io
-      version: v1
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=cluster-api
-  - path: patches/crds/bootstrap.yaml
-    target:
-      group: apiextensions.k8s.io
-      version: v1
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
-  - path: patches/crds/controlplane.yaml
-    target:
-      group: apiextensions.k8s.io
-      version: v1
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
+# CRDs
+- path: patches/crds/core.yaml
+  target:
+    group: apiextensions.k8s.io
+    version: v1
+    kind: CustomResourceDefinition
+    labelSelector: cluster.x-k8s.io/provider=cluster-api
+- path: patches/crds/bootstrap.yaml
+  target:
+    group: apiextensions.k8s.io
+    version: v1
+    kind: CustomResourceDefinition
+    labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
+- path: patches/crds/controlplane.yaml
+  target:
+    group: apiextensions.k8s.io
+    version: v1
+    kind: CustomResourceDefinition
+    labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
 
-  # Namespaces
-  - path: patches/namespaces/capi-system.yaml
-  - path: patches/namespaces/capi-kubeadm-bootstrap-system.yaml
-  - path: patches/namespaces/capi-kubeadm-control-plane-system.yaml
+# Namespaces
+- path: patches/namespaces/capi-system.yaml
+- path: patches/namespaces/capi-kubeadm-bootstrap-system.yaml
+- path: patches/namespaces/capi-kubeadm-control-plane-system.yaml
 
-  # Roles
-  - path: patches/roles/capi-leader-election-role.yaml
-  - path: patches/roles/capi-kubeadm-bootstrap-leader-election-role.yaml
-  - path: patches/roles/capi-kubeadm-control-plane-leader-election-role.yaml
+# Roles
+- path: patches/roles/capi-leader-election-role.yaml
+- path: patches/roles/capi-kubeadm-bootstrap-leader-election-role.yaml
+- path: patches/roles/capi-kubeadm-control-plane-leader-election-role.yaml
 
-  # Role bindings
-  - path: patches/rolebindings/capi-leader-election-rolebinding.yaml
-  - path: patches/rolebindings/capi-kubeadm-bootstrap-leader-election-rolebinding.yaml
-  - path: patches/rolebindings/capi-kubeadm-control-plane-leader-election-rolebinding.yaml
+# Role bindings
+- path: patches/rolebindings/capi-leader-election-rolebinding.yaml
+- path: patches/rolebindings/capi-kubeadm-bootstrap-leader-election-rolebinding.yaml
+- path: patches/rolebindings/capi-kubeadm-control-plane-leader-election-rolebinding.yaml
 
-  # Issuers
-  - path: patches/issuers/capi-selfsigned-issuer.yaml
-  - path: patches/issuers/capi-kubeadm-bootstrap-selfsigned-issuer.yaml
-  - path: patches/issuers/capi-kubeadm-control-plane-selfsigned-issuer.yaml
+# Issuers
+- path: patches/issuers/capi-selfsigned-issuer.yaml
+- path: patches/issuers/capi-kubeadm-bootstrap-selfsigned-issuer.yaml
+- path: patches/issuers/capi-kubeadm-control-plane-selfsigned-issuer.yaml
 
-  # Certificates
-  - path: patches/certificates/capi-serving-cert.yaml
-  - path: patches/certificates/capi-kubeadm-bootstrap-serving-cert.yaml
-  - path: patches/certificates/capi-kubeadm-control-plane-serving-cert.yaml
+# Certificates
+- path: patches/certificates/capi-serving-cert.yaml
+- path: patches/certificates/capi-kubeadm-bootstrap-serving-cert.yaml
+- path: patches/certificates/capi-kubeadm-control-plane-serving-cert.yaml
 
-  # Deployments
-  - path: patches/deployments/capi-controller-manager.yaml
-  - path: patches/deployments/capi-kubeadm-bootstrap-controller-manager.yaml
-  - path: patches/deployments/capi-kubeadm-control-plane-controller-manager.yaml
+# Deployments
+- path: patches/deployments/capi-controller-manager.yaml
+- path: patches/deployments/capi-kubeadm-bootstrap-controller-manager.yaml
+- path: patches/deployments/capi-kubeadm-control-plane-controller-manager.yaml
 
-  # Services
-  - path: patches/services/capi-webhook-service.yaml
-  - path: patches/services/capi-kubeadm-bootstrap-webhook-service.yaml
-  - path: patches/services/capi-kubeadm-control-plane-webhook-service.yaml
+# Services
+- path: patches/services/capi-webhook-service.yaml
+- path: patches/services/capi-kubeadm-bootstrap-webhook-service.yaml
+- path: patches/services/capi-kubeadm-control-plane-webhook-service.yaml
 
-  # Mutating webhooks
-  - path: patches/mutatingwebhooks/capi-mutating-webhook-configuration.yaml
-  - path: patches/mutatingwebhooks/capi-kubeadm-bootstrap-mutating-webhook-configuration.yaml
-  - path: patches/mutatingwebhooks/capi-kubeadm-control-plane-mutating-webhook-configuration.yaml
+# Mutating webhooks
+- path: patches/mutatingwebhooks/capi-mutating-webhook-configuration.yaml
+- path: patches/mutatingwebhooks/capi-kubeadm-bootstrap-mutating-webhook-configuration.yaml
+- path: patches/mutatingwebhooks/capi-kubeadm-control-plane-mutating-webhook-configuration.yaml
 
-  # Validating webhooks
-  - path: patches/validatingwebhooks/capi-validating-webhook-configuration.yaml
-  - path: patches/validatingwebhooks/capi-kubeadm-bootstrap-validating-webhook-configuration.yaml
-  - path: patches/validatingwebhooks/capi-kubeadm-control-plane-validating-webhook-configuration.yaml
+# Validating webhooks
+- path: patches/validatingwebhooks/capi-validating-webhook-configuration.yaml
+- path: patches/validatingwebhooks/capi-kubeadm-bootstrap-validating-webhook-configuration.yaml
+- path: patches/validatingwebhooks/capi-kubeadm-control-plane-validating-webhook-configuration.yaml
