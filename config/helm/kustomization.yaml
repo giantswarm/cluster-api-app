@@ -38,6 +38,7 @@ transformers:
   - patches/mutatingwebhooks/zzz-prefix.yaml
 
 replacements:
+# CRDs
 - source:
     version: v1
     kind: ConfigMap
@@ -63,45 +64,23 @@ replacements:
       create: true
 
 patches:
-  # add the `cert-manager.io/inject-ca-from` label to point to the target namespace where the CAPI controllers are running
-  - path: crd_core_cainjection.yaml
+  # CRDs
+  - path: patches/crds/core.yaml
     target:
+      group: apiextensions.k8s.io
+      version: v1
       kind: CustomResourceDefinition
       labelSelector: cluster.x-k8s.io/provider=cluster-api
-  - path: crd_bootstrap_cainjection.yaml
+  - path: patches/crds/bootstrap.yaml
     target:
+      group: apiextensions.k8s.io
+      version: v1
       kind: CustomResourceDefinition
       labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
-  - path: crd_controlplane_cainjection.yaml
+  - path: patches/crds/controlplane.yaml
     target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
-
-  # adds clusterctl labels required to do the move operation correctly.
-  - path: crd_clusterctl_labels.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=cluster-api
-  - path: crd_clusterctl_labels.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
-  - path: crd_clusterctl_labels.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
-
-  # point to the target namespace where the CAPI controllers are running in the CRD spec for the
-  - path: crd_core_webhook.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=cluster-api
-  - path: crd_bootstrap_webhook.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
-  - path: crd_controlplane_webhook.yaml
-    target:
+      group: apiextensions.k8s.io
+      version: v1
       kind: CustomResourceDefinition
       labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
 
