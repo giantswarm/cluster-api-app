@@ -1,0 +1,6 @@
+$patch: delete
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: capi-kubeadm-control-plane-selfsigned-issuer
+  namespace: capi-kubeadm-control-plane-system

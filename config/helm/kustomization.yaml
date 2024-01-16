@@ -1,256 +1,140 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+resources:
+# Cluster API components
+- bases/cluster-api-components.yaml
+# Network policies
+- bases/networkpolicies/capi-controller-manager.yaml
+- bases/networkpolicies/capi-kubeadm-bootstrap-controller-manager.yaml
+- bases/networkpolicies/capi-kubeadm-control-plane-controller-manager.yaml
+# Cilium network policies
+- bases/ciliumnetworkpolicies/capi-controller-manager.yaml
+- bases/ciliumnetworkpolicies/capi-kubeadm-bootstrap-controller-manager.yaml
+- bases/ciliumnetworkpolicies/capi-kubeadm-control-plane-controller-manager.yaml
+# Watch filter configmap
+- bases/configmaps/watch-filter.yaml
+
 namespace: "{{ .Release.Namespace }}"
 
-resources:
-  - input/cluster-api-components.yaml
-  - watchfilter-patch-configmap.yaml
-  - ciliumnetworkpolicy_capi-controller-manager.yaml
-  - ciliumnetworkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
-  - ciliumnetworkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
-  - networkpolicy_capi-controller-manager.yaml
-  - networkpolicy_capi-kubeadm-bootstrap-controller-manager.yaml
-  - networkpolicy_capi-kubeadm-control-plane-controller-manager.yaml
+labels:
+# Common labels
+- pairs:
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.giantswarm.io/branch: "{{ .Values.project.branch }}"
+    app.giantswarm.io/commit: "{{ .Values.project.commit }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: cluster-api
+  includeTemplates: true
 
-# we want to define our own images
 images:
-  - name: registry.k8s.io/cluster-api/cluster-api-controller
-    newName: "{{.Values.images.domain}}/{{.Values.images.core.name}}"
-    newTag: "{{.Values.images.core.tag | default .Values.images.tag}}"
-
-  - name: registry.k8s.io/cluster-api/kubeadm-bootstrap-controller
-    newName: "{{.Values.images.domain}}/{{.Values.images.bootstrap.name}}"
-    newTag: "{{.Values.images.bootstrap.tag | default .Values.images.tag}}"
-
-  - name: registry.k8s.io/cluster-api/kubeadm-control-plane-controller
-    newName: "{{.Values.images.domain}}/{{.Values.images.controlplane.name}}"
-    newTag: "{{.Values.images.controlplane.tag | default .Values.images.tag}}"
+# Cluster API
+- name: registry.k8s.io/cluster-api/cluster-api-controller
+  newName: "{{ .Values.images.domain }}/{{ .Values.images.core.name }}"
+  newTag: "{{ .Values.images.core.tag | default .Values.images.tag }}"
+# kubeadm bootstrap
+- name: registry.k8s.io/cluster-api/kubeadm-bootstrap-controller
+  newName: "{{ .Values.images.domain }}/{{ .Values.images.bootstrap.name }}"
+  newTag: "{{ .Values.images.bootstrap.tag | default .Values.images.tag }}"
+# kubeadm control plane
+- name: registry.k8s.io/cluster-api/kubeadm-control-plane-controller
+  newName: "{{ .Values.images.domain }}/{{ .Values.images.controlplane.name }}"
+  newTag: "{{ .Values.images.controlplane.tag | default .Values.images.tag }}"
 
 transformers:
-  # add all the mandatory labels to make an object managed by helm
-  - common-labels.yaml
-  # Add prometheus scrape labels - could be removed in the future as we're using `PodMonitors|ServiceMonitors` to define a scrape target
-  - monitoring-annotations.yaml
-  # set zzz- as prefix for MutatingWebhookConfiguration
-  # more detailed explanation: https://intranet.giantswarm.io/docs/product/architecture-specs-adrs/adr/017_webhook-ordering
-  - webhook-prefix.yaml
+# Mutating webhooks
+- patches/mutatingwebhooks/zzz-prefix.yaml
 
 replacements:
-  - source:
-      name: watchfilter-patch
-      namespace: watchfilter-patch-ns-not-exist
-      kind: ConfigMap
-      fieldPath: data.watch-filter
+# CRDs
+- source:
+    version: v1
+    kind: ConfigMap
+    name: watch-filter
+    namespace: watch-filter
+    fieldPath: data
+  targets:
+  - select:
+      group: admissionregistration.k8s.io
       version: v1
-    targets:
-      - select:
-          kind: MutatingWebhookConfiguration
-        fieldPaths:
-          - webhooks.*.objectSelector.matchLabels.[cluster.x-k8s.io/watch-filter]
-        options:
-          create: true
-      - select:
-          kind: ValidatingWebhookConfiguration
-        fieldPaths:
-          - webhooks.*.objectSelector.matchLabels.[cluster.x-k8s.io/watch-filter]
-        options:
-          create: true
+      kind: MutatingWebhookConfiguration
+    fieldPaths:
+    - webhooks.*.objectSelector.matchLabels
+    options:
+      create: true
+  - select:
+      group: admissionregistration.k8s.io
+      version: v1
+      kind: ValidatingWebhookConfiguration
+    fieldPaths:
+    - webhooks.*.objectSelector.matchLabels
+    options:
+      create: true
 
 patches:
-  # add the `cert-manager.io/inject-ca-from` label to point to the target namespace where the CAPI controllers are running
-  - path: crd_core_cainjection.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=cluster-api
-  - path: crd_bootstrap_cainjection.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
-  - path: crd_controlplane_cainjection.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
+# CRDs
+- path: patches/crds/core.yaml
+  target:
+    group: apiextensions.k8s.io
+    version: v1
+    kind: CustomResourceDefinition
+    labelSelector: cluster.x-k8s.io/provider=cluster-api
+- path: patches/crds/bootstrap.yaml
+  target:
+    group: apiextensions.k8s.io
+    version: v1
+    kind: CustomResourceDefinition
+    labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
+- path: patches/crds/controlplane.yaml
+  target:
+    group: apiextensions.k8s.io
+    version: v1
+    kind: CustomResourceDefinition
+    labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
 
-  # adds clusterctl labels required to do the move operation correctly.
-  - path: crd_clusterctl_labels.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=cluster-api
-  - path: crd_clusterctl_labels.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
-  - path: crd_clusterctl_labels.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
+# Namespaces
+- path: patches/namespaces/capi-system.yaml
+- path: patches/namespaces/capi-kubeadm-bootstrap-system.yaml
+- path: patches/namespaces/capi-kubeadm-control-plane-system.yaml
 
-  # point to the target namespace where the CAPI controllers are running in the CRD spec for the
-  - path: crd_core_webhook.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=cluster-api
-  - path: crd_bootstrap_webhook.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=bootstrap-kubeadm
-  - path: crd_controlplane_webhook.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: cluster.x-k8s.io/provider=control-plane-kubeadm
+# Roles
+- path: patches/roles/capi-leader-election-role.yaml
+- path: patches/roles/capi-kubeadm-bootstrap-leader-election-role.yaml
+- path: patches/roles/capi-kubeadm-control-plane-leader-election-role.yaml
 
-  # as we have PSS and kyverno in place we drop the `seccompProfile`
-  - target:
-      kind: Deployment
-      name: capi-controller-manager|capi-kubeadm-bootstrap-controller-manager|capi-kubeadm-control-plane-controller-manager
-    patch: |-
-      - op: remove
-        path: /spec/template/spec/securityContext/seccompProfile
+# Role bindings
+- path: patches/rolebindings/capi-leader-election-rolebinding.yaml
+- path: patches/rolebindings/capi-kubeadm-bootstrap-leader-election-rolebinding.yaml
+- path: patches/rolebindings/capi-kubeadm-control-plane-leader-election-rolebinding.yaml
 
-  # Upstream defaults to `Always` but since we use images that are not changing (`vX.Y.Z` or commit SHA), we prefer `IfNotPresent`
-  - target:
-      kind: Deployment
-      name: capi-controller-manager|capi-kubeadm-bootstrap-controller-manager|capi-kubeadm-control-plane-controller-manager
-    patch: |-
-      - op: replace
-        path: /spec/template/spec/containers/0/imagePullPolicy
-        value: IfNotPresent
+# Issuers
+- path: patches/issuers/capi-selfsigned-issuer.yaml
+- path: patches/issuers/capi-kubeadm-bootstrap-selfsigned-issuer.yaml
+- path: patches/issuers/capi-kubeadm-control-plane-selfsigned-issuer.yaml
 
-  # We have our `Issuer` manifests already deployed to clusters
-  - patch: |-
-      $patch: delete
-      apiVersion: cert-manager.io/v1
-      kind: Issuer
-      metadata:
-        name: capi-selfsigned-issuer
-        namespace: capi-system
-  - patch: |-
-      $patch: delete
-      apiVersion: cert-manager.io/v1
-      kind: Issuer
-      metadata:
-        name: capi-kubeadm-bootstrap-selfsigned-issuer
-        namespace: capi-kubeadm-bootstrap-system
-  - patch: |-
-      $patch: delete
-      apiVersion: cert-manager.io/v1
-      kind: Issuer
-      metadata:
-        name: capi-kubeadm-control-plane-selfsigned-issuer
-        namespace: capi-kubeadm-control-plane-system
+# Certificates
+- path: patches/certificates/capi-serving-cert.yaml
+- path: patches/certificates/capi-kubeadm-bootstrap-serving-cert.yaml
+- path: patches/certificates/capi-kubeadm-control-plane-serving-cert.yaml
 
-  # We are not using leader election in our current release, since we are
-  # only deploying a single webhook pod.
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: Role
-      metadata:
-        name: capi-leader-election-role
-        namespace: capi-system
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: RoleBinding
-      metadata:
-        name: capi-leader-election-rolebinding
-        namespace: capi-system
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: Role
-      metadata:
-        name: capi-kubeadm-bootstrap-leader-election-role
-        namespace: capi-kubeadm-bootstrap-system
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: RoleBinding
-      metadata:
-        name: capi-kubeadm-bootstrap-leader-election-rolebinding
-        namespace: capi-kubeadm-bootstrap-system
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: Role
-      metadata:
-        name: capi-kubeadm-control-plane-leader-election-role
-        namespace: capi-kubeadm-control-plane-system
-  - patch: |-
-      $patch: delete
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: RoleBinding
-      metadata:
-        name: capi-kubeadm-control-plane-leader-election-rolebinding
-        namespace: capi-kubeadm-control-plane-system
+# Deployments
+- path: patches/deployments/capi-controller-manager.yaml
+- path: patches/deployments/capi-kubeadm-bootstrap-controller-manager.yaml
+- path: patches/deployments/capi-kubeadm-control-plane-controller-manager.yaml
 
-  # deployment args
-  #
-  # we make us of a few feature-gates, want to define the image by our own
-  # and also need the watch-filter argument (for vintage clusters)
-  - path: deployment-args-controller-manager.yaml
-  - path: deployment-args-kubeadm-bootstrap-controller-manager.yaml
-  - path: deployment-args-kubeadm-control-plane-controller-manager.yaml
+# Services
+- path: patches/services/capi-webhook-service.yaml
+- path: patches/services/capi-kubeadm-bootstrap-webhook-service.yaml
+- path: patches/services/capi-kubeadm-control-plane-webhook-service.yaml
 
-  # app labels
-  #
-  # we try to follow https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
-  # and add the label=app.kubernetes.io/component
-  - path: deployment-labels-controller-manager.yaml
-  - path: deployment-labels-kubeadm-bootstrap-controller-manager.yaml
-  - path: deployment-labels-kubeadm-control-plane-controller-manager.yaml
+# Mutating webhooks
+- path: patches/mutatingwebhooks/capi-mutating-webhook-configuration.yaml
+- path: patches/mutatingwebhooks/capi-kubeadm-bootstrap-mutating-webhook-configuration.yaml
+- path: patches/mutatingwebhooks/capi-kubeadm-control-plane-mutating-webhook-configuration.yaml
 
-  # metrics port
-  #
-  # to make the scraping of kubebuilder generated metrics possible
-  # we expose the metrics port
-  - path: deployment-metrics-port-controller-manager.yaml
-  - path: deployment-metrics-port-kubeadm-bootstrap-controller-manager.yaml
-  - path: deployment-metrics-port-kubeadm-control-plane-controller-manager.yaml
-
-  # delete namespace
-  #
-  # as we deploy everything in namspace/giantswarm we don't need the namespace objects from upstream CAPI
-  - path: delete-capi-system-ns.yaml
-  - path: delete-capi-kubeadm-control-plane-system-ns.yaml
-  - path: delete-capi-kubeadm-bootstrap-system-ns.yaml
-
-  # watchfilter
-  #
-  # needed for vintage only as we make use of the watchfilter feature there.
-  - path: webhook-mutating-capi-kubeadm-bootstrap-mutating-webhook-configuration-watchfilter.yaml
-  - path: webhook-mutating-capi-kubeadm-control-plane-mutating-webhook-configuration-watchfilter.yaml
-  - path: webhook-mutating-capi-mutating-webhook-configuration-watchfilter.yaml
-  - path: webhook-validating-capi-kubeadm-bootstrap-validating-webhook-configuration-watchfilter.yaml
-  - path: webhook-validating-capi-kubeadm-control-plane-validating-webhook-configuration-watchfilter.yaml
-  - path: webhook-validating-capi-validating-webhook-configuration-watchfilter.yaml
-
-  # webhook certificate configuration
-  #
-  # as everything got deployed in namespace/giantswarm we also have to update the cert-manager.io/inject-ca-from annotation to not
-  # use the upstream namespace
-  - path: webhook-mutating-certificate-kubeadm-bootstrap.yaml
-  - path: webhook-mutating-certificate-kubeadm-control-plane.yaml
-  - path: webhook-mutating-certificate.yaml
-  - path: webhook-validating-certificate-kubeadm-bootstrap.yaml
-  - path: webhook-validating-certificate-kubeadm-control-plane.yaml
-  - path: webhook-validating-certificate.yaml
-
-  # metrics port
-  #
-  # to make the scraping of kubebuilder generated metrics via the service possible
-  # we add the metrics port to the service
-  - path: service-add-metrics-port-kubeadm-bootstrap.yaml
-  - path: service-add-metrics-port-kubeadm-control-plane.yaml
-  - path: service-add-metrics-port.yaml
-
-  # certificates
-  #
-  # the target namespace has to be present in the certificate
-  # we use `ClusterIssuer/selfsigned-giantswarm` as certificate issuer
-  #  - defined in cert-manager-app: https://github.com/giantswarm/cert-manager-app/blob/8adabf2af43ce3c6c19f94d0bba5e4064fc90a45/helm/cert-manager-app/charts/cert-manager-giantswarm-clusterissuer/templates/_helpers.tpl#L55-L62
-  #  - used in https://github.com/giantswarm/mc-bootstrap/blob/8bbd507d9d0feba1bac4406d71332ac8ff04c05d/scripts/deploy-cert-manager-app.sh#L95
-  - path: certificate-kubeadm-bootstrap.yaml
-  - path: certificate-kubeadm-control-plane.yaml
-  - path: certificate.yaml
+# Validating webhooks
+- path: patches/validatingwebhooks/capi-validating-webhook-configuration.yaml
+- path: patches/validatingwebhooks/capi-kubeadm-bootstrap-validating-webhook-configuration.yaml
+- path: patches/validatingwebhooks/capi-kubeadm-control-plane-validating-webhook-configuration.yaml

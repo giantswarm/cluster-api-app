@@ -1,48 +1,48 @@
 [![CircleCI](https://circleci.com/gh/giantswarm/cluster-api-app.svg?style=shield)](https://circleci.com/gh/giantswarm/cluster-api-app)
 
-# cluster-api chart
+# cluster-api-app
 
-This is a meta app that provides deployment packaging for Cluster API core, bootstrap and control-plane controllers.
+This is a meta app that provides deployment packaging for Cluster API components.
 
 ## Prerequisites
 
 To get all the `make` targets running
 
-* `kubectl` ([source](https://github.com/kubernetes/kubectl)) in version `>= v1.27.0` is required
-* `yq` ([source](https://github.com/mikefarah/yq)) is required
+* [`kubectl`](https://github.com/kubernetes/kubectl) in version `>= v1.27.0` is required
+* [`yq`](https://github.com/mikefarah/yq) is required
 
 ## How it works
 
-The `make generate` target transfers the upstream released `cluster-api-components.yaml` into a Giant Swarm specific Helm chart. Besides there are some other changes required to make all the Cluster API components fit into our stack.
+The `make generate` target transfers the upstream Cluster API components into a Giant Swarm specific Helm chart. Besides there are some other changes required to make them fit into our stack.
 
 To make all the changes transparent and reproducible, `kubectl kustomize` is used to apply patches.
 
-The following notable scripts & commands are triggered in `make generate`:
+The following notable commands & scripts are triggered in `make generate`:
 
-1. [`hack/fetch-manifest.sh`](hack/fetch-manifest.sh): Fetches the release manifest with the version specified in `helm/cluster-api/values.yaml`.
-1. `kubectl kustomize config/helm --output helm/cluster-api/templates`: Applies all the changes defined in `kustomization.yaml`.
-1. [`hack/move-generated-crds.sh`](hack/move-generated-crds.sh): Moves all the CRDs into the `helm/cluster-api/files` directory. All files within this directory are later used in `job/cluster-api-crd-install`.
+1. [`hack/fetch-manifest.sh`](hack/fetch-manifest.sh): Fetches the Cluster API components for the version specified in `helm/cluster-api/values.yaml`.
+1. `kubectl kustomize config/helm --output helm/cluster-api/templates`: Generates kustomized Helm templates from upstream Cluster API components.
+1. [`hack/move-generated-crds.sh`](hack/move-generated-crds.sh): Moves all the CRDs into the `helm/cluster-api/files` directory. They are later used in the CRD install job.
 1. [`hack/generate-crd-version-patches.sh`](hack/generate-crd-version-patches.sh): Extracts the upstream Cluster API CRDs into `kustomize` patches in `helm/cluster-api/files`.
 1. [`hack/wrap-with-conditional.sh`](hack/wrap-with-conditional.sh)
     * Wraps all occurrences of the `cluster.x-k8s.io/watch-filter` object selector into a condition:
         ```yaml
-        {{ if .Values.watchfilter }}
+        {{- if .Values.watchfilter }}
         objectSelector:
             matchLabels:
                 cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-        {{ end }}
+        {{- end }}
         ```
     * Wraps all the `*_ciliumnetworkpolicy_*.yaml` manifests into the global `ciliumNetworkPolicy.enabled` condition:
         ```yaml
         {{- if .Values.ciliumNetworkPolicy.enabled }}
         [...]
-        {{ end }}
+        {{- end }}
         ```
 
-## Upgrading CAPI
+## Upgrading Cluster API
 
 See the [`README.md`](https://github.com/giantswarm/cluster-api/blob/main/README.md) of our Cluster API fork for testing and releasing changes.
 
-It is important to run `make generate` so that the templates, CRDs and patches are regenerated using the new version of CAPI.
+It is important to run `make generate` so that the templates, CRDs and patches are regenerated using the new version of Cluster API.
 
-**NOTE:** When new webhooks are added upstream, we need to manually add them to the relevant patches (`config/helm/certificate*.yaml`).
+**NOTE:** When new webhooks are added upstream, we need to manually add them to the relevant patches.

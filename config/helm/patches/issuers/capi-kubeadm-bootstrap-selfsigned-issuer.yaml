@@ -1,0 +1,6 @@
+$patch: delete
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: capi-kubeadm-bootstrap-selfsigned-issuer
+  namespace: capi-kubeadm-bootstrap-system
