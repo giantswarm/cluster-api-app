@@ -1,11 +1,17 @@
 .PHONY: generate verify
 
 generate:
-	rm helm/cluster-api/templates/*.yaml
+	# Fetch Cluster API components.
 	hack/fetch-manifest.sh
+
+	# Kustomize templates.
+	rm helm/cluster-api/templates/*.yaml
 	kubectl kustomize config/helm --output helm/cluster-api/templates
 	rm helm/cluster-api/templates/v1_configmap_watch-filter.yaml
-	hack/move-generated-crds.sh
+
+	# Move CRDs.
+	hack/move-crds.sh
+
 	hack/generate-crd-version-patches.sh
 	hack/wrap-with-conditional.sh
 
