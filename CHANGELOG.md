@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Repository: Rework `hack` & `config`. ([#176](https://github.com/giantswarm/cluster-api-app/pull/176))
+- Chart: Make PSS compliant. ([#182](https://github.com/giantswarm/cluster-api-app/pull/182))
 
 ## [1.15.1] - 2024-01-15
 

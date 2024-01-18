@@ -2,6 +2,14 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
+        "ciliumNetworkPolicy": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
         "crds": {
             "type": "object",
             "properties": {
@@ -10,11 +18,16 @@
                 }
             }
         },
-        "ciliumNetworkPolicy": {
+        "global": {
             "type": "object",
             "properties": {
-                "enabled": {
-                    "type": "boolean"
+                "podSecurityStandards": {
+                    "type": "object",
+                    "properties": {
+                        "enforced": {
+                            "type": "boolean"
+                        }
+                    }
                 }
             }
         },

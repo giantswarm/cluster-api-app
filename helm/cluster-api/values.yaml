@@ -22,3 +22,7 @@ crds:
 
 ciliumNetworkPolicy:
   enabled: false
+
+global:
+  podSecurityStandards:
+    enforced: false
