@@ -39,14 +39,6 @@ rules:
   - patch
   - list
 - apiGroups:
-  - policy
-  resources:
-  - podsecuritypolicies
-  resourceNames:
-  - {{ include "cluster-api.crdInstall" . }}
-  verbs:
-  - use
-- apiGroups:
   - apps
   - extensions
   resources:

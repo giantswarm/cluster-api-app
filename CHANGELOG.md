@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Chart: Make PSS compliant. ([#184](https://github.com/giantswarm/cluster-api-app/pull/184))
+
 ## [1.5.3] - 2022-09-16
 
 ### Changed
