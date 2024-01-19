@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.15.2] - 2024-01-19
+
 ### Changed
 
 - Chart: Make PSS compliant. ([#184](https://github.com/giantswarm/cluster-api-app/pull/184))
@@ -106,7 +108,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.3...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.15.2...HEAD
+[1.15.2]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.3...v1.15.2
 [1.5.3]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.2...v1.5.3
 [1.5.2]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.1...v1.5.2
 [1.5.1]: https://github.com/giantswarm/cluster-api-app/compare/v1.5.0...v1.5.1
