@@ -77,6 +77,8 @@ spec:
           readOnly: true
       securityContext:
         runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: capi-kubeadm-bootstrap-manager
       terminationGracePeriodSeconds: 10
       tolerations:

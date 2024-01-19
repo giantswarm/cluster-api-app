@@ -20,9 +20,6 @@ spec:
         {{- include "cluster-api.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "cluster-api.crdInstall" . }}
-      securityContext:
-        runAsUser: 65534
-        runAsGroup: 65534
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
@@ -52,6 +49,15 @@ spec:
           for deployment in $(kubectl get deployment -l app.kubernetes.io/name=cluster-operator -o name); do
             kubectl rollout restart -n giantswarm "$deployment"
           done
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
         volumeMounts:
 {{- range $path, $_ := $.Files.Glob "files/**.yaml" }}
         - name: {{ printf "%s-%s" (base (dir $path)) (trimSuffix "-yaml" (base $path | replace "." "-")) | trunc 63 }}

@@ -90,6 +90,8 @@ spec:
           readOnly: true
       securityContext:
         runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: capi-kubeadm-control-plane-manager
       terminationGracePeriodSeconds: 10
       tolerations:

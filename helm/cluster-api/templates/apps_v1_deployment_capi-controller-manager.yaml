@@ -90,6 +90,8 @@ spec:
           readOnly: true
       securityContext:
         runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: capi-manager
       terminationGracePeriodSeconds: 10
       tolerations:
