@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.15.2] - 2024-01-22
+
 ### Changed
 
 - Repository: Rework `hack` & `config`. ([#176](https://github.com/giantswarm/cluster-api-app/pull/176))
@@ -226,7 +228,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.15.1...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.15.2...HEAD
+[1.15.2]: https://github.com/giantswarm/cluster-api-app/compare/v1.15.1...v1.15.2
 [1.15.1]: https://github.com/giantswarm/cluster-api-app/compare/v1.15.0...v1.15.1
 [1.15.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.14.1...v1.15.0
 [1.14.1]: https://github.com/giantswarm/cluster-api-app/compare/v1.14.0...v1.14.1
