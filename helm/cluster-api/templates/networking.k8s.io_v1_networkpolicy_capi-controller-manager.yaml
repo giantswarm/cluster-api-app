@@ -21,9 +21,6 @@ spec:
       protocol: TCP
     - port: 6443
       protocol: TCP
-    to:
-    - ipBlock:
-        cidr: 0.0.0.0/0
   podSelector:
     matchLabels:
       cluster.x-k8s.io/provider: cluster-api
