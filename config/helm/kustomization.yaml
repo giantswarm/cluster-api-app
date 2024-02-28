@@ -28,15 +28,15 @@ labels:
 images:
 # Cluster API
 - name: registry.k8s.io/cluster-api/cluster-api-controller
-  newName: "{{ .Values.images.domain }}/{{ .Values.images.core.name }}"
+  newName: "{{ .Values.registry.domain }}/{{ .Values.images.core.name }}"
   newTag: "{{ .Values.images.core.tag | default .Values.images.tag }}"
 # kubeadm bootstrap
 - name: registry.k8s.io/cluster-api/kubeadm-bootstrap-controller
-  newName: "{{ .Values.images.domain }}/{{ .Values.images.bootstrap.name }}"
+  newName: "{{ .Values.registry.domain }}/{{ .Values.images.bootstrap.name }}"
   newTag: "{{ .Values.images.bootstrap.tag | default .Values.images.tag }}"
 # kubeadm control plane
 - name: registry.k8s.io/cluster-api/kubeadm-control-plane-controller
-  newName: "{{ .Values.images.domain }}/{{ .Values.images.controlplane.name }}"
+  newName: "{{ .Values.registry.domain }}/{{ .Values.images.controlplane.name }}"
   newTag: "{{ .Values.images.controlplane.tag | default .Values.images.tag }}"
 
 transformers:
