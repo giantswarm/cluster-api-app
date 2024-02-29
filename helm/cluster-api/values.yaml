@@ -1,7 +1,9 @@
 name: cluster-api
 
-images:
+registry:
   domain: gsoci.azurecr.io
+
+images:
   core:
     name: giantswarm/cluster-api-controller
   bootstrap:

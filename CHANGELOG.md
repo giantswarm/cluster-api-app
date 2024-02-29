@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Change container image registry values name to use values from `config` repo.
+
 ## [1.15.2] - 2024-01-22
 
 ### Changed
