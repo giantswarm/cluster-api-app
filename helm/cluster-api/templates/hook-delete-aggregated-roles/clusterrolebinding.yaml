@@ -6,8 +6,8 @@ metadata:
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
     helm.sh/hook-weight: "-1"
   labels:
-    app.giantswarm.io/branch: '{{ .Values.project.branch }}'
-    app.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    application.giantswarm.io/branch: '{{ .Values.project.branch }}'
+    application.giantswarm.io/commit: '{{ .Values.project.commit }}'
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
     app.kubernetes.io/name: cluster-api
