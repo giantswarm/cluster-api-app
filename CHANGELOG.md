@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Change container image registry values name to use values from `config` repo.
+- Add toleration for `node.cluster.x-k8s.io/uninitialized` taint.
+- Remove toleration for old `node-role.kubernetes.io/master` taint.
+- Add node affinity to prefer scheduling CAPI pods to control-plane nodes.
 
 ## [1.15.2] - 2024-01-22
 

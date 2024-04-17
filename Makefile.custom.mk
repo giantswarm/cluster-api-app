@@ -5,9 +5,9 @@ generate:
 	hack/fetch-manifest.sh
 
 	# Kustomize templates.
-	rm helm/cluster-api/templates/*.yaml
+	rm -f helm/cluster-api/templates/*.yaml
 	kubectl kustomize config/helm --output helm/cluster-api/templates
-	rm helm/cluster-api/templates/v1_configmap_watch-filter.yaml
+	rm -f helm/cluster-api/templates/v1_configmap_watch-filter.yaml
 
 	# Move CRDs.
 	hack/move-crds.sh
