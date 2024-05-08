@@ -62,8 +62,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.uid
-        image: '{{ .Values.registry.domain }}/{{ .Values.images.controlplane.name
-          }}:{{ .Values.images.controlplane.tag | default .Values.images.tag }}'
+        image: '{{ .Values.registry.domain }}/{{ .Values.images.controlplane.name }}:{{ .Values.images.controlplane.tag | default .Values.images.tag }}'
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
