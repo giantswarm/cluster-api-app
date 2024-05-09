@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- CNPs are added back to allow the api server to access pods for webhooks.
+
 ## [1.17.0] - 2024-05-08
 
 ### Changed
