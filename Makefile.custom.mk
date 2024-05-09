@@ -14,7 +14,7 @@ generate:
 
 	hack/generate-crd-version-patches.sh
 	hack/wrap-with-conditional.sh
-
+	hack/remove-curly-braces-for-helm.sh
 verify: generate
 	@if ! git diff --exit-code ; then \
 		echo "Generated templates are out of date. Run make generate." ; \
