@@ -1,0 +1,30 @@
+{{- if .Values.ciliumNetworkPolicy.enabled }}
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  labels:
+    app.kubernetes.io/component: control-plane-kubeadm
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    application.giantswarm.io/branch: '{{ .Values.project.branch }}'
+    application.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    cluster.x-k8s.io/provider: control-plane-kubeadm
+    control-plane: controller-manager
+    helm.sh/chart: cluster-api
+  name: capi-kubeadm-control-plane-controller-manager
+  namespace: '{{ .Release.Namespace }}'
+spec:
+  egress:
+  - toEntities:
+    - kube-apiserver
+  endpointSelector:
+    matchLabels:
+      cluster.x-k8s.io/provider: control-plane-kubeadm
+      control-plane: controller-manager
+  ingress:
+  - fromEntities:
+    - cluster
+    - kube-apiserver
+{{- end }}
