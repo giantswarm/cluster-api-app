@@ -10,7 +10,7 @@ images:
     name: giantswarm/kubeadm-bootstrap-controller
   controlplane:
     name: giantswarm/kubeadm-control-plane-controller
-  tag: v1.5.7-gs-7111ea7b8  # upstream v1.5.7 + https://github.com/kubernetes-sigs/cluster-api/pull/8586 (Makefile improvement) + https://github.com/giantswarm/cluster-api/pull/21 (backport of bootstrap config reference rotation support)
+  tag: v1.5.7-gs-7111ea7b8  # upstream v1.5.7 + https://github.com/kubernetes-sigs/cluster-api/pull/8586 (Makefile improvement) + https://github.com/giantswarm/cluster-api/pull/21 (backport of bootstrap config reference rotation support) + https://github.com/giantswarm/cluster-api-app/pull/211 (fix secret caching client for CAPI migration)
 
 project:
   branch: "[[ .Branch ]]"
