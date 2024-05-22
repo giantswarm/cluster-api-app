@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Replace secret caching client with kubeadmcontrolplane client to fix CAPI migration.
+
 ## [1.18.0] - 2024-05-09
 
 ### Changed
