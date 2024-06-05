@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-kubeadm-bootstrap-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.12.0
+    controller-gen.kubebuilder.io/version: v0.13.0
   labels:
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
@@ -12,7 +12,6 @@ metadata:
     application.giantswarm.io/branch: '{{ .Values.project.branch }}'
     application.giantswarm.io/commit: '{{ .Values.project.commit }}'
     cluster.x-k8s.io/provider: bootstrap-kubeadm
-    cluster.x-k8s.io/v1alpha3: v1alpha3
     cluster.x-k8s.io/v1alpha4: v1alpha4
     cluster.x-k8s.io/v1beta1: v1beta1
     clusterctl.cluster.x-k8s.io: ""
@@ -56,7 +55,7 @@ spec:
       deprecated: true
       name: v1alpha4
       schema: {}
-      served: true
+      served: false
       storage: false
       subresources: {}
     - additionalPrinterColumns:
