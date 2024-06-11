@@ -21,6 +21,62 @@ webhooks:
     service:
       name: capi-webhook-service
       namespace: '{{ .Release.Namespace }}'
+      path: /validate-cluster-x-k8s-io-v1beta1-cluster
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: validation.cluster.cluster.x-k8s.io
+{{ if .Values.watchFilter }}
+  objectSelector:
+    matchLabels:
+      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+{{ end }}
+  rules:
+  - apiGroups:
+    - cluster.x-k8s.io
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    - DELETE
+    resources:
+    - clusters
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: capi-webhook-service
+      namespace: '{{ .Release.Namespace }}'
+      path: /validate-cluster-x-k8s-io-v1beta1-clusterclass
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: validation.clusterclass.cluster.x-k8s.io
+{{ if .Values.watchFilter }}
+  objectSelector:
+    matchLabels:
+      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
+{{ end }}
+  rules:
+  - apiGroups:
+    - cluster.x-k8s.io
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    - DELETE
+    resources:
+    - clusterclasses
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: capi-webhook-service
+      namespace: '{{ .Release.Namespace }}'
       path: /validate-cluster-x-k8s-io-v1beta1-machine
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -121,62 +177,6 @@ webhooks:
     - UPDATE
     resources:
     - machinesets
-  sideEffects: None
-- admissionReviewVersions:
-  - v1
-  - v1beta1
-  clientConfig:
-    service:
-      name: capi-webhook-service
-      namespace: '{{ .Release.Namespace }}'
-      path: /validate-cluster-x-k8s-io-v1beta1-cluster
-  failurePolicy: Fail
-  matchPolicy: Equivalent
-  name: validation.cluster.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
-  rules:
-  - apiGroups:
-    - cluster.x-k8s.io
-    apiVersions:
-    - v1beta1
-    operations:
-    - CREATE
-    - UPDATE
-    - DELETE
-    resources:
-    - clusters
-  sideEffects: None
-- admissionReviewVersions:
-  - v1
-  - v1beta1
-  clientConfig:
-    service:
-      name: capi-webhook-service
-      namespace: '{{ .Release.Namespace }}'
-      path: /validate-cluster-x-k8s-io-v1beta1-clusterclass
-  failurePolicy: Fail
-  matchPolicy: Equivalent
-  name: validation.clusterclass.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
-  rules:
-  - apiGroups:
-    - cluster.x-k8s.io
-    apiVersions:
-    - v1beta1
-    operations:
-    - CREATE
-    - UPDATE
-    - DELETE
-    resources:
-    - clusterclasses
   sideEffects: None
 - admissionReviewVersions:
   - v1
@@ -293,7 +293,7 @@ webhooks:
     service:
       name: capi-webhook-service
       namespace: '{{ .Release.Namespace }}'
-      path: /validate-ipam-cluster-x-k8s-io-v1alpha1-ipaddress
+      path: /validate-ipam-cluster-x-k8s-io-v1beta1-ipaddress
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.ipaddress.ipam.cluster.x-k8s.io
@@ -306,7 +306,7 @@ webhooks:
   - apiGroups:
     - ipam.cluster.x-k8s.io
     apiVersions:
-    - v1alpha1
+    - v1beta1
     operations:
     - CREATE
     - UPDATE
@@ -321,7 +321,7 @@ webhooks:
     service:
       name: capi-webhook-service
       namespace: '{{ .Release.Namespace }}'
-      path: /validate-ipam-cluster-x-k8s-io-v1alpha1-ipaddressclaim
+      path: /validate-ipam-cluster-x-k8s-io-v1beta1-ipaddressclaim
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.ipaddressclaim.ipam.cluster.x-k8s.io
@@ -334,7 +334,7 @@ webhooks:
   - apiGroups:
     - ipam.cluster.x-k8s.io
     apiVersions:
-    - v1alpha1
+    - v1beta1
     operations:
     - CREATE
     - UPDATE

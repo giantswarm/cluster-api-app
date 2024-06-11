@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.12.0
+    controller-gen.kubebuilder.io/version: v0.13.0
   labels:
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
@@ -49,7 +49,30 @@ spec:
           jsonPath: .spec.poolRef.kind
           name: Pool Kind
           type: string
+        - description: Time duration since creation of IPAdressClaim
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
       name: v1alpha1
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        status: {}
+    - additionalPrinterColumns:
+        - description: Name of the pool to allocate an address from
+          jsonPath: .spec.poolRef.name
+          name: Pool Name
+          type: string
+        - description: Kind of the pool to allocate an address from
+          jsonPath: .spec.poolRef.kind
+          name: Pool Kind
+          type: string
+        - description: Time duration since creation of IPAdressClaim
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1beta1
       schema: {}
       served: true
       storage: true

@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.12.0
+    controller-gen.kubebuilder.io/version: v0.13.0
   labels:
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
@@ -66,11 +66,15 @@ spec:
       deprecated: true
       name: v1alpha4
       schema: {}
-      served: true
+      served: false
       storage: false
       subresources:
         status: {}
     - additionalPrinterColumns:
+        - description: ClusterClass of this Cluster, empty if the Cluster is not using a ClusterClass
+          jsonPath: .spec.topology.class
+          name: ClusterClass
+          type: string
         - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
           jsonPath: .status.phase
           name: Phase
