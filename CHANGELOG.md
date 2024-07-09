@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Don't inject conversion webhooks to CRDs if they don't have originally.
+
 ## [1.20.0] - 2024-06-11
 
 ### Changed
