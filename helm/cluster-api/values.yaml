@@ -24,3 +24,4 @@ crds:
 
 ciliumNetworkPolicy:
   enabled: false
+
