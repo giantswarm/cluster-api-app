@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade CAPI to v1.7.8
+
 ## [1.20.1] - 2024-07-10
 
 ### Fixed
