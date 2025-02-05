@@ -12,7 +12,10 @@ generate:
 	hack/move-crds.sh
 
 	hack/generate-crd-version-patches.sh
-	hack/wrap-with-conditional.sh
+
+	# Wrap object selectors in conditions.
+	hack/wrap-in-conditions.sh
+
 	hack/remove-braces.sh
 
 .PHONY: verify
