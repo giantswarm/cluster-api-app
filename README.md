@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/giantswarm/cluster-api-app.svg?style=shield)](https://circleci.com/gh/giantswarm/cluster-api-app)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/giantswarm/cluster-api-app.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/giantswarm/cluster-api-app)
 
 # cluster-api-app
 
