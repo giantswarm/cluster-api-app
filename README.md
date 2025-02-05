@@ -38,6 +38,7 @@ The following notable commands & scripts are triggered in `make generate`:
         [...]
         {{- end }}
         ```
+1. [`hack/remove-braces.sh`](hack/remove-braces.sh): Removes braces breaking Helm templates from CRDs.
 
 ## Upgrading Cluster API
 
