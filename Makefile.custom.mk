@@ -17,6 +17,7 @@ generate:
 	# Wrap object selectors in conditions.
 	hack/wrap-in-conditions.sh
 
+	# Remove braces.
 	hack/remove-braces.sh
 
 .PHONY: verify
