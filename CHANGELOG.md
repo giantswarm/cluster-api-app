@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Hack: Rework `remove-curly-braces-for-helm.sh`. ([#243](https://github.com/giantswarm/cluster-api-app/pull/243))
 - Chart: Replace Cilium network policies by native ones. ([#244](https://github.com/giantswarm/cluster-api-app/pull/244))
+- Chart: Rework affinity & tolerations. ([#245](https://github.com/giantswarm/cluster-api-app/pull/245))
 
 ## [1.20.1] - 2024-07-10
 
