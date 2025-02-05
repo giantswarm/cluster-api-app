@@ -21,9 +21,12 @@ spec:
       protocol: TCP
     - port: 6443
       protocol: TCP
+  ingress:
+  - {}
   podSelector:
     matchLabels:
       cluster.x-k8s.io/provider: cluster-api
       control-plane: controller-manager
   policyTypes:
+  - Ingress
   - Egress
