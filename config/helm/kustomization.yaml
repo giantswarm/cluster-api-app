@@ -124,6 +124,11 @@ patches:
 - path: patches/certificates/capi-kubeadm-control-plane-serving-cert.yaml
 
 # Deployments
+- path: patches/deployments/all.yaml
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
 - path: patches/deployments/capi-controller-manager.yaml
 - path: patches/deployments/capi-kubeadm-bootstrap-controller-manager.yaml
 - path: patches/deployments/capi-kubeadm-control-plane-controller-manager.yaml
