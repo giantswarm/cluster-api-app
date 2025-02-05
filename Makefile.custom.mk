@@ -13,7 +13,7 @@ generate:
 
 	hack/generate-crd-version-patches.sh
 	hack/wrap-with-conditional.sh
-	hack/remove-curly-braces-for-helm.sh
+	hack/remove-braces.sh
 
 .PHONY: verify
 verify: generate
