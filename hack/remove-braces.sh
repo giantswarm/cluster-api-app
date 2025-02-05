@@ -3,8 +3,7 @@
 set -o errexit -o nounset -o pipefail
 
 #
-# The CRD contains some templates in the descriptions breaking our Helm templates.
-# This script removes the curly braces from the CRD.
+# Removes braces breaking Helm templates from CRDs.
 #
 
 # Get repository path.
