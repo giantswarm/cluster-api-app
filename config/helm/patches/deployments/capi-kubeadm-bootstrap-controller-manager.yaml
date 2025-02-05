@@ -8,14 +8,6 @@ metadata:
 spec:
   template:
     spec:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - preference:
-              matchExpressions:
-              - key: node-role.kubernetes.io/control-plane
-                operator: Exists
-            weight: 10
       containers:
       - name: manager
         args:
@@ -27,9 +19,17 @@ spec:
         - name: metrics
           protocol: TCP
           containerPort: 8080
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - preference:
+              matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+            weight: 10
       tolerations:
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/control-plane
-      - effect: NoSchedule
-        key: "node.cluster.x-k8s.io/uninitialized"
-        operator: "Exists"
+      - key: node-role.kubernetes.io/control-plane
+        effect: NoSchedule
+      - key: node.cluster.x-k8s.io/uninitialized
+        effect: NoSchedule
+        operator: Exists
