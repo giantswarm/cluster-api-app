@@ -1,5 +1,4 @@
-.PHONY: generate verify
-
+.PHONY: generate
 generate:
 	# Fetch Cluster API components.
 	hack/fetch-manifest.sh
@@ -15,6 +14,8 @@ generate:
 	hack/generate-crd-version-patches.sh
 	hack/wrap-with-conditional.sh
 	hack/remove-curly-braces-for-helm.sh
+
+.PHONY: verify
 verify: generate
 	@if ! git diff --exit-code ; then \
 		echo "Generated templates are out of date. Run make generate." ; \
