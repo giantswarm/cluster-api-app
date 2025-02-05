@@ -21,8 +21,8 @@ The following notable commands & scripts are triggered in `make generate`:
 
 1. [`hack/fetch-manifest.sh`](hack/fetch-manifest.sh): Fetches the Cluster API components for the version specified in `helm/cluster-api/values.yaml`.
 1. `kubectl kustomize config/helm --output helm/cluster-api/templates`: Generates kustomized Helm templates from upstream Cluster API components.
-1. [`hack/move-generated-crds.sh`](hack/move-generated-crds.sh): Moves all the CRDs into the `helm/cluster-api/files` directory. They are later used in the CRD install job.
-1. [`hack/generate-crd-version-patches.sh`](hack/generate-crd-version-patches.sh): Extracts the upstream Cluster API CRDs into `kustomize` patches in `helm/cluster-api/files`.
+1. [`hack/move-crds.sh`](hack/move-crds.sh): Moves all the CRDs into the `helm/cluster-api/files` directory. They are later used in the CRD install job.
+1. [`hack/generate-patches.sh`](hack/generate-patches.sh): Extracts the upstream Cluster API CRDs into `kustomize` patches in `helm/cluster-api/files`.
 1. [`hack/wrap-in-conditions.sh`](hack/wrap-in-conditions.sh): Wraps all occurrences of the `cluster.x-k8s.io/watch-filter` object selector in a condition:
     ```yaml
     {{- if .Values.watchfilter }}

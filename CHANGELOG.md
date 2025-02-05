@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Chart: Replace Cilium network policies by native ones. ([#244](https://github.com/giantswarm/cluster-api-app/pull/244))
 - Chart: Rework affinity & tolerations. ([#245](https://github.com/giantswarm/cluster-api-app/pull/245))
 - Hack: Rework `wrap-with-conditional.sh`. ([#246](https://github.com/giantswarm/cluster-api-app/pull/246))
+- Hack: Rename `generate-crd-version-patches.sh`. ([#247](https://github.com/giantswarm/cluster-api-app/pull/247))
 
 ## [1.20.1] - 2024-07-10
 

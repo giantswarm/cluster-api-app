@@ -11,7 +11,8 @@ generate:
 	# Move CRDs.
 	hack/move-crds.sh
 
-	hack/generate-crd-version-patches.sh
+	# Generate patches.
+	hack/generate-patches.sh
 
 	# Wrap object selectors in conditions.
 	hack/wrap-in-conditions.sh
