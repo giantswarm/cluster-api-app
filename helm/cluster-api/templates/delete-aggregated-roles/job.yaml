@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: delete-aggregated-roles
+  namespace: '{{ .Release.Namespace }}'
+  labels:
+    helm.sh/chart: cluster-api
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/component: delete-aggregated-roles
+    application.giantswarm.io/branch: '{{ .Values.project.branch }}'
+    application.giantswarm.io/commit: '{{ .Values.project.commit }}'
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: cluster-api
+        app.kubernetes.io/name: cluster-api
+        app.kubernetes.io/instance: '{{ .Release.Name }}'
+        app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+        app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+        app.kubernetes.io/component: delete-aggregated-roles
+        application.giantswarm.io/branch: '{{ .Values.project.branch }}'
+        application.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    spec:
+      serviceAccountName: delete-aggregated-roles
+      automountServiceAccountToken: true
+      containers:
+      - name: delete-aggregated-roles
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+        image: '{{ .Values.images.domain }}/giantswarm/kubectl:1.32.1'
+        args:
+        - delete
+        - clusterrole
+        - --ignore-not-found
+        - capi-aggregated-manager-role
+        - capi-kubeadm-control-plane-aggregated-manager-role
+      restartPolicy: Never
