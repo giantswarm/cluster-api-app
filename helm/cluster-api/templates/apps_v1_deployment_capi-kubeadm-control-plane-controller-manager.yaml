@@ -43,7 +43,8 @@ spec:
             weight: 10
       containers:
       - args:
-        - --metrics-bind-addr=0.0.0.0:8080
+        - --diagnostics-address=0.0.0.0:8080
+        - --insecure-diagnostics
         - --feature-gates=ClusterTopology=true,KubeadmBootstrapFormatIgnition=true
         - --watch-filter={{ .Values.watchFilter }}
         - --v=0

@@ -11,7 +11,8 @@ spec:
       containers:
       - name: manager
         args:
-        - --metrics-bind-addr=0.0.0.0:8080
+        - --diagnostics-address=0.0.0.0:8080
+        - --insecure-diagnostics
         - --feature-gates=MachinePool=true,KubeadmBootstrapFormatIgnition=true
         - --watch-filter={{ .Values.watchFilter }}
         - --v=0
