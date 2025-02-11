@@ -1,6 +1,6 @@
 apiVersion: v2
 name: cluster-api
-description: Helm chart for cluster API.
+description: A Helm chart for Cluster API components.
 version: [[ .Version ]]
 appVersion: [[ .AppVersion ]]
 home: https://github.com/giantswarm/cluster-api-app
