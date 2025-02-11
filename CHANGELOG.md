@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Chart: Rework CRD install. ([#250](https://github.com/giantswarm/cluster-api-app/pull/250))\
   **NOTE:** This also upgrades the used `kubectl` image from v1.24 to v1.32.
 - Chart: Use helpers for `delete-aggregated-roles`. ([#251](https://github.com/giantswarm/cluster-api-app/pull/251))
+- Chart: Rework values. ([#252](https://github.com/giantswarm/cluster-api-app/pull/252))
 
 ## [1.20.1] - 2024-07-10
 

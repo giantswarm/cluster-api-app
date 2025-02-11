@@ -42,9 +42,6 @@
                 }
             }
         },
-        "name": {
-            "type": "string"
-        },
         "project": {
             "type": "object",
             "properties": {
