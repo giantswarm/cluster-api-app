@@ -1,37 +1,22 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: delete-aggregated-roles
-  namespace: '{{ .Release.Namespace }}'
+  name: {{ include "cluster-api.delete-aggregated-roles.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
-    helm.sh/chart: cluster-api
-    app.kubernetes.io/name: cluster-api
-    app.kubernetes.io/instance: '{{ .Release.Name }}'
-    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
-    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
-    app.kubernetes.io/component: delete-aggregated-roles
-    application.giantswarm.io/branch: '{{ .Values.project.branch }}'
-    application.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    {{- include "cluster-api.delete-aggregated-roles.labels" . | nindent 4 }}
   annotations:
-    helm.sh/hook: pre-install,pre-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+    {{- include "cluster-api.delete-aggregated-roles.annotations" . | nindent 4 }}
 spec:
   template:
     metadata:
       labels:
-        helm.sh/chart: cluster-api
-        app.kubernetes.io/name: cluster-api
-        app.kubernetes.io/instance: '{{ .Release.Name }}'
-        app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
-        app.kubernetes.io/managed-by: '{{ .Release.Service }}'
-        app.kubernetes.io/component: delete-aggregated-roles
-        application.giantswarm.io/branch: '{{ .Values.project.branch }}'
-        application.giantswarm.io/commit: '{{ .Values.project.commit }}'
+        {{- include "cluster-api.delete-aggregated-roles.labels" . | nindent 8 }}
     spec:
-      serviceAccountName: delete-aggregated-roles
+      serviceAccountName: {{ include "cluster-api.delete-aggregated-roles.fullname" . }}
       automountServiceAccountToken: true
       containers:
-      - name: delete-aggregated-roles
+      - name: kubectl
         securityContext:
           runAsNonRoot: true
           allowPrivilegeEscalation: false
