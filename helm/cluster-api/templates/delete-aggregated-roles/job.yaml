@@ -41,7 +41,7 @@ spec:
             drop:
             - ALL
           readOnlyRootFilesystem: true
-        image: '{{ .Values.images.domain }}/giantswarm/kubectl:1.32.1'
+        image: "{{ .Values.registry.domain }}/giantswarm/kubectl:1.32.1"
         args:
         - delete
         - clusterrole
