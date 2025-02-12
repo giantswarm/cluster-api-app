@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   **NOTE:** This also upgrades the used `kubectl` image from v1.24 to v1.32.
 - Chart: Use helpers for `delete-aggregated-roles`. ([#251](https://github.com/giantswarm/cluster-api-app/pull/251))
 - Chart: Rework values. ([#252](https://github.com/giantswarm/cluster-api-app/pull/252))
+- Kustomization: Replace deprecated `--metrics-bind-addr` flag. ([#253](https://github.com/giantswarm/cluster-api-app/pull/253))
 
 ## [1.20.1] - 2024-07-10
 
