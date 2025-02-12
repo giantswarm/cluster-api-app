@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Kustomization: Delete `metrics` port. ([#248](https://github.com/giantswarm/cluster-api-app/pull/248))
 - Chart: Rework `hook-delete-aggregated-roles`. ([#249](https://github.com/giantswarm/cluster-api-app/pull/249))\
   **NOTE:** This also upgrades the used `kubectl` image from v1.24 to v1.32.
+- Chart: Rework CRD install. ([#250](https://github.com/giantswarm/cluster-api-app/pull/250))\
+  **NOTE:** This also upgrades the used `kubectl` image from v1.24 to v1.32.
 
 ## [1.20.1] - 2024-07-10
 

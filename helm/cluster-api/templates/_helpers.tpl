@@ -1,24 +1,39 @@
-{{/* vim: set filetype=mustache: */}}
-{{/* Expand the name of the chart. This is suffixed with -alertmanager, which means subtract 13 from longest 63 available */}}
+{{/*
+Expand the name of the chart.
+*/}}
 {{- define "cluster-api.name" -}}
-{{- .Chart.Name | trunc 50 | trimSuffix "-" -}}
+{{- .Chart.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "cluster-api.crdInstall" -}}
-{{- printf "%s-%s" ( include "cluster-api.name" . ) "crd-install" | replace "+" "_" | trimSuffix "-" -}}
-{{- end -}}
+{{/*
+Create a default fully qualified app name.
+*/}}
+{{- define "cluster-api.fullname" -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
 
-{{- define "cluster-api.CRDInstallAnnotations" -}}
-"helm.sh/hook": "pre-install,pre-upgrade"
-"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
-{{- end -}}
+{{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define "cluster-api.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
 
+{{/*
+Common labels
+*/}}
+{{- define "cluster-api.labels" -}}
+helm.sh/chart: {{ include "cluster-api.chart" . }}
+{{ include "cluster-api.selectorLabels" . }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
 {{- define "cluster-api.selectorLabels" -}}
-app.kubernetes.io/name: "{{ template "cluster-api.name" . }}"
-app.kubernetes.io/instance: "{{ template "cluster-api.name" . }}"
-{{- end -}}
-
-{{/* Create a label which can be used to select any orphaned crd-install hook resources */}}
-{{- define "cluster-api.CRDInstallSelector" -}}
-{{- printf "%s" "crd-install-hook" -}}
-{{- end -}}
+app.kubernetes.io/name: {{ include "cluster-api.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
