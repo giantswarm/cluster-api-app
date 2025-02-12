@@ -1,27 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: delete-aggregated-roles
-  namespace: '{{ .Release.Namespace }}'
+  name: {{ include "cluster-api.delete-aggregated-roles.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
-    helm.sh/chart: cluster-api
-    app.kubernetes.io/name: cluster-api
-    app.kubernetes.io/instance: '{{ .Release.Name }}'
-    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
-    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
-    app.kubernetes.io/component: delete-aggregated-roles
-    application.giantswarm.io/branch: '{{ .Values.project.branch }}'
-    application.giantswarm.io/commit: '{{ .Values.project.commit }}'
+    {{- include "cluster-api.delete-aggregated-roles.labels" . | nindent 4 }}
   annotations:
-    helm.sh/hook: pre-install,pre-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+    {{- include "cluster-api.delete-aggregated-roles.annotations" . | nindent 4 }}
     helm.sh/hook-weight: "-1"
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/name: cluster-api
-      app.kubernetes.io/instance: '{{ .Release.Name }}'
-      app.kubernetes.io/component: delete-aggregated-roles
+      {{- include "cluster-api.delete-aggregated-roles.selectorLabels" . | nindent 6 }}
   policyTypes:
   - Egress
   egress:
