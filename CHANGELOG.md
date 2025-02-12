@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Chart: Rework values. ([#252](https://github.com/giantswarm/cluster-api-app/pull/252))
 - Kustomization: Replace deprecated `--metrics-bind-addr` flag. ([#253](https://github.com/giantswarm/cluster-api-app/pull/253))
 - Chart: Fix `delete-aggregated-roles` permissions. ([#254](https://github.com/giantswarm/cluster-api-app/pull/254))
+- Chart: Upgrade CAPI to v1.7.9. ([#236](https://github.com/giantswarm/cluster-api-app/pull/236))
 
 ## [1.20.1] - 2024-07-10
 
