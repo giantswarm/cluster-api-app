@@ -1,23 +1,36 @@
-name: cluster-api
-
-registry:
-  domain: gsoci.azurecr.io
-
-images:
-  core:
-    name: giantswarm/cluster-api-controller
-  bootstrap:
-    name: giantswarm/kubeadm-bootstrap-controller
-  controlplane:
-    name: giantswarm/kubeadm-control-plane-controller
-  tag: v1.6.5-gs-e01ea92f1  # upstream v1.6.5 + https://github.com/kubernetes-sigs/cluster-api/pull/8586 (Makefile improvement) + https://github.com/giantswarm/cluster-api/pull/21 (backport of bootstrap config reference rotation support) + https://github.com/giantswarm/cluster-api/pull/23 (fix secret caching client for CAPI migration)
-
+# -- Project information.
 project:
+  # -- Branch this chart has been built from.
   branch: "[[ .Branch ]]"
+  # -- Commit this chart has been built from.
   commit: "[[ .SHA ]]"
 
+# -- Registry settings.
+registry:
+  # -- Registry domain.
+  domain: gsoci.azurecr.io
+
+# -- Image settings.
+images:
+  # -- Core image settings.
+  core:
+    # -- Core image repository.
+    name: giantswarm/cluster-api-controller
+  # -- Bootstrap image settings.
+  bootstrap:
+    # -- Bootstrap image repository.
+    name: giantswarm/kubeadm-bootstrap-controller
+  # -- Control plane image settings.
+  controlplane:
+    # -- Control plane image repository.
+    name: giantswarm/kubeadm-control-plane-controller
+  # -- Image tag (used for all images).
+  tag: v1.6.5-gs-e01ea92f1
+
+# -- Webhook watch filter.
 watchFilter: capi
 
-# We install CRDs through a Job with the helm specific crd folder.
+# -- CRD install job settings.
 crds:
+  # -- Whether to install CRDs or not.
   install: true
