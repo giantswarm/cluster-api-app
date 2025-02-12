@@ -13,5 +13,9 @@ rules:
   resources:
   - clusterroles
   verbs:
+  # kubectl is doing some weird stuff when deleting the cluster roles.
+  # To complete the job without errors, it sadly needs list and watch permissions.
+  - list
+  - watch
   - get
   - delete
