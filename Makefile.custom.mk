@@ -19,10 +19,3 @@ generate:
 
 	# Remove braces.
 	hack/remove-braces.sh
-
-.PHONY: verify
-verify: generate
-	@if ! git diff --exit-code ; then \
-		echo "Generated templates are out of date. Run make generate." ; \
-		exit 1 ; \
-	fi
