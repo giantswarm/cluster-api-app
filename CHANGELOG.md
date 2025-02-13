@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2025-02-13
+
 ### Changed
 
 - Hack: Rework `remove-curly-braces-for-helm.sh`. ([#243](https://github.com/giantswarm/cluster-api-app/pull/243))
@@ -287,7 +289,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v1.20.1...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.20.1...v2.0.0
 [1.20.1]: https://github.com/giantswarm/cluster-api-app/compare/v1.20.0...v1.20.1
 [1.20.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.19.0...v1.20.0
 [1.19.0]: https://github.com/giantswarm/cluster-api-app/compare/v1.18.0...v1.19.0
