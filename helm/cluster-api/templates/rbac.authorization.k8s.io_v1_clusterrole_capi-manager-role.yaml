@@ -94,8 +94,6 @@ rules:
   resources:
   - clusterclasses
   verbs:
-  - create
-  - delete
   - get
   - list
   - patch
@@ -127,8 +125,6 @@ rules:
   - clusters/finalizers
   - clusters/status
   verbs:
-  - create
-  - delete
   - get
   - list
   - patch
@@ -140,8 +136,6 @@ rules:
   - clusters
   - clusters/status
   verbs:
-  - create
-  - delete
   - get
   - list
   - patch
@@ -299,6 +293,7 @@ rules:
   - get
   - list
   - patch
+  - update
   - watch
 - apiGroups:
   - ""
@@ -306,22 +301,7 @@ rules:
   - events
   verbs:
   - create
-  - get
-  - list
   - patch
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - nodes
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
 - apiGroups:
   - ""
   resources:
@@ -332,6 +312,7 @@ rules:
   - get
   - list
   - patch
+  - update
   - watch
 - apiGroups:
   - ipam.cluster.x-k8s.io
