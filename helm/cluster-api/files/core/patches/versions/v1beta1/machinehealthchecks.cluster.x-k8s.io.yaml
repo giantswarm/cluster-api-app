@@ -35,6 +35,9 @@
               description: |-
                 Any further remediation is only allowed if at most "MaxUnhealthy" machines selected by
                 "selector" are not healthy.
+
+
+                Deprecated: This field is deprecated and is going to be removed in the next apiVersion. Please see https://github.com/kubernetes-sigs/cluster-api/issues/10722 for more details.
               x-kubernetes-int-or-string: true
             nodeStartupTimeout:
               description: |-
@@ -131,11 +134,13 @@
                         items:
                           type: string
                         type: array
+                        x-kubernetes-list-type: atomic
                     required:
                       - key
                       - operator
                     type: object
                   type: array
+                  x-kubernetes-list-type: atomic
                 matchLabels:
                   additionalProperties:
                     type: string
@@ -170,7 +175,6 @@
                   - timeout
                   - type
                 type: object
-              minItems: 1
               type: array
             unhealthyRange:
               description: |-
@@ -179,12 +183,14 @@
                 Eg. "[3-5]" - This means that remediation will be allowed only when:
                 (a) there are at least 3 unhealthy machines (and)
                 (b) there are at most 5 unhealthy machines
+
+
+                Deprecated: This field is deprecated and is going to be removed in the next apiVersion. Please see https://github.com/kubernetes-sigs/cluster-api/issues/10722 for more details.
               pattern: ^\[[0-9]+-[0-9]+\]$
               type: string
           required:
             - clusterName
             - selector
-            - unhealthyConditions
           type: object
         status:
           description: Most recently observed status of MachineHealthCheck resource

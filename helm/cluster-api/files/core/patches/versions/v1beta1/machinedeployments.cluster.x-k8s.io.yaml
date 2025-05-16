@@ -73,6 +73,9 @@
                 The number of old MachineSets to retain to allow rollback.
                 This is a pointer to distinguish between explicit zero and not specified.
                 Defaults to 1.
+
+
+                Deprecated: This field is deprecated and is going to be removed in the next apiVersion. Please see https://github.com/kubernetes-sigs/cluster-api/issues/10479 for more details.
               format: int32
               type: integer
             rolloutAfter:
@@ -115,11 +118,13 @@
                         items:
                           type: string
                         type: array
+                        x-kubernetes-list-type: atomic
                     required:
                       - key
                       - operator
                     type: object
                   type: array
+                  x-kubernetes-list-type: atomic
                 matchLabels:
                   additionalProperties:
                     type: string
