@@ -16407,7 +16407,7 @@ spec:
         - --feature-gates=MachinePool=${EXP_MACHINE_POOL:=false},KubeadmBootstrapFormatIgnition=${EXP_KUBEADM_BOOTSTRAP_FORMAT_IGNITION:=false}
         command:
         - /manager
-        image: k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller:v1.1.5
+        image: registry.k8s.io/cluster-api/kubeadm-bootstrap-controller:v1.1.5
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
