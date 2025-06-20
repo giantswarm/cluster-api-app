@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Enabled the `MachineSetPreflightChecks` feature gate to ensure safe rolling of nodes
+
 ## [3.0.1] - 2025-05-25
 
 ### Changed
