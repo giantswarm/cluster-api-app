@@ -13,7 +13,7 @@ spec:
         args:
         - --diagnostics-address=0.0.0.0:8080
         - --insecure-diagnostics
-        - --feature-gates=MachinePool=true,ClusterResourceSet=true,ClusterTopology=true
+        - --feature-gates=MachinePool=true,ClusterResourceSet=true,ClusterTopology=true,MachineSetPreflightChecks=true
         - --watch-filter={{ .Values.watchFilter }}
         - --v=0
         ports:
