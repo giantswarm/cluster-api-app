@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Recreate bootstrap token if it was cleaned up
+- Remediate unhealthy MachinePool machines
+
 ## [3.1.2] - 2025-07-10
 
 ### Fixed
