@@ -12,7 +12,6 @@ spec:
       - v1
       - v1beta1
       clientConfig:
-        caBundle: Cg==
         service:
           name: capi-kubeadm-bootstrap-webhook-service
           namespace: "{{ .Release.Namespace }}"
