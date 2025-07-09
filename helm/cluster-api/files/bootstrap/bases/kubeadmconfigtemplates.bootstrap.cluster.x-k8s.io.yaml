@@ -22,7 +22,6 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
         service:
           name: capi-kubeadm-bootstrap-webhook-service
           namespace: '{{ .Release.Namespace }}'
