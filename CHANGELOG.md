@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.1.2] - 2025-07-10
 
+### Fixed
+
+- Drop dummy `caBundle` field to support Kubernetes 1.31 ([#283](https://github.com/giantswarm/cluster-api-app/pull/283))
+
 ## [3.1.1] - 2025-06-20
 
 ### Fixed
