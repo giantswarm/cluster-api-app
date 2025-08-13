@@ -7,6 +7,7 @@ resources:
   - bases/ipaddressclaims.ipam.cluster.x-k8s.io.yaml
   - bases/ipaddresses.ipam.cluster.x-k8s.io.yaml
   - bases/machinedeployments.cluster.x-k8s.io.yaml
+  - bases/machinedrainrules.cluster.x-k8s.io.yaml
   - bases/machinehealthchecks.cluster.x-k8s.io.yaml
   - bases/machinepools.cluster.x-k8s.io.yaml
   - bases/machines.cluster.x-k8s.io.yaml
@@ -126,6 +127,12 @@ patches:
       version: v1
       kind: CustomResourceDefinition
       name: machinedeployments.cluster.x-k8s.io
+  - path: patches/versions/v1beta1/machinedrainrules.cluster.x-k8s.io.yaml
+    target:
+      group: apiextensions.k8s.io
+      version: v1
+      kind: CustomResourceDefinition
+      name: machinedrainrules.cluster.x-k8s.io
   - path: patches/versions/v1alpha3/machinehealthchecks.cluster.x-k8s.io.yaml
     target:
       group: apiextensions.k8s.io
