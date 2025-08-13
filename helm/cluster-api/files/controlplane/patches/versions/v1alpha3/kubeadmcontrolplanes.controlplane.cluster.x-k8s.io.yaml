@@ -5,7 +5,6 @@
       description: |-
         KubeadmControlPlane is the Schema for the KubeadmControlPlane API.
 
-
         Deprecated: This type will be removed in one of the next releases.
       properties:
         apiVersion:
@@ -30,7 +29,7 @@
           properties:
             infrastructureTemplate:
               description: |-
-                InfrastructureTemplate is a required reference to a custom resource
+                infrastructureTemplate is a required reference to a custom resource
                 offered by an infrastructure provider.
               properties:
                 apiVersion:
@@ -45,7 +44,6 @@
                     the event) or if no container name is specified "spec.containers[2]" (container with
                     index 2 in this pod). This syntax is chosen only to have some well-defined way of
                     referencing a part of an object.
-                    TODO: this design is not final and this field is subject to change in the future.
                   type: string
                 kind:
                   description: |-
@@ -76,11 +74,11 @@
               x-kubernetes-map-type: atomic
             kubeadmConfigSpec:
               description: |-
-                KubeadmConfigSpec is a KubeadmConfigSpec
+                kubeadmConfigSpec is a KubeadmConfigSpec
                 to use for initializing and joining machines to the control plane.
               properties:
                 clusterConfiguration:
-                  description: ClusterConfiguration along with InitConfiguration are the configurations necessary for the init command
+                  description: clusterConfiguration along with InitConfiguration are the configurations necessary for the init command
                   properties:
                     apiServer:
                       description: APIServer contains extra settings for the API server control plane component
@@ -93,10 +91,7 @@
                         extraArgs:
                           additionalProperties:
                             type: string
-                          description: |-
-                            ExtraArgs is an extra set of flags to pass to the control plane component.
-                            TODO: This is temporary and ideally we would like to switch all components to
-                            use ComponentConfig + ConfigMaps.
+                          description: ExtraArgs is an extra set of flags to pass to the control plane component.
                           type: object
                         extraVolumes:
                           description: ExtraVolumes is an extra set of host volumes, mounted to the control plane component.
@@ -168,10 +163,7 @@
                         extraArgs:
                           additionalProperties:
                             type: string
-                          description: |-
-                            ExtraArgs is an extra set of flags to pass to the control plane component.
-                            TODO: This is temporary and ideally we would like to switch all components to
-                            use ComponentConfig + ConfigMaps.
+                          description: ExtraArgs is an extra set of flags to pass to the control plane component.
                           type: object
                         extraVolumes:
                           description: ExtraVolumes is an extra set of host volumes, mounted to the control plane component.
@@ -348,10 +340,7 @@
                         extraArgs:
                           additionalProperties:
                             type: string
-                          description: |-
-                            ExtraArgs is an extra set of flags to pass to the control plane component.
-                            TODO: This is temporary and ideally we would like to switch all components to
-                            use ComponentConfig + ConfigMaps.
+                          description: ExtraArgs is an extra set of flags to pass to the control plane component.
                           type: object
                         extraVolumes:
                           description: ExtraVolumes is an extra set of host volumes, mounted to the control plane component.
@@ -389,38 +378,38 @@
                       type: boolean
                   type: object
                 diskSetup:
-                  description: DiskSetup specifies options for the creation of partition tables and file systems on devices.
+                  description: diskSetup specifies options for the creation of partition tables and file systems on devices.
                   properties:
                     filesystems:
-                      description: Filesystems specifies the list of file systems to setup.
+                      description: filesystems specifies the list of file systems to setup.
                       items:
                         description: Filesystem defines the file systems to be created.
                         properties:
                           device:
-                            description: Device specifies the device name
+                            description: device specifies the device name
                             type: string
                           extraOpts:
-                            description: ExtraOpts defined extra options to add to the command for creating the file system.
+                            description: extraOpts defined extra options to add to the command for creating the file system.
                             items:
                               type: string
                             type: array
                           filesystem:
-                            description: Filesystem specifies the file system type.
+                            description: filesystem specifies the file system type.
                             type: string
                           label:
-                            description: Label specifies the file system label to be used. If set to None, no label is used.
+                            description: label specifies the file system label to be used. If set to None, no label is used.
                             type: string
                           overwrite:
                             description: |-
-                              Overwrite defines whether or not to overwrite any existing filesystem.
+                              overwrite defines whether or not to overwrite any existing filesystem.
                               If true, any pre-existing file system will be destroyed. Use with Caution.
                             type: boolean
                           partition:
-                            description: 'Partition specifies the partition to use. The valid options are: "auto|any", "auto", "any", "none", and <NUM>, where NUM is the actual partition number.'
+                            description: 'partition specifies the partition to use. The valid options are: "auto|any", "auto", "any", "none", and <NUM>, where NUM is the actual partition number.'
                             type: string
                           replaceFS:
                             description: |-
-                              ReplaceFS is a special directive, used for Microsoft Azure that instructs cloud-init to replace a file system of <FS_TYPE>.
+                              replaceFS is a special directive, used for Microsoft Azure that instructs cloud-init to replace a file system of <FS_TYPE>.
                               NOTE: unless you define a label, this requires the use of the 'any' partition directive.
                             type: string
                         required:
@@ -430,27 +419,27 @@
                         type: object
                       type: array
                     partitions:
-                      description: Partitions specifies the list of the partitions to setup.
+                      description: partitions specifies the list of the partitions to setup.
                       items:
                         description: Partition defines how to create and layout a partition.
                         properties:
                           device:
-                            description: Device is the name of the device.
+                            description: device is the name of the device.
                             type: string
                           layout:
                             description: |-
-                              Layout specifies the device layout.
+                              layout specifies the device layout.
                               If it is true, a single partition will be created for the entire device.
                               When layout is false, it means don't partition or ignore existing partitioning.
                             type: boolean
                           overwrite:
                             description: |-
-                              Overwrite describes whether to skip checks and create the partition if a partition or filesystem is found on the device.
+                              overwrite describes whether to skip checks and create the partition if a partition or filesystem is found on the device.
                               Use with caution. Default is 'false'.
                             type: boolean
                           tableType:
                             description: |-
-                              TableType specifies the tupe of partition table. The following are supported:
+                              tableType specifies the tupe of partition table. The following are supported:
                               'mbr': default and setups a MS-DOS partition table
                               'gpt': setups a GPT partition table
                             type: string
@@ -461,24 +450,24 @@
                       type: array
                   type: object
                 files:
-                  description: Files specifies extra files to be passed to user_data upon creation.
+                  description: files specifies extra files to be passed to user_data upon creation.
                   items:
                     description: File defines the input for generating write_files in cloud-init.
                     properties:
                       content:
-                        description: Content is the actual content of the file.
+                        description: content is the actual content of the file.
                         type: string
                       contentFrom:
-                        description: ContentFrom is a referenced source of content to populate the file.
+                        description: contentFrom is a referenced source of content to populate the file.
                         properties:
                           secret:
-                            description: Secret represents a secret that should populate this file.
+                            description: secret represents a secret that should populate this file.
                             properties:
                               key:
-                                description: Key is the key in the secret's data map for this value.
+                                description: key is the key in the secret's data map for this value.
                                 type: string
                               name:
-                                description: Name of the secret in the KubeadmBootstrapConfig's namespace to use.
+                                description: name of the secret in the KubeadmBootstrapConfig's namespace to use.
                                 type: string
                             required:
                               - key
@@ -488,32 +477,32 @@
                           - secret
                         type: object
                       encoding:
-                        description: Encoding specifies the encoding of the file contents.
+                        description: encoding specifies the encoding of the file contents.
                         enum:
                           - base64
                           - gzip
                           - gzip+base64
                         type: string
                       owner:
-                        description: Owner specifies the ownership of the file, e.g. "root:root".
+                        description: owner specifies the ownership of the file, e.g. "root:root".
                         type: string
                       path:
-                        description: Path specifies the full path on disk where to store the file.
+                        description: path specifies the full path on disk where to store the file.
                         type: string
                       permissions:
-                        description: Permissions specifies the permissions to assign to the file, e.g. "0640".
+                        description: permissions specifies the permissions to assign to the file, e.g. "0640".
                         type: string
                     required:
                       - path
                     type: object
                   type: array
                 format:
-                  description: Format specifies the output format of the bootstrap data
+                  description: format specifies the output format of the bootstrap data
                   enum:
                     - cloud-config
                   type: string
                 initConfiguration:
-                  description: InitConfiguration along with ClusterConfiguration are the configurations necessary for the init command
+                  description: initConfiguration along with ClusterConfiguration are the configurations necessary for the init command
                   properties:
                     apiVersion:
                       description: |-
@@ -657,7 +646,7 @@
                       type: object
                   type: object
                 joinConfiguration:
-                  description: JoinConfiguration is the kubeadm configuration for the join command
+                  description: joinConfiguration is the kubeadm configuration for the join command
                   properties:
                     apiVersion:
                       description: |-
@@ -671,7 +660,6 @@
                         CACertPath is the path to the SSL certificate authority used to
                         secure comunications between node and control-plane.
                         Defaults to "/etc/kubernetes/pki/ca.crt".
-                        TODO: revisit when there is defaulting from k/k
                       type: string
                     controlPlane:
                       description: |-
@@ -696,9 +684,7 @@
                           type: object
                       type: object
                     discovery:
-                      description: |-
-                        Discovery specifies the options for the kubelet to use during the TLS Bootstrap process
-                        TODO: revisit when there is defaulting from k/k
+                      description: Discovery specifies the options for the kubelet to use during the TLS Bootstrap process
                       properties:
                         bootstrapToken:
                           description: |-
@@ -755,7 +741,6 @@
                             TLSBootstrapToken is a token used for TLS bootstrapping.
                             If .BootstrapToken is set, this field is defaulted to .BootstrapToken.Token, but can be overridden.
                             If .File is set, this field **must be set** in case the KubeConfigFile does not contain any other authentication information
-                            TODO: revisit when there is defaulting from k/k
                           type: string
                       type: object
                     kind:
@@ -825,7 +810,7 @@
                       type: object
                   type: object
                 mounts:
-                  description: Mounts specifies a list of mount points to be setup.
+                  description: mounts specifies a list of mount points to be setup.
                   items:
                     description: MountPoints defines input for generated mounts in cloud-init.
                     items:
@@ -833,82 +818,79 @@
                     type: array
                   type: array
                 ntp:
-                  description: NTP specifies NTP configuration
+                  description: ntp specifies NTP configuration
                   properties:
                     enabled:
-                      description: Enabled specifies whether NTP should be enabled
+                      description: enabled specifies whether NTP should be enabled
                       type: boolean
                     servers:
-                      description: Servers specifies which NTP servers to use
+                      description: servers specifies which NTP servers to use
                       items:
                         type: string
                       type: array
                   type: object
                 postKubeadmCommands:
-                  description: PostKubeadmCommands specifies extra commands to run after kubeadm runs
+                  description: postKubeadmCommands specifies extra commands to run after kubeadm runs
                   items:
                     type: string
                   type: array
                 preKubeadmCommands:
-                  description: PreKubeadmCommands specifies extra commands to run before kubeadm runs
+                  description: preKubeadmCommands specifies extra commands to run before kubeadm runs
                   items:
                     type: string
                   type: array
                 useExperimentalRetryJoin:
                   description: |-
-                    UseExperimentalRetryJoin replaces a basic kubeadm command with a shell
+                    useExperimentalRetryJoin replaces a basic kubeadm command with a shell
                     script with retries for joins.
-
 
                     This is meant to be an experimental temporary workaround on some environments
                     where joins fail due to timing (and other issues). The long term goal is to add retries to
                     kubeadm proper and use that functionality.
 
-
                     This will add about 40KB to userdata
-
 
                     For more information, refer to https://github.com/kubernetes-sigs/cluster-api/pull/2763#discussion_r397306055.
                   type: boolean
                 users:
-                  description: Users specifies extra users to add
+                  description: users specifies extra users to add
                   items:
                     description: User defines the input for a generated user in cloud-init.
                     properties:
                       gecos:
-                        description: Gecos specifies the gecos to use for the user
+                        description: gecos specifies the gecos to use for the user
                         type: string
                       groups:
-                        description: Groups specifies the additional groups for the user
+                        description: groups specifies the additional groups for the user
                         type: string
                       homeDir:
-                        description: HomeDir specifies the home directory to use for the user
+                        description: homeDir specifies the home directory to use for the user
                         type: string
                       inactive:
-                        description: Inactive specifies whether to mark the user as inactive
+                        description: inactive specifies whether to mark the user as inactive
                         type: boolean
                       lockPassword:
-                        description: LockPassword specifies if password login should be disabled
+                        description: lockPassword specifies if password login should be disabled
                         type: boolean
                       name:
-                        description: Name specifies the user name
+                        description: name specifies the user name
                         type: string
                       passwd:
-                        description: Passwd specifies a hashed password for the user
+                        description: passwd specifies a hashed password for the user
                         type: string
                       primaryGroup:
-                        description: PrimaryGroup specifies the primary group for the user
+                        description: primaryGroup specifies the primary group for the user
                         type: string
                       shell:
-                        description: Shell specifies the user's shell
+                        description: shell specifies the user's shell
                         type: string
                       sshAuthorizedKeys:
-                        description: SSHAuthorizedKeys specifies a list of ssh authorized keys for the user
+                        description: sshAuthorizedKeys specifies a list of ssh authorized keys for the user
                         items:
                           type: string
                         type: array
                       sudo:
-                        description: Sudo specifies a sudo role for the user
+                        description: sudo specifies a sudo role for the user
                         type: string
                     required:
                       - name
@@ -916,14 +898,14 @@
                   type: array
                 verbosity:
                   description: |-
-                    Verbosity is the number for the kubeadm log level verbosity.
+                    verbosity is the number for the kubeadm log level verbosity.
                     It overrides the `--v` flag in kubeadm commands.
                   format: int32
                   type: integer
               type: object
             nodeDrainTimeout:
               description: |-
-                NodeDrainTimeout is the total amount of time that the controller will spend on draining a controlplane node
+                nodeDrainTimeout is the total amount of time that the controller will spend on draining a controlplane node
                 The default value is 0, meaning that the node can be drained without any time limitations.
                 NOTE: NodeDrainTimeout is different from `kubectl drain --timeout`
               type: string
@@ -959,20 +941,20 @@
                   type: object
                 type:
                   description: |-
-                    Type of rollout. Currently the only supported strategy is
+                    type of rollout. Currently the only supported strategy is
                     "RollingUpdate".
                     Default is RollingUpdate.
                   type: string
               type: object
             upgradeAfter:
               description: |-
-                UpgradeAfter is a field to indicate an upgrade should be performed
+                upgradeAfter is a field to indicate an upgrade should be performed
                 after the specified time even if no changes have been made to the
                 KubeadmControlPlane
               format: date-time
               type: string
             version:
-              description: Version defines the desired Kubernetes version.
+              description: version defines the desired Kubernetes version.
               type: string
           required:
             - infrastructureTemplate
@@ -983,7 +965,7 @@
           description: KubeadmControlPlaneStatus defines the observed state of KubeadmControlPlane.
           properties:
             conditions:
-              description: Conditions defines current service state of the KubeadmControlPlane.
+              description: conditions defines current service state of the KubeadmControlPlane.
               items:
                 description: Condition defines an observation of a Cluster API resource operational state.
                 properties:
@@ -1007,16 +989,16 @@
                     type: string
                   severity:
                     description: |-
-                      Severity provides an explicit classification of Reason code, so the users or machines can immediately
+                      severity provides an explicit classification of Reason code, so the users or machines can immediately
                       understand the current situation and act accordingly.
                       The Severity field MUST be set only when Status=False.
                     type: string
                   status:
-                    description: Status of the condition, one of True, False, Unknown.
+                    description: status of the condition, one of True, False, Unknown.
                     type: string
                   type:
                     description: |-
-                      Type of condition in CamelCase or in foo.example.com/CamelCase.
+                      type of condition in CamelCase or in foo.example.com/CamelCase.
                       Many .condition.type values are consistent across resources like Available, but because arbitrary conditions
                       can be useful (see .node.status.conditions), the ability to deconflict is important.
                     type: string
@@ -1032,22 +1014,22 @@
               type: string
             failureReason:
               description: |-
-                FailureReason indicates that there is a terminal problem reconciling the
+                failureReason indicates that there is a terminal problem reconciling the
                 state, and will be set to a token value suitable for
                 programmatic interpretation.
               type: string
             initialized:
               description: |-
-                Initialized denotes whether or not the control plane has the
+                initialized denotes whether or not the control plane has the
                 uploaded kubeadm-config configmap.
               type: boolean
             observedGeneration:
-              description: ObservedGeneration is the latest generation observed by the controller.
+              description: observedGeneration is the latest generation observed by the controller.
               format: int64
               type: integer
             ready:
               description: |-
-                Ready denotes that the KubeadmControlPlane API Server is ready to
+                ready denotes that the KubeadmControlPlane API Server is ready to
                 receive requests.
               type: boolean
             readyReplicas:
@@ -1062,7 +1044,7 @@
               type: integer
             selector:
               description: |-
-                Selector is the label selector in string format to avoid introspection
+                selector is the label selector in string format to avoid introspection
                 by clients, and is used to provide the CRD-based integration for the
                 scale subresource and additional integrations for things like kubectl
                 describe.. The string will be in the same format as the query-param syntax.

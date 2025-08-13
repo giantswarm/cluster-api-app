@@ -5,7 +5,6 @@
       description: |-
         MachineHealthCheck is the Schema for the machinehealthchecks API.
 
-
         Deprecated: This type will be removed in one of the next releases.
       properties:
         apiVersion:
@@ -29,7 +28,7 @@
           description: Specification of machine health check policy
           properties:
             clusterName:
-              description: ClusterName is the name of the Cluster this object belongs to.
+              description: clusterName is the name of the Cluster this object belongs to.
               minLength: 1
               type: string
             maxUnhealthy:
@@ -49,9 +48,8 @@
               type: string
             remediationTemplate:
               description: |-
-                RemediationTemplate is a reference to a remediation template
+                remediationTemplate is a reference to a remediation template
                 provided by an infrastructure provider.
-
 
                 This field is completely optional, when filled, the MachineHealthCheck controller
                 creates a new object from the template referenced and hands off remediation of the machine to
@@ -69,7 +67,6 @@
                     the event) or if no container name is specified "spec.containers[2]" (container with
                     index 2 in this pod). This syntax is chosen only to have some well-defined way of
                     referencing a part of an object.
-                    TODO: this design is not final and this field is subject to change in the future.
                   type: string
                 kind:
                   description: |-
@@ -144,7 +141,7 @@
               x-kubernetes-map-type: atomic
             unhealthyConditions:
               description: |-
-                UnhealthyConditions contains a list of the conditions that determine
+                unhealthyConditions contains a list of the conditions that determine
                 whether a node is considered unhealthy.  The conditions are combined in a
                 logical OR, i.e. if any of the conditions is met, the node is unhealthy.
               items:
@@ -186,7 +183,7 @@
           description: Most recently observed status of MachineHealthCheck resource
           properties:
             conditions:
-              description: Conditions defines current service state of the MachineHealthCheck.
+              description: conditions defines current service state of the MachineHealthCheck.
               items:
                 description: Condition defines an observation of a Cluster API resource operational state.
                 properties:
@@ -210,16 +207,16 @@
                     type: string
                   severity:
                     description: |-
-                      Severity provides an explicit classification of Reason code, so the users or machines can immediately
+                      severity provides an explicit classification of Reason code, so the users or machines can immediately
                       understand the current situation and act accordingly.
                       The Severity field MUST be set only when Status=False.
                     type: string
                   status:
-                    description: Status of the condition, one of True, False, Unknown.
+                    description: status of the condition, one of True, False, Unknown.
                     type: string
                   type:
                     description: |-
-                      Type of condition in CamelCase or in foo.example.com/CamelCase.
+                      type of condition in CamelCase or in foo.example.com/CamelCase.
                       Many .condition.type values are consistent across resources like Available, but because arbitrary conditions
                       can be useful (see .node.status.conditions), the ability to deconflict is important.
                     type: string
@@ -239,18 +236,18 @@
               minimum: 0
               type: integer
             observedGeneration:
-              description: ObservedGeneration is the latest generation observed by the controller.
+              description: observedGeneration is the latest generation observed by the controller.
               format: int64
               type: integer
             remediationsAllowed:
               description: |-
-                RemediationsAllowed is the number of further remediations allowed by this machine health check before
+                remediationsAllowed is the number of further remediations allowed by this machine health check before
                 maxUnhealthy short circuiting will be applied
               format: int32
               minimum: 0
               type: integer
             targets:
-              description: Targets shows the current list of machines the machine health check is watching
+              description: targets shows the current list of machines the machine health check is watching
               items:
                 type: string
               type: array

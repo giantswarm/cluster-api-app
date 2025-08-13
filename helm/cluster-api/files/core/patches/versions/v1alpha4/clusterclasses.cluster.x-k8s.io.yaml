@@ -5,7 +5,6 @@
       description: |-
         ClusterClass is a template which can be used to create managed topologies.
 
-
         Deprecated: This type will be removed in one of the next releases.
       properties:
         apiVersion:
@@ -30,7 +29,7 @@
           properties:
             controlPlane:
               description: |-
-                ControlPlane is a reference to a local struct that holds the details
+                controlPlane is a reference to a local struct that holds the details
                 for provisioning the Control Plane for the Cluster.
               properties:
                 machineInfrastructure:
@@ -38,13 +37,12 @@
                     MachineTemplate defines the metadata and infrastructure information
                     for control plane machines.
 
-
                     This field is supported if and only if the control plane provider template
                     referenced above is Machine based and supports setting replicas.
                   properties:
                     ref:
                       description: |-
-                        Ref is a required reference to a custom resource
+                        ref is a required reference to a custom resource
                         offered by a provider.
                       properties:
                         apiVersion:
@@ -59,7 +57,6 @@
                             the event) or if no container name is specified "spec.containers[2]" (container with
                             index 2 in this pod). This syntax is chosen only to have some well-defined way of
                             referencing a part of an object.
-                            TODO: this design is not final and this field is subject to change in the future.
                           type: string
                         kind:
                           description: |-
@@ -93,9 +90,8 @@
                   type: object
                 metadata:
                   description: |-
-                    Metadata is the metadata applied to the machines of the ControlPlane.
+                    metadata is the metadata applied to the machines of the ControlPlane.
                     At runtime this metadata is merged with the corresponding metadata from the topology.
-
 
                     This field is supported if and only if the control plane provider template
                     referenced is Machine based.
@@ -104,7 +100,7 @@
                       additionalProperties:
                         type: string
                       description: |-
-                        Annotations is an unstructured key value map stored with a resource that may be
+                        annotations is an unstructured key value map stored with a resource that may be
                         set by external tools to store and retrieve arbitrary metadata. They are not
                         queryable and should be preserved when modifying objects.
                         More info: http://kubernetes.io/docs/user-guide/annotations
@@ -121,7 +117,7 @@
                   type: object
                 ref:
                   description: |-
-                    Ref is a required reference to a custom resource
+                    ref is a required reference to a custom resource
                     offered by a provider.
                   properties:
                     apiVersion:
@@ -136,7 +132,6 @@
                         the event) or if no container name is specified "spec.containers[2]" (container with
                         index 2 in this pod). This syntax is chosen only to have some well-defined way of
                         referencing a part of an object.
-                        TODO: this design is not final and this field is subject to change in the future.
                       type: string
                     kind:
                       description: |-
@@ -170,7 +165,7 @@
               type: object
             infrastructure:
               description: |-
-                Infrastructure is a reference to a provider-specific template that holds
+                infrastructure is a reference to a provider-specific template that holds
                 the details for provisioning infrastructure specific cluster
                 for the underlying provider.
                 The underlying provider is responsible for the implementation
@@ -178,7 +173,7 @@
               properties:
                 ref:
                   description: |-
-                    Ref is a required reference to a custom resource
+                    ref is a required reference to a custom resource
                     offered by a provider.
                   properties:
                     apiVersion:
@@ -193,7 +188,6 @@
                         the event) or if no container name is specified "spec.containers[2]" (container with
                         index 2 in this pod). This syntax is chosen only to have some well-defined way of
                         referencing a part of an object.
-                        TODO: this design is not final and this field is subject to change in the future.
                       type: string
                     kind:
                       description: |-
@@ -227,13 +221,13 @@
               type: object
             workers:
               description: |-
-                Workers describes the worker nodes for the cluster.
+                workers describes the worker nodes for the cluster.
                 It is a collection of node types which can be used to create
                 the worker nodes of the cluster.
               properties:
                 machineDeployments:
                   description: |-
-                    MachineDeployments is a list of machine deployment classes that can be used to create
+                    machineDeployments is a list of machine deployment classes that can be used to create
                     a set of worker nodes.
                   items:
                     description: |-
@@ -242,23 +236,23 @@
                     properties:
                       class:
                         description: |-
-                          Class denotes a type of worker node present in the cluster,
+                          class denotes a type of worker node present in the cluster,
                           this name MUST be unique within a ClusterClass and can be referenced
                           in the Cluster to create a managed MachineDeployment.
                         type: string
                       template:
                         description: |-
-                          Template is a local struct containing a collection of templates for creation of
+                          template is a local struct containing a collection of templates for creation of
                           MachineDeployment objects representing a set of worker nodes.
                         properties:
                           bootstrap:
                             description: |-
-                              Bootstrap contains the bootstrap template reference to be used
+                              bootstrap contains the bootstrap template reference to be used
                               for the creation of worker Machines.
                             properties:
                               ref:
                                 description: |-
-                                  Ref is a required reference to a custom resource
+                                  ref is a required reference to a custom resource
                                   offered by a provider.
                                 properties:
                                   apiVersion:
@@ -273,7 +267,6 @@
                                       the event) or if no container name is specified "spec.containers[2]" (container with
                                       index 2 in this pod). This syntax is chosen only to have some well-defined way of
                                       referencing a part of an object.
-                                      TODO: this design is not final and this field is subject to change in the future.
                                     type: string
                                   kind:
                                     description: |-
@@ -307,12 +300,12 @@
                             type: object
                           infrastructure:
                             description: |-
-                              Infrastructure contains the infrastructure template reference to be used
+                              infrastructure contains the infrastructure template reference to be used
                               for the creation of worker Machines.
                             properties:
                               ref:
                                 description: |-
-                                  Ref is a required reference to a custom resource
+                                  ref is a required reference to a custom resource
                                   offered by a provider.
                                 properties:
                                   apiVersion:
@@ -327,7 +320,6 @@
                                       the event) or if no container name is specified "spec.containers[2]" (container with
                                       index 2 in this pod). This syntax is chosen only to have some well-defined way of
                                       referencing a part of an object.
-                                      TODO: this design is not final and this field is subject to change in the future.
                                     type: string
                                   kind:
                                     description: |-
@@ -361,14 +353,14 @@
                             type: object
                           metadata:
                             description: |-
-                              Metadata is the metadata applied to the machines of the MachineDeployment.
+                              metadata is the metadata applied to the machines of the MachineDeployment.
                               At runtime this metadata is merged with the corresponding metadata from the topology.
                             properties:
                               annotations:
                                 additionalProperties:
                                   type: string
                                 description: |-
-                                  Annotations is an unstructured key value map stored with a resource that may be
+                                  annotations is an unstructured key value map stored with a resource that may be
                                   set by external tools to store and retrieve arbitrary metadata. They are not
                                   queryable and should be preserved when modifying objects.
                                   More info: http://kubernetes.io/docs/user-guide/annotations
