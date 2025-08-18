@@ -25,7 +25,7 @@ images:
     # -- Control plane image repository.
     name: giantswarm/kubeadm-control-plane-controller
   # -- Image tag (used for all images).
-  tag: v1.9.10-gs-4a4b01921
+  tag: v1.9.10-gs-424bc0150
 
 # -- Webhook watch filter.
 watchFilter: capi
