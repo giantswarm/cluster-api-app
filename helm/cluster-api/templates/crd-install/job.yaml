@@ -19,6 +19,7 @@ spec:
       - name: kubectl
         securityContext:
           runAsNonRoot: true
+          runAsUser: 1000
           allowPrivilegeEscalation: false
           seccompProfile:
             type: RuntimeDefault
@@ -26,11 +27,13 @@ spec:
             drop:
             - ALL
           readOnlyRootFilesystem: true
-        image: "{{ .Values.registry.domain }}/giantswarm/kubectl:1.32.1"
+        image: "{{ .Values.registry.domain }}/giantswarm/docker-kubectl:1.33.4"
         args:
         - apply
         - --kustomize
         - /files
+        - --server-side=true
+        - --force-conflicts=true
         volumeMounts:
         {{- range $path, $_ := .Files.Glob "files/**.yaml" }}
         - name: {{ printf "%s-%s" (dir $path | base) (base $path | trimSuffix ".yaml" | replace "." "-") | trunc 63 | trimSuffix "-" }}
