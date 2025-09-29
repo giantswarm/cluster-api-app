@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Config: Remove watch filter. ([#299](https://github.com/giantswarm/cluster-api-app/pull/299))
+- Values: Remove `project`. ([#299](https://github.com/giantswarm/cluster-api-app/pull/299))
 
 ## [4.0.1] - 2025-08-18
 
