@@ -60,9 +60,6 @@
                     "type": "string"
                 }
             }
-        },
-        "watchFilter": {
-            "type": "string"
         }
     }
 }

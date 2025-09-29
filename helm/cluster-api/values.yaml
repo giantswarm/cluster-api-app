@@ -27,9 +27,6 @@ images:
   # -- Image tag (used for all images).
   tag: v1.10.6-gs-6befca618
 
-# -- Webhook watch filter.
-watchFilter: capi
-
 # -- CRD install job settings.
 crds:
   # -- Whether to install CRDs or not.

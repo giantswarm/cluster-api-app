@@ -25,11 +25,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.kubeadmconfig.bootstrap.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - bootstrap.cluster.x-k8s.io
@@ -52,11 +47,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.kubeadmconfigtemplate.bootstrap.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - bootstrap.cluster.x-k8s.io

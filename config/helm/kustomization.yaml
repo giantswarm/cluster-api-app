@@ -8,8 +8,6 @@ resources:
 - bases/networkpolicies/capi-controller-manager.yaml
 - bases/networkpolicies/capi-kubeadm-bootstrap-controller-manager.yaml
 - bases/networkpolicies/capi-kubeadm-control-plane-controller-manager.yaml
-# Watch filter configmap
-- bases/configmaps/watch-filter.yaml
 
 namespace: "{{ .Release.Namespace }}"
 
@@ -42,32 +40,6 @@ images:
 transformers:
 # Mutating webhooks
 - patches/mutatingwebhooks/zzz-prefix.yaml
-
-replacements:
-# CRDs
-- source:
-    version: v1
-    kind: ConfigMap
-    name: watch-filter
-    namespace: watch-filter
-    fieldPath: data
-  targets:
-  - select:
-      group: admissionregistration.k8s.io
-      version: v1
-      kind: MutatingWebhookConfiguration
-    fieldPaths:
-    - webhooks.*.objectSelector.matchLabels
-    options:
-      create: true
-  - select:
-      group: admissionregistration.k8s.io
-      version: v1
-      kind: ValidatingWebhookConfiguration
-    fieldPaths:
-    - webhooks.*.objectSelector.matchLabels
-    options:
-      create: true
 
 patches:
 # CRDs

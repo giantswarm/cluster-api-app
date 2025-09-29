@@ -25,11 +25,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: default.kubeadmcontrolplane.controlplane.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - controlplane.cluster.x-k8s.io
@@ -51,11 +46,6 @@ webhooks:
       path: /mutate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplanetemplate
   failurePolicy: Fail
   name: default.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - controlplane.cluster.x-k8s.io

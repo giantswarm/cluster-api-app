@@ -25,11 +25,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.cluster.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -53,11 +48,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.clusterclass.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -81,11 +71,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.clusterresourceset.addons.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - addons.cluster.x-k8s.io
@@ -108,11 +93,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.clusterresourcesetbinding.addons.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - addons.cluster.x-k8s.io
@@ -135,11 +115,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.machine.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -162,11 +137,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.machinedeployment.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -189,11 +159,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.machinedrainrule.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -216,11 +181,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.machinehealthcheck.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -243,11 +203,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.machineset.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -270,11 +225,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.extensionconfig.runtime.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - runtime.cluster.x-k8s.io
@@ -297,11 +247,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.machinepool.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -324,11 +269,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.ipaddress.ipam.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - ipam.cluster.x-k8s.io
@@ -352,11 +292,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.ipaddressclaim.ipam.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - ipam.cluster.x-k8s.io
