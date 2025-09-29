@@ -198,6 +198,9 @@
               minItems: 1
               type: array
               x-kubernetes-list-type: atomic
+              x-kubernetes-validations:
+                - message: entries in machines must be unique
+                  rule: self.all(x, self.exists_one(y, x == y))
             pods:
               description: |-
                 pods defines to which Pods this MachineDrainRule should be applied.
@@ -338,6 +341,9 @@
               minItems: 1
               type: array
               x-kubernetes-list-type: atomic
+              x-kubernetes-validations:
+                - message: entries in pods must be unique
+                  rule: self.all(x, self.exists_one(y, x == y))
           required:
             - drain
           type: object
