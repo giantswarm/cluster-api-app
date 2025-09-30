@@ -25,7 +25,7 @@
         metadata:
           type: object
         spec:
-          description: KubeadmControlPlaneSpec defines the desired state of KubeadmControlPlane.
+          description: spec is the desired state of KubeadmControlPlane.
           properties:
             infrastructureTemplate:
               description: |-
@@ -911,19 +911,19 @@
               type: string
             replicas:
               description: |-
-                Number of desired machines. Defaults to 1. When stacked etcd is used only
+                replicas is the number of desired machines. Defaults to 1. When stacked etcd is used only
                 odd numbers are permitted, as per [etcd best practice](https://etcd.io/docs/v3.3.12/faq/#why-an-odd-number-of-cluster-members).
                 This is a pointer to distinguish between explicit zero and not specified.
               format: int32
               type: integer
             rolloutStrategy:
               description: |-
-                The RolloutStrategy to use to replace control plane machines with
+                rolloutStrategy is the RolloutStrategy to use to replace control plane machines with
                 new ones.
               properties:
                 rollingUpdate:
                   description: |-
-                    Rolling update config params. Present only if
+                    rollingUpdate is the rolling update config params. Present only if
                     RolloutStrategyType = RollingUpdate.
                   properties:
                     maxSurge:
@@ -931,7 +931,7 @@
                         - type: integer
                         - type: string
                       description: |-
-                        The maximum number of control planes that can be scheduled above or under the
+                        maxSurge is the maximum number of control planes that can be scheduled above or under the
                         desired number of control planes.
                         Value can be an absolute number 1 or 0.
                         Defaults to 1.
@@ -962,7 +962,7 @@
             - version
           type: object
         status:
-          description: KubeadmControlPlaneStatus defines the observed state of KubeadmControlPlane.
+          description: status is the observed state of KubeadmControlPlane.
           properties:
             conditions:
               description: conditions defines current service state of the KubeadmControlPlane.
@@ -971,19 +971,19 @@
                 properties:
                   lastTransitionTime:
                     description: |-
-                      Last time the condition transitioned from one status to another.
+                      lastTransitionTime is the last time the condition transitioned from one status to another.
                       This should be when the underlying condition changed. If that is not known, then using the time when
                       the API field changed is acceptable.
                     format: date-time
                     type: string
                   message:
                     description: |-
-                      A human readable message indicating details about the transition.
+                      message is a human readable message indicating details about the transition.
                       This field may be empty.
                     type: string
                   reason:
                     description: |-
-                      The reason for the condition's last transition in CamelCase.
+                      reason is the reason for the condition's last transition in CamelCase.
                       The specific API may choose whether or not this field is considered a guaranteed API.
                       This field may not be empty.
                     type: string
@@ -1009,7 +1009,7 @@
               type: array
             failureMessage:
               description: |-
-                ErrorMessage indicates that there is a terminal problem reconciling the
+                failureMessage indicates that there is a terminal problem reconciling the
                 state, and will be set to a descriptive error message.
               type: string
             failureReason:
@@ -1033,12 +1033,12 @@
                 receive requests.
               type: boolean
             readyReplicas:
-              description: Total number of fully running and ready control plane machines.
+              description: readyReplicas is the total number of fully running and ready control plane machines.
               format: int32
               type: integer
             replicas:
               description: |-
-                Total number of non-terminated machines targeted by this control plane
+                replicas is the total number of non-terminated machines targeted by this control plane
                 (their labels match the selector).
               format: int32
               type: integer
@@ -1052,7 +1052,7 @@
               type: string
             unavailableReplicas:
               description: |-
-                Total number of unavailable machines targeted by this control plane.
+                unavailableReplicas is the total number of unavailable machines targeted by this control plane.
                 This is the total number of machines that are still required for
                 the deployment to have 100% available capacity. They may either
                 be machines that are running but not yet ready or machines
@@ -1061,7 +1061,7 @@
               type: integer
             updatedReplicas:
               description: |-
-                Total number of non-terminated machines targeted by this control plane
+                updatedReplicas is the total number of non-terminated machines targeted by this control plane
                 that have the desired template spec.
               format: int32
               type: integer

@@ -8,8 +8,6 @@ metadata:
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
     app.kubernetes.io/name: cluster-api
     app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
-    application.giantswarm.io/branch: '{{ .Values.project.branch }}'
-    application.giantswarm.io/commit: '{{ .Values.project.commit }}'
     cluster.x-k8s.io/provider: cluster-api
     helm.sh/chart: cluster-api
   name: zzz-capi-mutating-webhook-configuration
@@ -25,11 +23,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: default.cluster.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -52,11 +45,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: default.clusterclass.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -75,15 +63,32 @@ webhooks:
     service:
       name: capi-webhook-service
       namespace: '{{ .Release.Namespace }}'
+      path: /mutate-addons-cluster-x-k8s-io-v1beta1-clusterresourceset
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: default.clusterresourceset.addons.cluster.x-k8s.io
+  rules:
+  - apiGroups:
+    - addons.cluster.x-k8s.io
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - clusterresourcesets
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: capi-webhook-service
+      namespace: '{{ .Release.Namespace }}'
       path: /mutate-cluster-x-k8s-io-v1beta1-machine
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: default.machine.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -106,11 +111,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: default.machinedeployment.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -133,11 +133,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: default.machinehealthcheck.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -160,11 +155,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: default.machineset.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -187,11 +177,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: default.extensionconfig.runtime.addons.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - runtime.cluster.x-k8s.io
@@ -214,11 +199,6 @@ webhooks:
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: default.machinepool.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
   rules:
   - apiGroups:
     - cluster.x-k8s.io
@@ -229,31 +209,4 @@ webhooks:
     - UPDATE
     resources:
     - machinepools
-  sideEffects: None
-- admissionReviewVersions:
-  - v1
-  - v1beta1
-  clientConfig:
-    service:
-      name: capi-webhook-service
-      namespace: '{{ .Release.Namespace }}'
-      path: /mutate-addons-cluster-x-k8s-io-v1beta1-clusterresourceset
-  failurePolicy: Fail
-  matchPolicy: Equivalent
-  name: default.clusterresourceset.addons.cluster.x-k8s.io
-{{ if .Values.watchFilter }}
-  objectSelector:
-    matchLabels:
-      cluster.x-k8s.io/watch-filter: '{{ .Values.watchFilter }}'
-{{ end }}
-  rules:
-  - apiGroups:
-    - addons.cluster.x-k8s.io
-    apiVersions:
-    - v1beta1
-    operations:
-    - CREATE
-    - UPDATE
-    resources:
-    - clusterresourcesets
   sideEffects: None

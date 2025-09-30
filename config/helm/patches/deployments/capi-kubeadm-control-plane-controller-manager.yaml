@@ -14,7 +14,6 @@ spec:
         - --diagnostics-address=0.0.0.0:8080
         - --insecure-diagnostics
         - --feature-gates=ClusterTopology=true,KubeadmBootstrapFormatIgnition=true,MachineSetPreflightChecks=true
-        - --watch-filter={{ .Values.watchFilter }}
         - --v=0
         ports:
         - name: metrics

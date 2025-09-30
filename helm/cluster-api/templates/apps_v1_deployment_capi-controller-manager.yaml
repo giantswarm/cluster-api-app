@@ -7,8 +7,6 @@ metadata:
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
     app.kubernetes.io/name: cluster-api
     app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
-    application.giantswarm.io/branch: '{{ .Values.project.branch }}'
-    application.giantswarm.io/commit: '{{ .Values.project.commit }}'
     cluster.x-k8s.io/provider: cluster-api
     control-plane: controller-manager
     helm.sh/chart: cluster-api
@@ -27,8 +25,6 @@ spec:
         app.kubernetes.io/managed-by: '{{ .Release.Service }}'
         app.kubernetes.io/name: cluster-api
         app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
-        application.giantswarm.io/branch: '{{ .Values.project.branch }}'
-        application.giantswarm.io/commit: '{{ .Values.project.commit }}'
         cluster.x-k8s.io/provider: cluster-api
         control-plane: controller-manager
         helm.sh/chart: cluster-api
@@ -46,7 +42,6 @@ spec:
         - --diagnostics-address=0.0.0.0:8080
         - --insecure-diagnostics
         - --feature-gates=MachinePool=true,ClusterResourceSet=true,ClusterTopology=true,MachineSetPreflightChecks=true
-        - --watch-filter={{ .Values.watchFilter }}
         - --v=0
         command:
         - /manager
