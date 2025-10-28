@@ -6,10 +6,10 @@ set -o errexit -o nounset -o pipefail
 # Fetches upstream Cluster API components for Kustomization.
 #
 
-YQ="${YQ:-$(realpath "$(dirname "$0")/../bin/yq")}"
-
 # Get repository path.
 repository="$(realpath "$(dirname "${0}")/..")"
+
+YQ="${YQ:-${repository}/bin/yq}"
 
 # Get Cluster API version.
 version="$("${YQ}" --exit-status ".images.tag" "${repository}/helm/cluster-api/values.yaml")"

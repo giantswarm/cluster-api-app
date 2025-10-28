@@ -1,11 +1,14 @@
-OS ?= $(shell go env GOOS 2>/dev/null || echo linux)
-ARCH ?= $(shell go env GOARCH 2>/dev/null || echo amd64)
+OS ?= $(shell uname -s | tr '[:upper:]' '[:lower:]')
+ARCH ?= $(shell uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/')
+
+# used by renovate
+# repo: mikefarah/yq
 YQ_BIN_VERSION := 4.48.1
-YQ_BIN := ./bin/yq
+YQ_BIN := bin/yq
 
 $(YQ_BIN): ## Download yq locally if necessary.
-	mkdir -p $(dir $@)
-	curl -sfL https://github.com/mikefarah/yq/releases/download/v$(YQ_BIN_VERSION)/yq_$(OS)_$(ARCH) -o $@
+	mkdir -p "$(dir $@)"
+	curl --silent --show-error --fail --location https://github.com/mikefarah/yq/releases/download/v$(YQ_BIN_VERSION)/yq_$(OS)_$(ARCH) -o $@
 	chmod +x $@
 
 .PHONY: clean
