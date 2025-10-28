@@ -9,8 +9,10 @@ set -o errexit -o nounset -o pipefail
 # Get repository path.
 repository="$(realpath "$(dirname "${0}")/..")"
 
+YQ="${YQ:-${repository}/bin/yq}"
+
 # Get Cluster API version.
-version="$(yq --exit-status ".images.tag" "${repository}/helm/cluster-api/values.yaml")"
+version="$("${YQ}" --exit-status ".images.tag" "${repository}/helm/cluster-api/values.yaml")"
 
 # Fetch Cluster API components.
 curl --silent --show-error --fail --location \

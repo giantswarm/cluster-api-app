@@ -8,7 +8,7 @@ ROOT_DIR="./$(dirname "$0")/.."
 ROOT_DIR="$(realpath "$ROOT_DIR")"
 KUSTOMIZE_CRD_DIR="$ROOT_DIR/helm/cluster-api/files"
 
-# YQ="./$(dirname "$0")/tools/bin/yq"
+YQ="${YQ:-$(realpath "$(dirname "$0")/../bin/yq")}"
 
 for CRD_DIR in "$KUSTOMIZE_CRD_DIR/core" "$KUSTOMIZE_CRD_DIR/bootstrap" "$KUSTOMIZE_CRD_DIR/controlplane"; do
     CRD_BASE_DIR="${CRD_DIR}/bases"
@@ -28,34 +28,34 @@ patches:
 EOF
     else
         # clean up resource list
-        yq e -i '.resources = null' "$KUSTOMIZATION_FILE"
+        "${YQ}" e -i '.resources = null' "$KUSTOMIZATION_FILE"
 
         # clean up API version patches
-        for ((i=$(yq eval '.patches | length' "$KUSTOMIZATION_FILE")-1; i>=0; i--)); do
-            patch_path=$(j="$i" yq e '.patches[env(j)].path' "$KUSTOMIZATION_FILE")
+        for ((i=$("${YQ}" e '.patches | length' "$KUSTOMIZATION_FILE")-1; i>=0; i--)); do
+            patch_path=$(j="$i" "${YQ}" e '.patches[env(j)].path' "$KUSTOMIZATION_FILE")
 
             if [[ "$patch_path" = patches/versions* ]]; then
-                j="$i" yq e -i 'del .patches[env(j)]' "$KUSTOMIZATION_FILE"
+                j="$i" "${YQ}" e -i 'del .patches[env(j)]' "$KUSTOMIZATION_FILE"
             fi
         done
 
-        patch_len=$(yq eval '.patches | length' "$KUSTOMIZATION_FILE")
+        patch_len=$("${YQ}" e '.patches | length' "$KUSTOMIZATION_FILE")
         if [ "$patch_len" -eq "0" ]; then
-            yq e -i '.patches = null' "$KUSTOMIZATION_FILE"
+            "${YQ}" e -i '.patches = null' "$KUSTOMIZATION_FILE"
         fi
     fi
 
     for crd in "${CRD_BASE_DIR}"/*.yaml
     do
-        crd_name="$(yq e '.metadata.name' "$crd")"
+        crd_name="$("${YQ}" e '.metadata.name' "$crd")"
         echo "$crd_name"
         crd_filename="$(basename "$crd")"
 
         # Add CRD base to kustomization.yaml
-        yq eval -i '.resources += ["bases/'"$crd_filename"'"]' "$KUSTOMIZATION_FILE"
+        "${YQ}" e -i '.resources += ["bases/'"$crd_filename"'"]' "$KUSTOMIZATION_FILE"
 
         version_index=0
-        for version in $(yq e '.spec.versions[].name' "$crd")
+        for version in $("${YQ}" e '.spec.versions[].name' "$crd")
         do
             version_patches_dir="$CRD_VERSION_PATCHES_DIR/$version"
             mkdir -p "$version_patches_dir"
@@ -68,8 +68,8 @@ EOF
   value:
 " > "$patch_file"
 
-            yq e ".spec.versions[$version_index].schema" "$crd" > "$crd-version-$version_index-schema.yaml"
-            yq e -i ".[0].value = load(\"$crd-version-$version_index-schema.yaml\")" "$patch_file"
+            "${YQ}" e ".spec.versions[$version_index].schema" "$crd" > "$crd-version-$version_index-schema.yaml"
+            "${YQ}" e -i ".[0].value = load(\"$crd-version-$version_index-schema.yaml\")" "$patch_file"
             rm "$crd-version-$version_index-schema.yaml"
 
             # Add CRD version patches to kustomization.yaml
@@ -80,10 +80,10 @@ target:
     kind: CustomResourceDefinition
     name: $crd_name
 " \
-            yq eval -i '.patches += [env(version_patch_entry)]' "$KUSTOMIZATION_FILE"
+            "${YQ}" e -i '.patches += [env(version_patch_entry)]' "$KUSTOMIZATION_FILE"
 
             # Delete version data from the CRD base
-            yq e -i ".spec.versions[$version_index].schema = {}" "$crd"
+            "${YQ}" e -i ".spec.versions[$version_index].schema = {}" "$crd"
             version_index=$((version_index+1))
         done
     done
