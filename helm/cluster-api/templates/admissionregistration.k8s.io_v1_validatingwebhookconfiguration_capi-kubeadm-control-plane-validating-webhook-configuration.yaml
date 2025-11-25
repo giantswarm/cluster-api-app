@@ -19,7 +19,7 @@ webhooks:
     service:
       name: capi-kubeadm-control-plane-webhook-service
       namespace: '{{ .Release.Namespace }}'
-      path: /validate-scale-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplane
+      path: /validate-scale-controlplane-cluster-x-k8s-io-v1beta2-kubeadmcontrolplane
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation-scale.kubeadmcontrolplane.controlplane.cluster.x-k8s.io
@@ -27,7 +27,7 @@ webhooks:
   - apiGroups:
     - controlplane.cluster.x-k8s.io
     apiVersions:
-    - v1beta1
+    - v1beta2
     operations:
     - UPDATE
     resources:
@@ -40,7 +40,7 @@ webhooks:
     service:
       name: capi-kubeadm-control-plane-webhook-service
       namespace: '{{ .Release.Namespace }}'
-      path: /validate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplane
+      path: /validate-controlplane-cluster-x-k8s-io-v1beta2-kubeadmcontrolplane
   failurePolicy: Fail
   matchPolicy: Equivalent
   name: validation.kubeadmcontrolplane.controlplane.cluster.x-k8s.io
@@ -48,7 +48,7 @@ webhooks:
   - apiGroups:
     - controlplane.cluster.x-k8s.io
     apiVersions:
-    - v1beta1
+    - v1beta2
     operations:
     - CREATE
     - UPDATE
@@ -62,14 +62,14 @@ webhooks:
     service:
       name: capi-kubeadm-control-plane-webhook-service
       namespace: '{{ .Release.Namespace }}'
-      path: /validate-controlplane-cluster-x-k8s-io-v1beta1-kubeadmcontrolplanetemplate
+      path: /validate-controlplane-cluster-x-k8s-io-v1beta2-kubeadmcontrolplanetemplate
   failurePolicy: Fail
   name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
   rules:
   - apiGroups:
     - controlplane.cluster.x-k8s.io
     apiVersions:
-    - v1beta1
+    - v1beta2
     operations:
     - CREATE
     - UPDATE

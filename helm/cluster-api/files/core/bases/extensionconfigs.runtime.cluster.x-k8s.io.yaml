@@ -2,7 +2,8 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
+    controller-gen.kubebuilder.io/version: v0.18.0
   labels:
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
@@ -14,6 +15,18 @@ metadata:
     helm.sh/chart: cluster-api
   name: extensionconfigs.runtime.cluster.x-k8s.io
 spec:
+  conversion:
+    strategy: Webhook
+    webhook:
+      clientConfig:
+        service:
+          name: capi-webhook-service
+          namespace: '{{ .Release.Namespace }}'
+          path: /convert
+          port: 443
+      conversionReviewVersions:
+        - v1
+        - v1beta1
   group: runtime.cluster.x-k8s.io
   names:
     categories:
@@ -31,7 +44,28 @@ spec:
           jsonPath: .metadata.creationTimestamp
           name: Age
           type: date
+      deprecated: true
       name: v1alpha1
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        status: {}
+    - additionalPrinterColumns:
+        - description: Reconciliation paused
+          jsonPath: .status.conditions[?(@.type=="Paused")].status
+          name: Paused
+          priority: 10
+          type: string
+        - description: ExtensionConfig discovered
+          jsonPath: .status.conditions[?(@.type=="Discovered")].status
+          name: Discovered
+          type: string
+        - description: Time duration since creation of ExtensionConfig
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1beta2
       schema: {}
       served: true
       storage: true

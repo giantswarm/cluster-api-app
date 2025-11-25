@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-kubeadm-bootstrap-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.18.0
   labels:
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
@@ -11,6 +11,7 @@ metadata:
     app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
     cluster.x-k8s.io/provider: bootstrap-kubeadm
     cluster.x-k8s.io/v1beta1: v1beta1
+    cluster.x-k8s.io/v1beta2: v1beta2
     clusterctl.cluster.x-k8s.io: ""
     clusterctl.cluster.x-k8s.io/move: ""
     helm.sh/chart: cluster-api
@@ -59,7 +60,26 @@ spec:
           jsonPath: .metadata.creationTimestamp
           name: Age
           type: date
+      deprecated: true
       name: v1beta1
+      schema: {}
+      served: true
+      storage: false
+      subresources: {}
+    - additionalPrinterColumns:
+        - description: Name of the ClusterClass owning this template
+          jsonPath: .metadata.ownerReferences[?(@.kind=="ClusterClass")].name
+          name: ClusterClass
+          type: string
+        - description: Name of the Cluster owning this template
+          jsonPath: .metadata.ownerReferences[?(@.kind=="Cluster")].name
+          name: Cluster
+          type: string
+        - description: Time duration since creation of KubeadmConfigTemplate
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1beta2
       schema: {}
       served: true
       storage: true

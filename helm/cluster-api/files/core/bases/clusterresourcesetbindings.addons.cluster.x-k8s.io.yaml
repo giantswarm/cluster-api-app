@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.18.0
   labels:
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
@@ -61,9 +61,24 @@ spec:
           jsonPath: .metadata.creationTimestamp
           name: Age
           type: date
+      deprecated: true
       name: v1beta1
       schema: {}
       served: true
-      storage: true
+      storage: false
       subresources:
         status: {}
+    - additionalPrinterColumns:
+        - description: Cluster
+          jsonPath: .spec.clusterName
+          name: Cluster
+          type: string
+        - description: Time duration since creation of ClusterResourceSetBinding
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1beta2
+      schema: {}
+      served: true
+      storage: true
+      subresources: {}
