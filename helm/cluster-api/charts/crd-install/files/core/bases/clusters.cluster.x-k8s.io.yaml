@@ -1,0 +1,169 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
+    controller-gen.kubebuilder.io/version: v0.18.0
+  labels:
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    cluster.x-k8s.io/provider: cluster-api
+    clusterctl.cluster.x-k8s.io: ""
+    clusterctl.cluster.x-k8s.io/move: ""
+    helm.sh/chart: cluster-api
+  name: clusters.cluster.x-k8s.io
+spec:
+  conversion:
+    strategy: Webhook
+    webhook:
+      clientConfig:
+        service:
+          name: capi-webhook-service
+          namespace: '{{ .Release.Namespace }}'
+          path: /convert
+          port: 443
+      conversionReviewVersions:
+        - v1
+        - v1beta1
+  group: cluster.x-k8s.io
+  names:
+    categories:
+      - cluster-api
+    kind: Cluster
+    listKind: ClusterList
+    plural: clusters
+    shortNames:
+      - cl
+    singular: cluster
+  scope: Namespaced
+  versions:
+    - additionalPrinterColumns:
+        - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
+          jsonPath: .status.phase
+          name: Phase
+          type: string
+      deprecated: true
+      name: v1alpha3
+      schema: {}
+      served: false
+      storage: false
+      subresources:
+        status: {}
+    - additionalPrinterColumns:
+        - description: Time duration since creation of Cluster
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+        - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
+          jsonPath: .status.phase
+          name: Phase
+          type: string
+      deprecated: true
+      name: v1alpha4
+      schema: {}
+      served: false
+      storage: false
+      subresources:
+        status: {}
+    - additionalPrinterColumns:
+        - description: ClusterClass of this Cluster, empty if the Cluster is not using a ClusterClass
+          jsonPath: .spec.topology.class
+          name: ClusterClass
+          type: string
+        - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
+          jsonPath: .status.phase
+          name: Phase
+          type: string
+        - description: Time duration since creation of Cluster
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+        - description: Kubernetes version associated with this Cluster
+          jsonPath: .spec.topology.version
+          name: Version
+          type: string
+      deprecated: true
+      name: v1beta1
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        status: {}
+    - additionalPrinterColumns:
+        - description: ClusterClass of this Cluster, empty if the Cluster is not using a ClusterClass
+          jsonPath: .spec.topology.classRef.name
+          name: ClusterClass
+          type: string
+        - description: Cluster pass all availability checks
+          jsonPath: .status.conditions[?(@.type=="Available")].status
+          name: Available
+          type: string
+        - description: The desired number of control plane machines
+          jsonPath: .status.controlPlane.desiredReplicas
+          name: CP Desired
+          type: integer
+        - description: The number of control plane machines
+          jsonPath: .status.controlPlane.replicas
+          name: CP Current
+          priority: 10
+          type: integer
+        - description: The number of control plane machines with Ready condition true
+          jsonPath: .status.controlPlane.readyReplicas
+          name: CP Ready
+          priority: 10
+          type: integer
+        - description: The number of control plane machines with Available condition true
+          jsonPath: .status.controlPlane.availableReplicas
+          name: CP Available
+          type: integer
+        - description: The number of control plane machines with UpToDate condition true
+          jsonPath: .status.controlPlane.upToDateReplicas
+          name: CP Up-to-date
+          type: integer
+        - description: The desired number of worker machines
+          jsonPath: .status.workers.desiredReplicas
+          name: W Desired
+          type: integer
+        - description: The number of worker machines
+          jsonPath: .status.workers.replicas
+          name: W Current
+          priority: 10
+          type: integer
+        - description: The number of worker machines with Ready condition true
+          jsonPath: .status.workers.readyReplicas
+          name: W Ready
+          priority: 10
+          type: integer
+        - description: The number of worker machines with Available condition true
+          jsonPath: .status.workers.availableReplicas
+          name: W Available
+          type: integer
+        - description: The number of worker machines with UpToDate condition true
+          jsonPath: .status.workers.upToDateReplicas
+          name: W Up-to-date
+          type: integer
+        - description: Reconciliation paused
+          jsonPath: .status.conditions[?(@.type=="Paused")].status
+          name: Paused
+          priority: 10
+          type: string
+        - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
+          jsonPath: .status.phase
+          name: Phase
+          type: string
+        - description: Time duration since creation of Cluster
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+        - description: Kubernetes version associated with this Cluster
+          jsonPath: .spec.topology.version
+          name: Version
+          type: string
+      name: v1beta2
+      schema: {}
+      served: true
+      storage: true
+      subresources:
+        status: {}

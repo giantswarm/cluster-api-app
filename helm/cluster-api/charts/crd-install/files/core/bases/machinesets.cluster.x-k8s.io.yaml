@@ -1,0 +1,186 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
+    controller-gen.kubebuilder.io/version: v0.18.0
+  labels:
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    cluster.x-k8s.io/provider: cluster-api
+    clusterctl.cluster.x-k8s.io: ""
+    clusterctl.cluster.x-k8s.io/move: ""
+    helm.sh/chart: cluster-api
+  name: machinesets.cluster.x-k8s.io
+spec:
+  conversion:
+    strategy: Webhook
+    webhook:
+      clientConfig:
+        service:
+          name: capi-webhook-service
+          namespace: '{{ .Release.Namespace }}'
+          path: /convert
+          port: 443
+      conversionReviewVersions:
+        - v1
+        - v1beta1
+  group: cluster.x-k8s.io
+  names:
+    categories:
+      - cluster-api
+    kind: MachineSet
+    listKind: MachineSetList
+    plural: machinesets
+    shortNames:
+      - ms
+    singular: machineset
+  scope: Namespaced
+  versions:
+    - additionalPrinterColumns:
+        - description: Total number of non-terminated machines targeted by this machineset
+          jsonPath: .status.replicas
+          name: Replicas
+          type: integer
+        - description: Total number of available machines (ready for at least minReadySeconds)
+          jsonPath: .status.availableReplicas
+          name: Available
+          type: integer
+        - description: Total number of ready machines targeted by this machineset.
+          jsonPath: .status.readyReplicas
+          name: Ready
+          type: integer
+      deprecated: true
+      name: v1alpha3
+      schema: {}
+      served: false
+      storage: false
+      subresources:
+        scale:
+          labelSelectorPath: .status.selector
+          specReplicasPath: .spec.replicas
+          statusReplicasPath: .status.replicas
+        status: {}
+    - additionalPrinterColumns:
+        - description: Cluster
+          jsonPath: .spec.clusterName
+          name: Cluster
+          type: string
+        - description: Time duration since creation of MachineSet
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+        - description: Total number of non-terminated machines targeted by this machineset
+          jsonPath: .status.replicas
+          name: Replicas
+          type: integer
+        - description: Total number of available machines (ready for at least minReadySeconds)
+          jsonPath: .status.availableReplicas
+          name: Available
+          type: integer
+        - description: Total number of ready machines targeted by this machineset.
+          jsonPath: .status.readyReplicas
+          name: Ready
+          type: integer
+      deprecated: true
+      name: v1alpha4
+      schema: {}
+      served: false
+      storage: false
+      subresources:
+        scale:
+          labelSelectorPath: .status.selector
+          specReplicasPath: .spec.replicas
+          statusReplicasPath: .status.replicas
+        status: {}
+    - additionalPrinterColumns:
+        - description: Cluster
+          jsonPath: .spec.clusterName
+          name: Cluster
+          type: string
+        - description: Total number of machines desired by this machineset
+          jsonPath: .spec.replicas
+          name: Desired
+          priority: 10
+          type: integer
+        - description: Total number of non-terminated machines targeted by this machineset
+          jsonPath: .status.replicas
+          name: Replicas
+          type: integer
+        - description: Total number of ready machines targeted by this machineset.
+          jsonPath: .status.readyReplicas
+          name: Ready
+          type: integer
+        - description: Total number of available machines (ready for at least minReadySeconds)
+          jsonPath: .status.availableReplicas
+          name: Available
+          type: integer
+        - description: Time duration since creation of MachineSet
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+        - description: Kubernetes version associated with this MachineSet
+          jsonPath: .spec.template.spec.version
+          name: Version
+          type: string
+      deprecated: true
+      name: v1beta1
+      schema: {}
+      served: true
+      storage: false
+      subresources:
+        scale:
+          labelSelectorPath: .status.selector
+          specReplicasPath: .spec.replicas
+          statusReplicasPath: .status.replicas
+        status: {}
+    - additionalPrinterColumns:
+        - description: Cluster
+          jsonPath: .spec.clusterName
+          name: Cluster
+          type: string
+        - description: The desired number of machines
+          jsonPath: .spec.replicas
+          name: Desired
+          type: integer
+        - description: The number of machines
+          jsonPath: .status.replicas
+          name: Current
+          type: integer
+        - description: The number of machines with Ready condition true
+          jsonPath: .status.readyReplicas
+          name: Ready
+          type: integer
+        - description: The number of machines with Available condition true
+          jsonPath: .status.availableReplicas
+          name: Available
+          type: integer
+        - description: The number of machines with UpToDate condition true
+          jsonPath: .status.upToDateReplicas
+          name: Up-to-date
+          type: integer
+        - description: Reconciliation paused
+          jsonPath: .status.conditions[?(@.type=="Paused")].status
+          name: Paused
+          priority: 10
+          type: string
+        - description: Time duration since creation of MachineSet
+          jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+        - description: Kubernetes version associated with this MachineSet
+          jsonPath: .spec.template.spec.version
+          name: Version
+          type: string
+      name: v1beta2
+      schema: {}
+      served: true
+      storage: true
+      subresources:
+        scale:
+          labelSelectorPath: .status.selector
+          specReplicasPath: .spec.replicas
+          statusReplicasPath: .status.replicas
+        status: {}

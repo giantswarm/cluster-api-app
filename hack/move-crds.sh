@@ -17,7 +17,7 @@ do
     [ "${component}" != "core" ] && prefix="${component}." || prefix=""
 
     # Remove existing CRDs.
-    rm -f "${repository}/helm/cluster-api/files/${component}/bases/"*".yaml"
+    rm -f "${repository}/helm/cluster-api/charts/crd-install/files/${component}/bases/"*".yaml"
 
     # Iterate generated CRDs.
     for crd_path in "${repository}/helm/cluster-api/templates/apiextensions.k8s.io_v1_customresourcedefinition_"*".${prefix}cluster.x-k8s.io.yaml"
@@ -27,6 +27,6 @@ do
         crd_file="${crd_file#apiextensions.k8s.io_v1_customresourcedefinition_}"
 
         # Move generated CRD.
-        mv "${crd_path}" "${repository}/helm/cluster-api/files/${component}/bases/${crd_file}"
+        mv "${crd_path}" "${repository}/helm/cluster-api/charts/crd-install/files/${component}/bases/${crd_file}"
     done
 done
