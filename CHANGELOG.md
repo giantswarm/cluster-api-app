@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.0] - 2025-11-26
+
 ### Changed
 
 - Chart: Upgrade CAPI to v1.11.3-gs-80dfa9ad7. ([#307](https://github.com/giantswarm/cluster-api-app/pull/307))
@@ -355,7 +357,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v5.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v6.0.0...HEAD
+[6.0.0]: https://github.com/giantswarm/cluster-api-app/compare/v5.0.0...v6.0.0
 [5.0.0]: https://github.com/giantswarm/cluster-api-app/compare/v4.0.1...v5.0.0
 [4.0.1]: https://github.com/giantswarm/cluster-api-app/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/giantswarm/cluster-api-app/compare/v3.2.0...v4.0.0
