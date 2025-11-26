@@ -10,5 +10,5 @@ set -o errexit -o nounset -o pipefail
 repository="$(realpath "$(dirname "${0}")/..")"
 
 # Remove braces.
-sed -i.bak -e "s/{{ //g" -e "s/ }}//g" "${repository}"/helm/cluster-api/files/*/patches/versions/*/*.yaml
-rm -f "${repository}"/helm/cluster-api/files/*/patches/versions/*/*.yaml.bak
+sed -i.bak -e "s/{{ //g" -e "s/ }}//g" "${repository}"/helm/cluster-api/charts/crd-install/files/*/patches/versions/*/*.yaml
+rm -f "${repository}"/helm/cluster-api/charts/crd-install/files/*/patches/versions/*/*.yaml.bak

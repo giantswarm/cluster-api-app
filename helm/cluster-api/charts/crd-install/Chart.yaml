@@ -1,14 +1,10 @@
 apiVersion: v2
-name: cluster-api
-description: A Helm chart for Cluster API components.
-version: [[ .Version ]]
-appVersion: [[ .AppVersion ]]
+name: crd-install
+description: A Helm chart for Cluster API CRDs.
+version: 1.0.0
+appVersion: 1.33.4
 home: https://github.com/giantswarm/cluster-api-app
 icon: https://s.giantswarm.io/app-icons/giantswarm/1/dark.svg
 annotations:
   application.giantswarm.io/team: tenet
   ui.giantswarm.io/logo: https://s.giantswarm.io/app-icons/giantswarm/1/dark.svg
-dependencies:
-- name: crd-install
-  version: 1.0.0
-  condition: crds.install

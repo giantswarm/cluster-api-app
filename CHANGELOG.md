@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Chart: Upgrade CAPI to v1.11.3-gs-80dfa9ad7. ([#307](https://github.com/giantswarm/cluster-api-app/pull/307))
+- Chart: Extract CRD install into sub-chart. ([#307](https://github.com/giantswarm/cluster-api-app/pull/307))
 
 ## [5.0.0] - 2025-09-30
 
