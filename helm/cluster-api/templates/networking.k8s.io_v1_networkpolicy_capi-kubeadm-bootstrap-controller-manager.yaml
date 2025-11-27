@@ -19,8 +19,16 @@ spec:
       protocol: TCP
     - port: 6443
       protocol: TCP
+    - port: 9443
+      protocol: TCP
   ingress:
-  - {}
+  - ports:
+    - port: 8080
+      protocol: TCP
+    - port: 9440
+      protocol: TCP
+    - port: 9443
+      protocol: TCP
   podSelector:
     matchLabels:
       cluster.x-k8s.io/provider: bootstrap-kubeadm
