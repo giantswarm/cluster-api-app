@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Chart: Rework network policies. ([#309](https://github.com/giantswarm/cluster-api-app/pull/309))
+
 ## [6.0.0] - 2025-11-26
 
 ### Changed

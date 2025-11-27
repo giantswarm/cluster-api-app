@@ -16,10 +16,24 @@ spec:
   - Ingress
   - Egress
   ingress:
-  - {}
+  - ports:
+    # Metrics
+    - protocol: TCP
+      port: 8080
+    # Healthz
+    - protocol: TCP
+      port: 9440
+    # Webhook
+    - protocol: TCP
+      port: 9443
   egress:
   - ports:
+    # Kubernetes API server
     - protocol: TCP
       port: 443
+    # Kubernetes API server
     - protocol: TCP
       port: 6443
+    # Webhook
+    - protocol: TCP
+      port: 9443
