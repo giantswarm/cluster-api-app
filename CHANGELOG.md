@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Chart: Grant `delete` permissions to Secrets. ([#311](https://github.com/giantswarm/cluster-api-app/pull/311))
+
 ## [6.0.1] - 2025-11-27
 
 ### Changed
