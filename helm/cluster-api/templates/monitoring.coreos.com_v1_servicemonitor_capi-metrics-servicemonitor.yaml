@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    helm.sh/chart: cluster-api
+  name: capi-metrics-servicemonitor
+  namespace: '{{ .Release.Namespace }}'
+spec:
+  endpoints:
+  - port: metrics
+  selector:
+    matchLabels:
+      cluster.x-k8s.io/provider: cluster-api
