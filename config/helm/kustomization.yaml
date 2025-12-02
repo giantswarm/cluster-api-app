@@ -13,7 +13,6 @@ resources:
 - bases/servicemonitors/capi-kubeadm-bootstrap-metrics-servicemonitor.yaml
 - bases/servicemonitors/capi-kubeadm-control-plane-metrics-servicemonitor.yaml
 
-
 namespace: "{{ .Release.Namespace }}"
 
 labels:
