@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Chart: Add `ServiceMonitor` objects for control plane. ([#313](https://github.com/giantswarm/cluster-api-app/pull/313))
+
 ## [6.0.2] - 2025-11-28
 
 ### Changed

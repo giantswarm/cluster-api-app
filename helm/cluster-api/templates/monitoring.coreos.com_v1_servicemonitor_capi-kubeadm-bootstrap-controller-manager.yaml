@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: bootstrap-kubeadm
+    app.kubernetes.io/instance: '{{ .Release.Name }}'
+    app.kubernetes.io/managed-by: '{{ .Release.Service }}'
+    app.kubernetes.io/name: cluster-api
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    cluster.x-k8s.io/provider: bootstrap-kubeadm
+    control-plane: controller-manager
+    helm.sh/chart: cluster-api
+  name: capi-kubeadm-bootstrap-controller-manager
+  namespace: '{{ .Release.Namespace }}'
+spec:
+  endpoints:
+  - port: metrics
+  selector:
+    matchLabels:
+      cluster.x-k8s.io/provider: bootstrap-kubeadm
+      control-plane: controller-manager
