@@ -9,9 +9,9 @@ resources:
 - bases/networkpolicies/capi-kubeadm-bootstrap-controller-manager.yaml
 - bases/networkpolicies/capi-kubeadm-control-plane-controller-manager.yaml
 # Service monitors
-- bases/servicemonitors/capi-metrics-servicemonitor.yaml
-- bases/servicemonitors/capi-kubeadm-bootstrap-metrics-servicemonitor.yaml
-- bases/servicemonitors/capi-kubeadm-control-plane-metrics-servicemonitor.yaml
+- bases/servicemonitors/capi-controller-manager.yaml
+- bases/servicemonitors/capi-kubeadm-bootstrap-controller-manager.yaml
+- bases/servicemonitors/capi-kubeadm-control-plane-controller-manager.yaml
 
 namespace: "{{ .Release.Namespace }}"
 

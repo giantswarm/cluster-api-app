@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: capi-controller-manager
+  namespace: capi-system
+  labels:
+    app.kubernetes.io/component: cluster-api
+    cluster.x-k8s.io/provider: cluster-api
+    control-plane: controller-manager
+spec:
+  endpoints:
+    - port: metrics
+  selector:
+    matchLabels:
+      cluster.x-k8s.io/provider: cluster-api
+      control-plane: controller-manager
