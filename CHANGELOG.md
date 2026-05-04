@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Migrate to App Build Suite (ABS) for Helm chart building.
+- Chart: Update CAPI to v1.12.7-gs-e49e77f55. ([#333](https://github.com/giantswarm/cluster-api-app/pull/333))
 
 ## [6.1.1] - 2025-12-11
 
