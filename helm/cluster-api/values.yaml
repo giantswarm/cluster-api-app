@@ -18,7 +18,7 @@ images:
     # -- Control plane image repository.
     name: giantswarm/kubeadm-control-plane-controller
   # -- Image tag (used for all images).
-  tag: v1.11.10-gs-9073163a8
+  tag: v1.12.8-gs-6158079b4
 
 # -- CRD install job settings.
 crds:
