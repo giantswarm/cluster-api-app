@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Repository: Integrate App Build Suite.
 - Hack: Rework `generate-patches.sh`.
+- CRD Install: Update `kubectl` to v1.35.4.
 
 ## [6.1.1] - 2025-12-11
 
