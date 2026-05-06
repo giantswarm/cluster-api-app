@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.2] - 2026-05-06
+
 ### Changed
 
 - Repository: Integrate App Build Suite.
@@ -389,7 +391,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v6.1.1...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v6.1.2...HEAD
+[6.1.2]: https://github.com/giantswarm/cluster-api-app/compare/v6.1.1...v6.1.2
 [6.1.1]: https://github.com/giantswarm/cluster-api-app/compare/v6.1.0...v6.1.1
 [6.1.0]: https://github.com/giantswarm/cluster-api-app/compare/v6.0.2...v6.1.0
 [6.0.2]: https://github.com/giantswarm/cluster-api-app/compare/v6.0.1...v6.0.2
