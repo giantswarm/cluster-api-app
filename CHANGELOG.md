@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Migrate to App Build Suite (ABS) for Helm chart building.
+- Hack: Rework `generate-patches.sh`.
 
 ## [6.1.1] - 2025-12-11
 

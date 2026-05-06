@@ -1,90 +1,68 @@
 #!/usr/bin/env bash
+# Exit on error.
+set -o errexit -o nounset -o pipefail
 
-set -o errexit
-set -o nounset
-set -o pipefail
+#
+# Generates CRD patches.
+#
 
-ROOT_DIR="./$(dirname "$0")/.."
-ROOT_DIR="$(realpath "$ROOT_DIR")"
-KUSTOMIZE_CRD_DIR="$ROOT_DIR/helm/cluster-api/charts/crd-install/files"
+# Get repository path.
+repository="$(realpath "$(dirname "${0}")/..")"
 
-# YQ="./$(dirname "$0")/tools/bin/yq"
+# Iterate components.
+for component in "core" "bootstrap" "controlplane"
+do
+    # Define kustomization & directories.
+    kustomization="${repository}/helm/cluster-api/charts/crd-install/files/${component}/kustomization.yaml"
+    bases="${repository}/helm/cluster-api/charts/crd-install/files/${component}/bases"
+    patches="${repository}/helm/cluster-api/charts/crd-install/files/${component}/patches"
 
-for CRD_DIR in "$KUSTOMIZE_CRD_DIR/core" "$KUSTOMIZE_CRD_DIR/bootstrap" "$KUSTOMIZE_CRD_DIR/controlplane"; do
-    CRD_BASE_DIR="${CRD_DIR}/bases"
-    CRD_VERSION_PATCHES_DIR="${CRD_DIR}/patches/versions"
+    # Reset kustomization.
+    yq --inplace ".resources = [] | .patches = []" "${kustomization}"
 
-    # remove old patches
-    rm -rf "${CRD_VERSION_PATCHES_DIR:?}"/v*
+    # Remove old patches.
+    rm -rf "${patches}"/*
 
-    KUSTOMIZATION_FILE="${CRD_DIR}/kustomization.yaml"
-
-    if [ ! -f "$KUSTOMIZATION_FILE" ]; then
-        cat > "$KUSTOMIZATION_FILE" << EOF
-resources:
-
-patches:
-
-EOF
-    else
-        # clean up resource list
-        yq e -i '.resources = null' "$KUSTOMIZATION_FILE"
-
-        # clean up API version patches
-        for ((i=$(yq eval '.patches | length' "$KUSTOMIZATION_FILE")-1; i>=0; i--)); do
-            patch_path=$(j="$i" yq e '.patches[env(j)].path' "$KUSTOMIZATION_FILE")
-
-            if [[ "$patch_path" = patches/versions* ]]; then
-                j="$i" yq e -i 'del .patches[env(j)]' "$KUSTOMIZATION_FILE"
-            fi
-        done
-
-        patch_len=$(yq eval '.patches | length' "$KUSTOMIZATION_FILE")
-        if [ "$patch_len" -eq "0" ]; then
-            yq e -i '.patches = null' "$KUSTOMIZATION_FILE"
-        fi
-    fi
-
-    for crd in "${CRD_BASE_DIR}"/*.yaml
+    # Iterate CRDs.
+    for crd in "${bases}"/*.yaml
     do
-        crd_name="$(yq e '.metadata.name' "$crd")"
-        echo "$crd_name"
-        crd_filename="$(basename "$crd")"
+        # Define CRD name & file.
+        crd_name="$(yq ".metadata.name" "${crd}")"
+        crd_file="$(basename "${crd}")"
 
-        # Add CRD base to kustomization.yaml
-        yq eval -i '.resources += ["bases/'"$crd_filename"'"]' "$KUSTOMIZATION_FILE"
+        # Add CRD.
+        yq --inplace ".resources += [\"bases/${crd_file}\"]" "${kustomization}"
 
-        version_index=0
-        for version in $(yq e '.spec.versions[].name' "$crd")
+        # Define index.
+        index=0
+
+        # Iterate versions.
+        for version in $(yq ".spec.versions[].name" "${crd}")
         do
-            version_patches_dir="$CRD_VERSION_PATCHES_DIR/$version"
-            mkdir -p "$version_patches_dir"
-
-            patch_file="$version_patches_dir/$crd_filename"
-            rm -f "$patch_file"
-
-            echo "- op: replace
-  path: /spec/versions/$version_index/schema
+            # Create patch.
+            mkdir -p "${patches}/${version}"
+            cat > "${patches}/${version}/${crd_file}" << EOF
+- op: replace
+  path: /spec/versions/${index}/schema
   value:
-" > "$patch_file"
+EOF
+            # Transfer schema.
+            yq ".spec.versions[${index}].schema" "${crd}" > "${patches}/${version}/${crd_file}.schema"
+            yq --inplace ".[0].value = load(\"${patches}/${version}/${crd_file}.schema\")" "${patches}/${version}/${crd_file}"
+            rm "${patches}/${version}/${crd_file}.schema"
+            yq --inplace ".spec.versions[${index}].schema = {}" "${crd}"
 
-            yq e ".spec.versions[$version_index].schema" "$crd" > "$crd-version-$version_index-schema.yaml"
-            yq e -i ".[0].value = load(\"$crd-version-$version_index-schema.yaml\")" "$patch_file"
-            rm "$crd-version-$version_index-schema.yaml"
-
-            # Add CRD version patches to kustomization.yaml
-            version_patch_entry="path: patches/versions/$version/$crd_filename
+            # Add patch.
+            patch="path: patches/${version}/${crd_file}
 target:
     group: apiextensions.k8s.io
     version: v1
     kind: CustomResourceDefinition
-    name: $crd_name
-" \
-            yq eval -i '.patches += [env(version_patch_entry)]' "$KUSTOMIZATION_FILE"
+    name: ${crd_name}
+" yq --inplace ".patches += [env(patch)]" "${kustomization}"
 
-            # Delete version data from the CRD base
-            yq e -i ".spec.versions[$version_index].schema = {}" "$crd"
-            version_index=$((version_index+1))
+            # Increment index.
+            index=$((index + 1))
         done
     done
 done
