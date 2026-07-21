@@ -1,8 +1,8 @@
 apiVersion: v2
 name: crd-install
 description: A Helm chart for Cluster API CRDs.
-version: 1.0.1
-appVersion: 1.35.4
+version: 1.0.2
+appVersion: 1.36.2
 home: https://github.com/giantswarm/cluster-api-app
 icon: https://s.giantswarm.io/app-icons/giantswarm/1/dark.svg
 annotations:
