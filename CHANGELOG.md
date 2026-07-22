@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.0.1] - 2026-07-21
+
 ### Changed
 
 - Upgrade `docker-kubectl` image to support arm64 architecture
@@ -401,7 +403,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v7.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v7.0.1...HEAD
+[7.0.1]: https://github.com/giantswarm/cluster-api-app/compare/v7.0.0...v7.0.1
 [7.0.0]: https://github.com/giantswarm/cluster-api-app/compare/v6.1.2...v7.0.0
 [6.1.2]: https://github.com/giantswarm/cluster-api-app/compare/v6.1.1...v6.1.2
 [6.1.1]: https://github.com/giantswarm/cluster-api-app/compare/v6.1.0...v6.1.1
