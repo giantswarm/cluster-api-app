@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   labels:
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
@@ -39,62 +39,6 @@ spec:
     singular: machineset
   scope: Namespaced
   versions:
-    - additionalPrinterColumns:
-        - description: Total number of non-terminated machines targeted by this machineset
-          jsonPath: .status.replicas
-          name: Replicas
-          type: integer
-        - description: Total number of available machines (ready for at least minReadySeconds)
-          jsonPath: .status.availableReplicas
-          name: Available
-          type: integer
-        - description: Total number of ready machines targeted by this machineset.
-          jsonPath: .status.readyReplicas
-          name: Ready
-          type: integer
-      deprecated: true
-      name: v1alpha3
-      schema: {}
-      served: false
-      storage: false
-      subresources:
-        scale:
-          labelSelectorPath: .status.selector
-          specReplicasPath: .spec.replicas
-          statusReplicasPath: .status.replicas
-        status: {}
-    - additionalPrinterColumns:
-        - description: Cluster
-          jsonPath: .spec.clusterName
-          name: Cluster
-          type: string
-        - description: Time duration since creation of MachineSet
-          jsonPath: .metadata.creationTimestamp
-          name: Age
-          type: date
-        - description: Total number of non-terminated machines targeted by this machineset
-          jsonPath: .status.replicas
-          name: Replicas
-          type: integer
-        - description: Total number of available machines (ready for at least minReadySeconds)
-          jsonPath: .status.availableReplicas
-          name: Available
-          type: integer
-        - description: Total number of ready machines targeted by this machineset.
-          jsonPath: .status.readyReplicas
-          name: Ready
-          type: integer
-      deprecated: true
-      name: v1alpha4
-      schema: {}
-      served: false
-      storage: false
-      subresources:
-        scale:
-          labelSelectorPath: .status.selector
-          specReplicasPath: .spec.replicas
-          statusReplicasPath: .status.replicas
-        status: {}
     - additionalPrinterColumns:
         - description: Cluster
           jsonPath: .spec.clusterName

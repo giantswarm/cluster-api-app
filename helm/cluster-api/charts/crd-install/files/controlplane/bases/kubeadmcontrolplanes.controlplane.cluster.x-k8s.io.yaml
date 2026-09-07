@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-kubeadm-control-plane-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   labels:
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
@@ -41,90 +41,6 @@ spec:
     singular: kubeadmcontrolplane
   scope: Namespaced
   versions:
-    - additionalPrinterColumns:
-        - description: This denotes whether or not the control plane has the uploaded kubeadm-config configmap
-          jsonPath: .status.initialized
-          name: Initialized
-          type: boolean
-        - description: KubeadmControlPlane API Server is ready to receive requests
-          jsonPath: .status.ready
-          name: API Server Available
-          type: boolean
-        - description: Kubernetes version associated with this control plane
-          jsonPath: .spec.version
-          name: Version
-          type: string
-        - description: Total number of non-terminated machines targeted by this control plane
-          jsonPath: .status.replicas
-          name: Replicas
-          type: integer
-        - description: Total number of fully running and ready control plane machines
-          jsonPath: .status.readyReplicas
-          name: Ready
-          type: integer
-        - description: Total number of non-terminated machines targeted by this control plane that have the desired template spec
-          jsonPath: .status.updatedReplicas
-          name: Updated
-          type: integer
-        - description: Total number of unavailable machines targeted by this control plane
-          jsonPath: .status.unavailableReplicas
-          name: Unavailable
-          type: integer
-      deprecated: true
-      name: v1alpha3
-      schema: {}
-      served: false
-      storage: false
-      subresources:
-        scale:
-          labelSelectorPath: .status.selector
-          specReplicasPath: .spec.replicas
-          statusReplicasPath: .status.replicas
-        status: {}
-    - additionalPrinterColumns:
-        - description: Time duration since creation of KubeadmControlPlane
-          jsonPath: .metadata.creationTimestamp
-          name: Age
-          type: date
-        - description: This denotes whether or not the control plane has the uploaded kubeadm-config configmap
-          jsonPath: .status.initialized
-          name: Initialized
-          type: boolean
-        - description: KubeadmControlPlane API Server is ready to receive requests
-          jsonPath: .status.ready
-          name: API Server Available
-          type: boolean
-        - description: Kubernetes version associated with this control plane
-          jsonPath: .spec.version
-          name: Version
-          type: string
-        - description: Total number of non-terminated machines targeted by this control plane
-          jsonPath: .status.replicas
-          name: Replicas
-          type: integer
-        - description: Total number of fully running and ready control plane machines
-          jsonPath: .status.readyReplicas
-          name: Ready
-          type: integer
-        - description: Total number of non-terminated machines targeted by this control plane that have the desired template spec
-          jsonPath: .status.updatedReplicas
-          name: Updated
-          type: integer
-        - description: Total number of unavailable machines targeted by this control plane
-          jsonPath: .status.unavailableReplicas
-          name: Unavailable
-          type: integer
-      deprecated: true
-      name: v1alpha4
-      schema: {}
-      served: false
-      storage: false
-      subresources:
-        scale:
-          labelSelectorPath: .status.selector
-          specReplicasPath: .spec.replicas
-          statusReplicasPath: .status.replicas
-        status: {}
     - additionalPrinterColumns:
         - description: Cluster
           jsonPath: .metadata.labels['cluster\.x-k8s\.io/cluster-name']

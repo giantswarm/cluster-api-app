@@ -13,4 +13,3 @@ metadata:
     cluster.x-k8s.io/provider: control-plane-kubeadm
     helm.sh/chart: cluster-api
   name: capi-kubeadm-control-plane-aggregated-manager-role
-rules: []
