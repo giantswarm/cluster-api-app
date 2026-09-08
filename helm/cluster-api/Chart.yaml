@@ -2,7 +2,7 @@ apiVersion: v2
 name: cluster-api
 description: A Helm chart for Cluster API components.
 version: 7.0.1
-appVersion: 1.12.8-gs-6158079b4
+appVersion: 1.13.5-gs-5331bfa07
 home: https://github.com/giantswarm/cluster-api-app
 icon: https://s.giantswarm.io/app-icons/giantswarm/1/dark.svg
 annotations:

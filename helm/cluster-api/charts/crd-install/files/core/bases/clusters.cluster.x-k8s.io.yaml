@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   labels:
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
@@ -39,34 +39,6 @@ spec:
     singular: cluster
   scope: Namespaced
   versions:
-    - additionalPrinterColumns:
-        - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
-          jsonPath: .status.phase
-          name: Phase
-          type: string
-      deprecated: true
-      name: v1alpha3
-      schema: {}
-      served: false
-      storage: false
-      subresources:
-        status: {}
-    - additionalPrinterColumns:
-        - description: Time duration since creation of Cluster
-          jsonPath: .metadata.creationTimestamp
-          name: Age
-          type: date
-        - description: Cluster status such as Pending/Provisioning/Provisioned/Deleting/Failed
-          jsonPath: .status.phase
-          name: Phase
-          type: string
-      deprecated: true
-      name: v1alpha4
-      schema: {}
-      served: false
-      storage: false
-      subresources:
-        status: {}
     - additionalPrinterColumns:
         - description: ClusterClass of this Cluster, empty if the Cluster is not using a ClusterClass
           jsonPath: .spec.topology.class

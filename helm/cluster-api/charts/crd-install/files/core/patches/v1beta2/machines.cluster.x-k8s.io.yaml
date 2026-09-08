@@ -1,5 +1,5 @@
 - op: replace
-  path: /spec/versions/3/schema
+  path: /spec/versions/1/schema
   value:
     openAPIV3Schema:
       description: Machine is the Schema for the machines API.
@@ -251,9 +251,6 @@
                     minLength: 1
                     pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*\/)?([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$
                     type: string
-                    x-kubernetes-validations:
-                      - message: key must be a valid qualified name of max size 63 characters with an optional subdomain prefix of max size 253 characters
-                        rule: 'self.contains(''/'') ? ( self.split(''/'') [0].size() <= 253 && self.split(''/'') [1].size() <= 63 && self.split(''/'').size() == 2 ) : self.size() <= 63'
                   propagation:
                     description: |-
                       propagation defines how this taint should be propagated to nodes.
@@ -341,7 +338,7 @@
                 NodeHealthy, Updating, Deleting, Paused.
                 If a MachineHealthCheck is targeting this machine, also HealthCheckSucceeded, OwnerRemediated conditions are added.
                 Additionally control plane Machines controlled by KubeadmControlPlane will have following additional conditions:
-                APIServerPodHealthy, ControllerManagerPodHealthy, SchedulerPodHealthy, EtcdPodHealthy, EtcdMemberHealthy.
+                APIServerPodHealthy, ControllerManagerPodHealthy, SchedulerPodHealthy, EtcdPodHealthy, EtcdMemberHealthy, NodeKubeadmLabelsAndTaintsSet.
               items:
                 description: Condition contains details for one aspect of the current state of this API Resource.
                 properties:
@@ -437,7 +434,10 @@
 
                         Deprecated: This field is deprecated and is going to be removed when support for v1beta1 will be dropped. Please see https://github.com/kubernetes-sigs/cluster-api/blob/main/docs/proposals/20240916-improve-status-in-CAPI-resources.md for more details.
                       items:
-                        description: Condition defines an observation of a Cluster API resource operational state.
+                        description: |-
+                          Condition defines an observation of a Cluster API resource operational state.
+
+                          Deprecated: This type is deprecated and is going to be removed when support for v1beta1 will be dropped. Please see https://github.com/kubernetes-sigs/cluster-api/blob/main/docs/proposals/20240916-improve-status-in-CAPI-resources.md for more details.
                         properties:
                           lastTransitionTime:
                             description: |-
@@ -531,6 +531,11 @@
                       type: string
                   type: object
               type: object
+            failureDomain:
+              description: failureDomain is the failure domain where the Machine has been scheduled.
+              maxLength: 256
+              minLength: 1
+              type: string
             initialization:
               description: |-
                 initialization provides observations of the Machine initialization process.
