@@ -418,6 +418,20 @@
                     Only present when the Machine has a deletionTimestamp and waiting for volume detachments had been started.
                   format: date-time
                   type: string
+                waitForPreDrainHookStartTime:
+                  description: |-
+                    waitForPreDrainHookStartTime is the time when waiting for pre-drain hooks started
+                    and is used to determine if the pre-drain hooks are taking too long.
+                    Only present when the Machine has a deletionTimestamp and waiting for pre-drain hooks had been started.
+                  format: date-time
+                  type: string
+                waitForPreTerminateHookStartTime:
+                  description: |-
+                    waitForPreTerminateHookStartTime is the time when waiting for pre-terminate hooks started
+                    and is used to determine if the pre-terminate hooks are taking too long.
+                    Only present when the Machine has a deletionTimestamp and waiting for pre-terminate hooks had been started.
+                  format: date-time
+                  type: string
               type: object
             deprecated:
               description: deprecated groups all the status fields that are deprecated and will be removed when all the nested field are removed.
