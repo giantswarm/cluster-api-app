@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [9.0.0] - 2026-09-29
+
 ### Changed
 
 - Helpers: Trim `.` & `_` at the end of `cluster-api.chart`.
@@ -420,7 +422,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v8.0.1...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v9.0.0...HEAD
+[9.0.0]: https://github.com/giantswarm/cluster-api-app/compare/v8.0.1...v9.0.0
 [8.0.1]: https://github.com/giantswarm/cluster-api-app/compare/v8.0.0...v8.0.1
 [8.0.0]: https://github.com/giantswarm/cluster-api-app/compare/v7.0.1...v8.0.0
 [7.0.1]: https://github.com/giantswarm/cluster-api-app/compare/v7.0.0...v7.0.1
