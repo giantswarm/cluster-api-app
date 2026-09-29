@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: '{{ .Release.Namespace }}/capi-serving-cert'
-    controller-gen.kubebuilder.io/version: v0.20.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   labels:
     app.kubernetes.io/instance: '{{ .Release.Name }}'
     app.kubernetes.io/managed-by: '{{ .Release.Service }}'
@@ -50,7 +50,7 @@ spec:
           jsonPath: .spec.poolRef.kind
           name: Pool Kind
           type: string
-        - description: Time duration since creation of IPAdress
+        - description: Time duration since creation of IPAddress
           jsonPath: .metadata.creationTimestamp
           name: Age
           type: date
@@ -72,7 +72,7 @@ spec:
           jsonPath: .spec.poolRef.kind
           name: Pool Kind
           type: string
-        - description: Time duration since creation of IPAdress
+        - description: Time duration since creation of IPAddress
           jsonPath: .metadata.creationTimestamp
           name: Age
           type: date
@@ -95,7 +95,7 @@ spec:
           jsonPath: .spec.poolRef.kind
           name: Pool Kind
           type: string
-        - description: Time duration since creation of IPAdress
+        - description: Time duration since creation of IPAddress
           jsonPath: .metadata.creationTimestamp
           name: Age
           type: date

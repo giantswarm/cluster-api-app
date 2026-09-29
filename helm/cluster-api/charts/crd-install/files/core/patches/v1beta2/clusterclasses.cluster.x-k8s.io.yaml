@@ -1284,7 +1284,7 @@
                           order:
                             description: |-
                               order defines the order in which Machines are deleted when downscaling.
-                              Defaults to "Random".  Valid values are "Random, "Newest", "Oldest"
+                              Defaults to "Random". Valid values are "Random", "Newest", "Oldest"
                             enum:
                               - Random
                               - Newest
