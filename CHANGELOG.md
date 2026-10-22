@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Chart: Add tenant label to ServiceMonitor for discovery.
+
 ## [9.0.2] - 2026-10-22
 
 ### Fixed
