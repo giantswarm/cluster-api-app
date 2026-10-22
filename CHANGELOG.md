@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [9.0.2] - 2026-10-22
+
 ### Fixed
 
 - Chart: Remove nonexistent labels from ServiceMonitors.
@@ -432,7 +434,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2021-09-29
 
-[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v9.0.1...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-api-app/compare/v9.0.2...HEAD
+[9.0.2]: https://github.com/giantswarm/cluster-api-app/compare/v9.0.1...v9.0.2
 [9.0.1]: https://github.com/giantswarm/cluster-api-app/compare/v9.0.0...v9.0.1
 [9.0.0]: https://github.com/giantswarm/cluster-api-app/compare/v8.0.1...v9.0.0
 [8.0.1]: https://github.com/giantswarm/cluster-api-app/compare/v8.0.0...v8.0.1
